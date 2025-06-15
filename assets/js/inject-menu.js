@@ -1,7 +1,7 @@
 // assets/js/inject-menu.js
 
 document.addEventListener("DOMContentLoaded", () => {
-  fetch("/assets/partials/menu.html")
+  fetch("assets/partials/menu.html")
     .then(response => response.text())
     .then(html => {
       const menuContainer = document.createElement("div");
