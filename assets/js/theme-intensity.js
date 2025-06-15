@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const saved = localStorage.getItem("celeste-intensity");
 
   function applyTheme(level) {
-    body.classList.remove("theme-celeste-clair", "theme-celeste-doux", "theme-celeste-nuit");
+    body.classList.remove("theme-celeste-doux", "theme-celeste-moyen", "theme-celeste-nuit");
     body.classList.add("theme-celeste-" + level);
     localStorage.setItem("celeste-intensity", level);
   }
