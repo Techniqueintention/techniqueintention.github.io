@@ -21,7 +21,7 @@ body.theme-celeste-v3 {
 
   body {
   /* Remplace l'URL par le chemin de ton image */
-  background-image: url('assets/images/CASC3.GIF');
+  background-image: url('mages/CASC3.GIF');
   background-attachment: fixed;  /* image fixe, ne défile pas */
   background-size: cover;        /* couvre tout l'écran */
   background-position: center;   /* centrée */
