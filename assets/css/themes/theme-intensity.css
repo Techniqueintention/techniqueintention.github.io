@@ -1,0 +1,17 @@
+/* 🌕 Clair - très lumineux */
+body.theme-celeste-clair {
+  background-color: #f8f1fb;
+  color: #222;
+}
+
+/* 🌗 Doux - modéré */
+body.theme-celeste-doux {
+  background-color: #e5dbf5;
+  color: #222;
+}
+
+/* 🌑 Nuit - tamisé */
+body.theme-celeste-nuit {
+  background-color: #bfaedb;
+  color: #f5f5f5;
+}
