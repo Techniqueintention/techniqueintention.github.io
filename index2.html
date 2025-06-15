@@ -20,15 +20,15 @@
   </div>
 
   <!-- Sélecteur d’intensité -->
-  <div id="intensity-selector">
-    <label>Intensité :</label>
-    <div style="display: flex; align-items: center; gap: 0.4rem; margin-top: 0.3rem;">
-      <button data-intensity="clair">☀️</button>
-      <button data-intensity="doux">🌤️</button>
-      <button data-intensity="nuit">🌙</button>
-    </div>
-    <input type="range" id="intensity-range" min="0" max="2" step="1">
+<div id="intensity-selector">
+  <label>Intensité :</label>
+  <div>
+    <button data-intensity="doux">🌤️</button>
+    <button data-intensity="moyen">⛅</button>
+    <button data-intensity="nuit">🌙</button>
   </div>
+  <input type="range" id="intensity-range" min="0" max="2" step="1" value="0">
+</div>
 
   <!-- Contenu principal -->
   <main style="position: relative; z-index: 1; padding: 4rem 2rem; max-width: 800px; margin: auto; text-align: center;">
