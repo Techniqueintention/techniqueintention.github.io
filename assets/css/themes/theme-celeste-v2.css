@@ -1,8 +1,8 @@
-/* === Thème céleste v2 – Sans image, fond fluide === */
+/* === Thème céleste v2 – Dégradé doux inspiré du thème stellaire === */
 body.theme-celeste {
   margin: 0;
   padding: 0;
-  background: linear-gradient(180deg, #f7f3fb 0%, #e8defa 100%);
+  background: linear-gradient(180deg, #f8f2fb 0%, #e5d9f3 40%, #d9d1f3 100%);
   color: #333;
   font-family: 'Roboto', sans-serif;
   overflow: hidden;
