@@ -19,10 +19,15 @@ body.theme-celeste-v3 {
   --btn-text: #fff;
   --btn-hover: #d4b8ff;
 
-  background: var(--bg-primary);
-  font-family: 'Roboto', sans-serif;
-  color: var(--text-primary);
-  overflow-x: hidden;
+  body {
+  /* Remplace l'URL par le chemin de ton image */
+  background-image: url('img/CASC3.GIF');
+  background-attachment: fixed;  /* image fixe, ne défile pas */
+  background-size: cover;        /* couvre tout l'écran */
+  background-position: center;   /* centrée */
+  background-repeat: no-repeat;  /* pas de répétition */
+  margin: 0;
+  padding: 0;
 }
 
 
