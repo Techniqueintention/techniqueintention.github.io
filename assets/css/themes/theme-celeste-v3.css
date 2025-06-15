@@ -1,34 +1,30 @@
 /* === 🌸 THÈME CÉLESTE V3 — Rose pâle, inspiré de stellaire === */
-body.theme-celeste {
-  --bg-primary: linear-gradient(180deg, #faf4fb 0%, #efe2fa 40%, #e5d6f8 100%);
-  --text-primary: #222;
-  --text-secondary: #705c9d;
-  --accent-primary: #b58de3;
-  --accent-hover: #c7a4ef;
-  --link-color: #a26ade;
+body.theme-celeste-v3 {
+  --bg-primary: linear-gradient(180deg, #f9f1ff 0%, #e8dbff 100%);
+  --text-primary: #333;
+  --text-secondary: #666;
+  --accent-primary: #b58eff;
+  --accent-hover: #d4b8ff;
 
-  --bloc-bg: rgba(255, 255, 255, 0.3);
-  --bloc-border: rgba(180, 160, 210, 0.4);
-  --bloc-shadow: rgba(180, 160, 210, 0.2);
-  --bloc-shadow-hover: rgba(180, 160, 210, 0.4);
+  --bloc-bg: rgba(255, 255, 255, 0.4);
+  --bloc-border: rgba(255, 255, 255, 0.2);
+  --bloc-shadow: rgba(0, 0, 0, 0.05);
 
-  --logo-color: #b58de3;
-  --nav-bg: rgba(255, 255, 255, 0.4);
-  --nav-link-color: #705c9d;
-  --nav-link-active-bg: #b58de3;
+  --nav-bg: rgba(255, 255, 255, 0.5);
+  --nav-link-color: #333;
+  --nav-link-active-bg: #b58eff;
   --nav-link-active-color: #fff;
 
-  --btn-bg: #b58de3;
+  --btn-bg: #b58eff;
   --btn-text: #fff;
-  --btn-hover: #c7a4ef;
+  --btn-hover: #d4b8ff;
 
-  margin: 0;
-  padding: 0;
   background: var(--bg-primary);
   font-family: 'Roboto', sans-serif;
   color: var(--text-primary);
-  overflow: hidden;
+  overflow-x: hidden;
 }
+
 
 /* --- étoiles animées --- */
 .etoiles-container {
