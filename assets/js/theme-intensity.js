@@ -1,36 +1,40 @@
-// 🎛️ Gestion des niveaux d’intensité du thème céleste
+// assets/js/theme-intensity.js
 document.addEventListener("DOMContentLoaded", () => {
+  const levels = ["clair", "doux", "nuit"]; // ← ordre respecté ici
+  const range = document.getElementById("intensity-range");
   const buttons = document.querySelectorAll("#intensity-selector button");
-  const range = document.querySelector("#intensity-range");
   const body = document.body;
-  const levels = ["clair", "doux", "nuit"];
+  const saved = localStorage.getItem("celeste-intensity");
 
-  const applyIntensity = (level) => {
-    levels.forEach(l => body.classList.remove("theme-celeste-" + l));
+  function applyTheme(level) {
+    body.classList.remove("theme-celeste-clair", "theme-celeste-doux", "theme-celeste-nuit");
     body.classList.add("theme-celeste-" + level);
     localStorage.setItem("celeste-intensity", level);
-  };
+  }
 
   // Initialisation
-  const saved = localStorage.getItem("celeste-intensity");
   if (saved && levels.includes(saved)) {
-    applyIntensity(saved);
-    if (range) range.value = levels.indexOf(saved);
+    applyTheme(saved);
+    range.value = levels.indexOf(saved);
+  } else {
+    applyTheme("doux");
+    range.value = 1;
   }
-
-  // Boutons cliquables
-  buttons.forEach((btn, i) => {
-    btn.addEventListener("click", () => {
-      applyIntensity(levels[i]);
-      if (range) range.value = i;
-    });
-  });
 
   // Slider
-  if (range) {
-    range.addEventListener("input", () => {
-      const level = levels[range.value];
-      applyIntensity(level);
+  range.addEventListener("input", () => {
+    const level = levels[range.value];
+    applyTheme(level);
+  });
+
+  // Boutons
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const level = btn.dataset.intensity;
+      if (levels.includes(level)) {
+        applyTheme(level);
+        range.value = levels.indexOf(level);
+      }
     });
-  }
+  });
 });
