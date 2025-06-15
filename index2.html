@@ -8,7 +8,8 @@
   <link rel="stylesheet" href="assets/css/theme-intensity.css">
   <link rel="stylesheet" href="assets/css/menu-responsive.css">
 </head>
-<body class="theme-celeste-doux">
+
+  <body class="theme-celeste-doux">
 
   <!-- Menu injecté dynamiquement -->
   <script src="assets/js/inject-menu.js" defer></script>
@@ -18,15 +19,15 @@
     <canvas id="etoiles-canvas"></canvas>
   </div>
 
-  <!-- Contrôle d’intensité -->
-  <div id="intensity-selector" style="position: fixed; bottom: 1rem; left: 1rem; z-index: 20;">
-    <label style="font-size: 0.9rem;">Intensité :</label>
+  <!-- Sélecteur d’intensité -->
+  <div id="intensity-selector">
+    <label>Intensité :</label>
     <div style="display: flex; align-items: center; gap: 0.4rem; margin-top: 0.3rem;">
       <button data-intensity="clair">☀️</button>
       <button data-intensity="doux">🌤️</button>
       <button data-intensity="nuit">🌙</button>
     </div>
-    <input type="range" id="intensity-range" min="0" max="2" step="1" style="margin-top: 0.5rem; width: 120px;">
+    <input type="range" id="intensity-range" min="0" max="2" step="1">
   </div>
 
   <!-- Contenu principal -->
@@ -48,6 +49,5 @@
   <!-- Scripts -->
   <script src="assets/js/theme-celeste.js"></script>
   <script src="assets/js/theme-intensity.js"></script>
-
 </body>
 </html>
