@@ -1,0 +1,22 @@
+/* === Thème CÉLESTE V4 === */
+body.theme-celeste-v4 {
+  background-color: #f4ecfb; /* Rose lilas pâle */
+  color: #333;
+  font-family: 'Roboto', sans-serif;
+  overflow-x: hidden;
+}
+
+/* === Canvas étoiles === */
+.etoiles-container {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#etoiles-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+} 
