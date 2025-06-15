@@ -1,20 +1,21 @@
-/* ☀️ Clair */
-body.theme-celeste-clair {
-  background-color: #f8f1fb;
-  color: #222;
-}
-
-/* 🌸 Doux */
+/* 🌤️ Doux – Rose pâle */
 body.theme-celeste-doux {
-  background-color: #e8dbf5;
+  background-color: #f2dbf5;
   color: #222;
 }
 
-/* 🌙 Nuit */
-body.theme-celeste-nuit {
-  background-color: #2d2255;
-  color: #f5f5f5;
+/* ⛅ Moyen – Violet clair apaisé */
+body.theme-celeste-moyen {
+  background-color: #c9afe8;
+  color: #fff;
 }
+
+/* 🌙 Nuit – Foncé façon stellaire */
+body.theme-celeste-nuit {
+  background-color: #0f0a32;
+  color: #ffffff;
+}
+
 
 /* Effet étoiles toujours visibles */
 .etoiles-container {
