@@ -1,6 +1,6 @@
 // assets/js/theme-intensity.js
 document.addEventListener("DOMContentLoaded", () => {
-  const levels = ["clair", "doux", "nuit"]; // ← ordre respecté ici
+  const levels = ["doux", "moyen", "nuit"]; // ← ordre respecté ici
   const range = document.getElementById("intensity-range");
   const buttons = document.querySelectorAll("#intensity-selector button");
   const body = document.body;
