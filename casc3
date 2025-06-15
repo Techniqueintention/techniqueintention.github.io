@@ -1,0 +1,9 @@
+body {
+  background-image: url('ton-image.jpg'); /* remplace par le lien ou chemin de ton image */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+  margin: 0;
+  height: 100vh;
+}
