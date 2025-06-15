@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Immersion Céleste – Expérience Sensorielle</title>
+  <meta name="description" content="Une interface sensorielle pour ajuster la douceur de l’ambiance selon votre ressenti visuel." />
+  <link rel="stylesheet" href="assets/css/theme-intensity.css">
+  <link rel="stylesheet" href="assets/css/menu-responsive.css">
+</head>
+<body class="theme-celeste-doux">
+
+  <!-- Zone des étoiles animées -->
+  <div class="etoiles-container">
+    <canvas id="etoiles-canvas"></canvas>
+  </div>
+
+  <!-- Titre de l'expérience -->
+  <main style="position: relative; z-index: 1; padding: 5rem 2rem; max-width: 800px; margin: auto; text-align: center;">
+    <h1 style="font-size: 2.2rem;">Immersion Céleste</h1>
+    <p style="margin-top: 1.5rem;">
+      Ajustez l’intensité lumineuse selon votre ressenti.  
+      Chaque nuance vous offre une nouvelle ambiance : douce, médiane ou nocturne.
+    </p>
+  </main>
+
+  <!-- Contrôle d’intensité -->
+  <div id="intensity-selector" style="position: fixed; bottom: 1rem; left: 1rem; z-index: 20;">
+    <label style="font-size: 0.9rem;">Intensité :</label>
+    <div style="display: flex; align-items: center; gap: 0.4rem; margin-top: 0.3rem;">
+      <button data-intensity="doux" title="Ambiance claire et douce">🌤️</button>
+      <button data-intensity="moyen" title="Ambiance médiane équilibrée">⛅</button>
+      <button data-intensity="nuit" title="Ambiance sombre et apaisante">🌙</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/inject-menu.js" defer></script>
+  <script src="assets/js/theme-celeste.js"></script>
+  <script src="assets/js/theme-intensity.js"></script>
+</body>
+</html>
