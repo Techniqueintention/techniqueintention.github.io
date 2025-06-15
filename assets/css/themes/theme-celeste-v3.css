@@ -1,0 +1,48 @@
+/* === 🌸 THÈME CÉLESTE V3 — Rose pâle, inspiré de stellaire === */
+body.theme-celeste {
+  --bg-primary: linear-gradient(180deg, #faf4fb 0%, #efe2fa 40%, #e5d6f8 100%);
+  --text-primary: #222;
+  --text-secondary: #705c9d;
+  --accent-primary: #b58de3;
+  --accent-hover: #c7a4ef;
+  --link-color: #a26ade;
+
+  --bloc-bg: rgba(255, 255, 255, 0.3);
+  --bloc-border: rgba(180, 160, 210, 0.4);
+  --bloc-shadow: rgba(180, 160, 210, 0.2);
+  --bloc-shadow-hover: rgba(180, 160, 210, 0.4);
+
+  --logo-color: #b58de3;
+  --nav-bg: rgba(255, 255, 255, 0.4);
+  --nav-link-color: #705c9d;
+  --nav-link-active-bg: #b58de3;
+  --nav-link-active-color: #fff;
+
+  --btn-bg: #b58de3;
+  --btn-text: #fff;
+  --btn-hover: #c7a4ef;
+
+  margin: 0;
+  padding: 0;
+  background: var(--bg-primary);
+  font-family: 'Roboto', sans-serif;
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+/* --- étoiles animées --- */
+.etoiles-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
