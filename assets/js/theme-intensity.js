@@ -1,19 +1,20 @@
-// 🎛️ Gestion des niveaux d’intensité du thème céleste
+// 🎛️ Gestion du slider d’intensité du thème céleste
 document.addEventListener("DOMContentLoaded", () => {
-  const buttons = document.querySelectorAll("#intensity-selector button");
+  const slider = document.getElementById("intensity-slider");
   const body = document.body;
+
+  const levels = ["clair", "doux", "nuit"];
   const saved = localStorage.getItem("celeste-intensity");
 
-  if (saved) {
+  if (saved && levels.includes(saved)) {
     body.classList.add("theme-celeste-" + saved);
+    slider.value = levels.indexOf(saved); // Met le slider à la bonne position
   }
 
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      body.classList.remove("theme-celeste-clair", "theme-celeste-doux", "theme-celeste-nuit");
-      const level = btn.dataset.intensity;
-      body.classList.add("theme-celeste-" + level);
-      localStorage.setItem("celeste-intensity", level);
-    });
+  slider.addEventListener("input", () => {
+    body.classList.remove("theme-celeste-clair", "theme-celeste-doux", "theme-celeste-nuit");
+    const level = levels[slider.value];
+    body.classList.add("theme-celeste-" + level);
+    localStorage.setItem("celeste-intensity", level);
   });
 });
