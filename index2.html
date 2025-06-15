@@ -18,15 +18,15 @@
     <canvas id="etoiles-canvas"></canvas>
   </div>
 
-  <!-- Contrôle de l’intensité -->
-  <div id="intensity-selector" style="position: fixed; bottom: 1rem; left: 1rem; z-index: 20; font-size: 0.9rem;">
-    <label for="intensity-slider">Intensité :</label>
-    <div style="display: flex; align-items: center; gap: 0.4rem; margin: 0.4rem 0;">
+  <!-- Contrôle d’intensité -->
+  <div id="intensity-selector" style="position: fixed; bottom: 1rem; left: 1rem; z-index: 20;">
+    <label style="font-size: 0.9rem;">Intensité :</label>
+    <div style="display: flex; align-items: center; gap: 0.4rem; margin-top: 0.3rem;">
       <button data-intensity="clair">☀️</button>
       <button data-intensity="doux">🌤️</button>
       <button data-intensity="nuit">🌙</button>
     </div>
-    <input type="range" id="intensity-slider" min="0" max="2" step="1" value="1" style="width: 120px;">
+    <input type="range" id="intensity-range" min="0" max="2" step="1" style="margin-top: 0.5rem; width: 120px;">
   </div>
 
   <!-- Contenu principal -->
@@ -46,7 +46,8 @@
   </main>
 
   <!-- Scripts -->
-  <script src="assets/js/theme-celeste.js" defer></script>
-  <script src="assets/js/theme-intensity.js" defer></script>
+  <script src="assets/js/theme-celeste.js"></script>
+  <script src="assets/js/theme-intensity.js"></script>
+
 </body>
 </html>
