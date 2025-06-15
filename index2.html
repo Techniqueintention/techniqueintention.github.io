@@ -18,14 +18,16 @@
     <canvas id="etoiles-canvas"></canvas>
   </div>
 
-  <div id="intensity-widget">
-  <label>Intensité :</label>
-  <div class="intensity-options">
-    <button data-intensity="clair" title="Clair">☀️</button>
-    <button data-intensity="doux" title="Doux">🌥️</button>
-    <button data-intensity="nuit" title="Nuit">🌙</button>
+<div id="intensity-selector" style="position: fixed; bottom: 1rem; left: 1rem; z-index: 20;">
+  <label style="font-size: 0.9rem;">Intensité :</label>
+  <div style="display: flex; align-items: center; gap: 0.4rem; margin-top: 0.3rem;">
+    <button data-intensity="clair">☀️</button>
+    <button data-intensity="doux">🌤️</button>
+    <button data-intensity="nuit">🌙</button>
   </div>
+  <input type="range" id="intensity-range" min="0" max="2" step="1" style="margin-top: 0.5rem; width: 120px;">
 </div>
+
 
 
   <!-- Contenu principal -->
