@@ -1,9 +1,8 @@
-
-/* === Thème céleste V2 — plus visible === */
+/* === Thème céleste v2 – Sans image, fond fluide === */
 body.theme-celeste {
   margin: 0;
   padding: 0;
-  background: radial-gradient(circle at 50% 30%, #f3dff9 0%, #e6d5fb 35%, #dac4f9 100%);
+  background: linear-gradient(180deg, #f7f3fb 0%, #e8defa 100%);
   color: #333;
   font-family: 'Roboto', sans-serif;
   overflow: hidden;
