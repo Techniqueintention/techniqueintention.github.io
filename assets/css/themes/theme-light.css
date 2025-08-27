@@ -40,3 +40,16 @@
   transform: scale(1.2);
   text-shadow: 0 0 6px var(--accent-color);
 }
+
+/* Laisse le dégradé du body visible */
+[data-theme="light"] main,
+[data-theme="light"] .home-shell,
+[data-theme="light"] .welcome,
+[data-theme="light"] section {
+  background: transparent !important;
+}
+
+/* Assure que le dégradé couvre toute la fenêtre */
+html, body {
+  min-height: 100%;
+}
