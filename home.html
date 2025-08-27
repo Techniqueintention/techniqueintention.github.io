@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TECHNIQUE INTENTION – Accueil</title>
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/theme-light.css" id="theme-link">
+  <script defer src="assets/js/theme.js"></script>
+  <script defer src="assets/js/inject-menu.js"></script>
+  <script defer src="assets/js/inject-footer.js"></script>
+  <script defer src="assets/js/viewer.js"></script>
+</head>
+<body data-theme="light">
+  <header class="topbar">
+    <a class="brand" href="index.html" title="Revoir l’intro">TECHNIQUE&nbsp;INTENTION</a>
+
+    <nav id="top-menu" class="topmenu" data-partial="partials/menu.html"></nav>
+
+    <!-- switch discret -->
+    <div class="theme-toggle">
+      <input type="checkbox" id="themeSwitch" aria-label="Basculer le thème">
+      <label for="themeSwitch" class="switch">
+        <svg class="icon sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"/>
+        </svg>
+        <svg class="icon moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21 12.8A9 9 0 0 1 11.2 3 7 7 0 1 0 12 21a9 9 0 0 0 9-8.2z"/>
+        </svg>
+        <span class="slider"></span>
+      </label>
+    </div>
+  </header>
+
+  <main class="shell">
+    <!-- colonne catégories -->
+    <aside class="side-menu" id="sideMenu" aria-label="Navigation secondaire"></aside>
+
+    <!-- visualiseur -->
+    <section id="viewer" class="viewer" aria-live="polite">
+      <article class="welcome">
+        <h1>Bienvenue</h1>
+        <p>
+      Bienvenue dans un espace hors du temps,<br>  
+      un lieu pour ralentir, ressentir, et se reconnecter.  <br>
+      Ici commence un chemin doux, fait de lumière, de silence,  <br>
+      et d'intentions posées comme des étoiles dans l'obscurité.
+    </p>
+    <p>
+      Que ce site soit un espace de respiration,  <br>
+      un carnet d'exploration spirituelle,  <br>
+      un sanctuaire pour accueillir la paix en soi.
+    </p>
+      </article>
+    </section>
+  </main>
+
+  <footer id="site-footer" data-partial="partials/footer.html"></footer>
+</body>
+</html>
