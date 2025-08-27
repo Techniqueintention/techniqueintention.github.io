@@ -10,9 +10,9 @@ body, html {
   height: 100%;
   overflow: hidden;
   font-family: "Cinzel", serif;
-  background: linear-gradient(180deg, #e8d8f7, #f2e6f9);
+  background: linear-gradient(180deg, #dcd2f0, #c8b7e6); /* violet/gris clair */
   background-size: cover;
-  color: #2e003d;
+  color: #fff;
 }
 
 /* Canvas étoiles */
@@ -39,17 +39,17 @@ body, html {
   opacity: 0;
   animation: fadeIn 2s ease forwards;
   padding: 2rem;
+  gap: 40px; /* espace entre titre / sous-titre / bouton */
 }
 
-/* Titre sobre et élégant */
+/* Titre */
 #intro-logo {
   font-size: 3rem;
   font-weight: 600;
-  color: #f9f6ff;
+  color: #fdfdfd; /* blanc cassé */
   text-shadow:
-    1px 1px 3px rgba(50, 0, 80, 0.25),
-    -1px -1px 2px rgba(255, 255, 255, 0.5);
-  margin-bottom: 40px;
+    1px 1px 2px rgba(0, 0, 0, 0.25),
+    0 2px 6px rgba(0, 0, 0, 0.2);
   opacity: 0;
   transform: translateY(-20px);
   animation: slideFadeIn 2s ease forwards 0.5s;
@@ -58,31 +58,30 @@ body, html {
 /* Sous-titre */
 #intro-subtitle {
   font-size: 1.2rem;
-  max-width: 600px;
+  max-width: 650px;
   line-height: 1.6;
-  color: #fdfaff;
-  opacity: 0.85;
-  margin-bottom: 50px;
+  color: #f3effc;
+  opacity: 0.9;
   animation: fadeIn 2s ease forwards 1.5s;
 }
 
-/* Bouton plus sobre */
+/* Bouton */
 #enter-btn {
   padding: 12px 32px;
   border: none;
   border-radius: 25px;
   font-size: 1rem;
   cursor: pointer;
-  background: #bda7e6;
-  color: #2b003a;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  background: #8f7cc5; /* violet doux */
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
   transition: background 0.3s, transform 0.2s;
   opacity: 0;
   animation: fadeIn 2s ease forwards 2.5s;
 }
 
 #enter-btn:hover {
-  background: #a68ed1;
+  background: #7a69ad;
   transform: scale(1.05);
 }
 
