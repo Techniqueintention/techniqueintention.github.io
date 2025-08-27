@@ -1,53 +1,21 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TECHNIQUE INTENTION – Introduction</title>
-  <link rel="preload" href="assets/css/base.css" as="style">
-  <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/theme-light.css" id="theme-link">
-  <script defer src="assets/js/intro-gate.js"></script>
-  <style>
-    /* décor doux : pluie de petites lumières */
-    .intro-wrap{min-height:100dvh;display:grid;place-items:center;position:relative;overflow:hidden}
-    .intro{text-align:center;z-index:1}
-    .ti-title{font-size:clamp(28px,5vw,56px);letter-spacing:.08em}
-    .ti-sub{opacity:.7;margin-top:.5rem}
-    .ti-enter{margin-top:2rem;padding:.8rem 1.2rem;border-radius:999px;border:1px solid var(--line);
-      background:var(--card);backdrop-filter:saturate(1.2) blur(2px)}
-    .ti-enter:hover{transform:translateY(-1px)}
-    .spark{position:absolute;top:-10vh;width:2px;height:2px;background:var(--accent);
-      box-shadow:0 0 6px var(--accent);border-radius:2px;animation:fall linear infinite}
-    @keyframes fall{to{transform:translateY(120vh)}}
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technique Intention</title>
+  <link rel="stylesheet" href="assets/css/intro.css">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
 </head>
-<body data-theme="light">
-  <div class="intro-wrap">
-    <div class="intro">
-      <h1 class="ti-title">TECHNIQUE&nbsp;INTENTION</h1>
-      <p class="ti-sub">message d'introduction</p>
-      <button class="ti-enter" id="enterBtn">Entrer</button>
-    </div>
-    <!-- petites lumières générées en JS -->
+<body>
+  <canvas id="stars-canvas"></canvas>
+
+  <div id="intro-content">
+    <h1 id="intro-logo">TECHNIQUE INTENTION</h1>
+    <p id="intro-subtitle">Vers le sanctuaire intérieur</p>
+    <button id="enter-btn">Entrer</button>
   </div>
 
-  <script>
-    // petites lumières
-    const wrap = document.querySelector('.intro-wrap');
-    for(let i=0;i<60;i++){
-      const s=document.createElement('div'); s.className='spark';
-      s.style.left=Math.random()*100+'%';
-      s.style.animationDuration=(6+Math.random()*6)+'s';
-      s.style.animationDelay=(-Math.random()*6)+'s';
-      s.style.opacity=0.5+Math.random()*0.5;
-      wrap.appendChild(s);
-    }
-    // entrer
-    document.getElementById('enterBtn').addEventListener('click', ()=>{
-      localStorage.setItem('ti_seen_intro','1');
-      location.href='home.html';
-    });
-  </script>
+  <script src="assets/js/intro.js"></script>
 </body>
 </html>
