@@ -1,13 +1,6 @@
-/* assets/css/theme-light.css (rose pâle) */
-
-:root{
-  --bg: #fff7fb;              /* blanc/rose très doux */
-  --text: #2a2226;
-  --muted: #7a6e75;
-  --line: #efd9e7;
-  --card: rgba(255,255,255,.66);
-  --accent: #e19ac1;          /* rose pastel */
-  --accent-2: #9ac1ff;
+:root[data-theme="light"] {
+  --bg-color: #f7f5fb;
+  --text-color: #222;
+  --header-bg: #fff;
+  --footer-bg: #eee;
 }
-
-body[data-theme="light"] {}
