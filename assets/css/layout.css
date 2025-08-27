@@ -7,15 +7,23 @@ main {
 footer {
   text-align: center;
   padding: 1rem;
-  background: transparent;   /* au lieu de gris */
+  background: transparent !important;
   color: var(--footer-text, #999);
   font-size: 0.8rem;
 }
 
+header {
+  background: var(--header-bg);
+}
+
 body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: var(--bg-color);
   color: var(--text-color);
 }
-header {
-  background: var(--header-bg);
+
+main {
+  flex: 1;
 }
