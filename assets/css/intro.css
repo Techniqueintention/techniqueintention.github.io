@@ -10,10 +10,14 @@ body, html {
   height: 100%;
   overflow: hidden;
   font-family: "Cinzel", serif;
-  background: linear-gradient(180deg, #dcd2f0, #c8b7e6); /* violet/gris clair */
-  background-size: cover;
+  background: 
+    radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.25), transparent 70%),
+    linear-gradient(180deg, #dcd2f0, #c8b7e6);
+  background-size: 150% 150%, cover;
+  animation: haloPulse 12s ease-in-out infinite;
   color: #fff;
 }
+
 
 /* Canvas étoiles */
 #stars-canvas {
@@ -103,4 +107,15 @@ body, html {
 @keyframes slideFadeIn {
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes haloPulse {
+  0%, 100% {
+    background-size: 140% 140%, cover;
+    background-position: 50% 40%, center;
+  }
+  50% {
+    background-size: 160% 160%, cover;
+    background-position: 50% 42%, center;
+  }
 }
