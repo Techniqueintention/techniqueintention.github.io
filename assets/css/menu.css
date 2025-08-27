@@ -16,7 +16,11 @@
   font-size: 1.4rem;
   font-weight: 700;
   color: var(--text-color, #222);
-  text-decoration: none;
+  text-decoration: none; /* pas de soulignement */
+}
+
+.site-title a:hover {
+  opacity: 0.8; /* effet discret */
 }
 
 /* Menu principal */
@@ -42,7 +46,6 @@
 
 /* Switch simple (☀️/🌙) */
 .menu-switch {
-  margin-left: auto;
   display: flex;
   align-items: center;
 }
