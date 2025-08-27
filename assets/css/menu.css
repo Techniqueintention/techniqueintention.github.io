@@ -1,11 +1,14 @@
-/* Bandeau */
+/* ===============================
+   Bandeau + Menu
+   =============================== */
+
 .site-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 2rem;
-  background: var(--header-bg, rgba(255,255,255,0.9));
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 0.8rem 2rem;
+  background: var(--header-bg, rgba(255,255,255,0.8));
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -14,41 +17,49 @@
 /* Titre */
 .site-title a {
   font-family: "Cinzel", serif;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: var(--text-color, #222);
   text-decoration: none;
-  letter-spacing: 1px;
-  transition: color 0.3s ease;
 }
 
-.site-title a:hover {
-  color: #8a6df1; /* violet lumineux en hover */
-}
-
-/* Menu */
+/* Menu centré */
 .menu-primary {
   display: flex;
-  gap: 1.2rem; /* réduit l’espacement */
+  gap: 1.5rem;
 }
 
 .menu-primary a {
   font-family: "Poppins", sans-serif;
-  font-size: 0.95rem; /* plus petit */
-  color: var(--text-color, #333);
+  font-size: 1rem;
   text-decoration: none;
-  padding: 0.3rem 0.6rem; /* réduit les blocs */
+  color: var(--text-color, #333);
+  padding: 0.3rem 0.6rem;
   border-radius: 6px;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
-/* Effet hover + actif */
 .menu-primary a:hover {
   background: rgba(138,109,241,0.12);
   color: #8a6df1;
 }
 
 .menu-primary a.active {
-  background: rgba(138,109,241,0.25);
+  background: rgba(138,109,241,0.2);
+  color: #8a6df1;
   font-weight: 600;
+}
+
+/* Switch simple */
+#themeToggle button {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: var(--text-color, #222);
+  transition: transform 0.2s ease;
+}
+
+#themeToggle button:hover {
+  transform: scale(1.2);
 }
