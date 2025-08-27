@@ -79,23 +79,15 @@ body, html {
   opacity: 1;
   white-space: nowrap;
   overflow: hidden;
-  border-right: 2px solid rgba(255,255,255,0.75); /* curseur */
   width: 0;
   margin-bottom: 40px;
-  /* 36 caractères → steps(36), durée 7s */
-  animation: typing 7s steps(36, end) forwards 1.5s,
-             blink 0.7s step-end infinite 1.5s;
+  /* 32 caractères → steps(32), durée 3.8s */
+  animation: typing 3.8s steps(32, end) forwards 1.5s;
 }
 
 @keyframes typing {
   from { width: 0 }
-  to { width: 22ch } /* largeur calculée en “caractères” */
-}
-
-/* Clignotement curseur */
-@keyframes blink {
-  from { border-color: rgba(255,255,255,0.75); }
-  to { border-color: transparent; }
+  to { width: 22ch; } /* largeur ajustée à la phrase */
 }
 
 /* Bouton raffiné */
