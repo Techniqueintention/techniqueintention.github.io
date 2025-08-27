@@ -1,17 +1,45 @@
-/* Contenu centré avec plus d’air */
+/* Reset minimal */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Cinzel", serif;
+  background: linear-gradient(180deg, #dcd2f0, #c8b7e6); /* violet/gris clair */
+  background-size: cover;
+  color: #fff;
+}
+
+/* Canvas étoiles */
+#stars-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: transparent;
+}
+
+/* Contenu centré (remonté et espacé) */
 #intro-content {
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* on aligne vers le haut */
+  justify-content: flex-start; /* alignement haut */
   align-items: center;
   height: 100%;
   text-align: center;
   opacity: 0;
   animation: fadeIn 2s ease forwards;
-  padding-top: 15vh; /* espace pour remonter */
-  gap: 60px; /* espace plus large entre éléments */
+  padding-top: 15vh; /* remonte le bloc */
+  gap: 60px; /* espace large entre titre / sous-titre / bouton */
 }
 
 /* Titre */
@@ -22,7 +50,10 @@
   text-shadow:
     1px 1px 3px rgba(0, 0, 0, 0.25),
     0 2px 8px rgba(0, 0, 0, 0.2);
-  margin-bottom: 30px; /* plus d’espace */
+  margin-bottom: 30px;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: slideFadeIn 2s ease forwards 0.5s;
 }
 
 /* Sous-titre */
@@ -33,6 +64,7 @@
   color: #f6f2ff;
   opacity: 0.95;
   margin-bottom: 40px;
+  animation: fadeIn 2s ease forwards 1.5s;
 }
 
 /* Bouton raffiné */
@@ -51,6 +83,8 @@
     0 2px 6px rgba(0,0,0,0.25),
     inset 0 1px 2px rgba(255,255,255,0.2);
   transition: all 0.3s ease;
+  opacity: 0;
+  animation: fadeIn 2s ease forwards 2.5s;
 }
 
 #enter-btn:hover {
@@ -59,4 +93,14 @@
   box-shadow: 
     0 4px 10px rgba(0,0,0,0.3),
     inset 0 1px 2px rgba(255,255,255,0.3);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes slideFadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
