@@ -60,15 +60,30 @@ body, html {
   animation: slideFadeIn 2s ease forwards 0.5s;
 }
 
-/* Sous-titre */
+/* Sous-titre manuscrit avec effet écriture */
 #intro-subtitle {
-  font-size: 1.2rem;
-  max-width: 650px;
-  line-height: 1.6;
-  color: #f6f2ff;
-  opacity: 0.95;
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.8rem;
+  color: #ffffff;
+  opacity: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid rgba(255,255,255,0.75); /* curseur */
+  width: 0;
   margin-bottom: 40px;
-  animation: fadeIn 2s ease forwards 1.5s;
+  animation: typing 4s steps(40, end) forwards 1.5s, blink 0.7s step-end infinite alternate 1.5s;
+}
+
+/* Effet machine à écrire */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* Clignotement curseur */
+@keyframes blink {
+  from { border-color: rgba(255,255,255,0.75); }
+  to { border-color: transparent; }
 }
 
 /* Bouton raffiné */
