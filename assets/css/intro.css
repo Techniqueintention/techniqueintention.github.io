@@ -76,19 +76,16 @@ body, html {
   font-family: 'Great Vibes', cursive;
   font-size: 1.8rem;
   color: #ffffff;
-  opacity: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 0;
+  opacity: 0;
   margin-bottom: 40px;
-  /* 32 caractères → steps(32), durée 3.8s */
-  animation: typing 3.8s steps(32, end) forwards 1.5s;
+  animation: fadeIn 2s ease forwards 1.5s; /* 2s = durée, 1.5s = délai */
 }
 
-@keyframes typing {
-  from { width: 0 }
-  to { width: 22ch; } /* largeur ajustée à la phrase */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
+
 
 /* Bouton raffiné */
 #enter-btn {
