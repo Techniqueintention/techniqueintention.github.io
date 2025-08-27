@@ -1,3 +1,5 @@
+import { setupCanvas, initParticles, stopParticles } from "/assets/js/canvas.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.documentElement;
 
@@ -8,18 +10,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     clearInterval(checkBtn);
 
+    // Fonction d'application du thème
+    function applyTheme(theme) {
+      root.setAttribute("data-theme", theme);
+      localStorage.setItem("site-theme", theme);
+      themeBtn.textContent = theme === "dark" ? "☀️" : "🌙";
+
+      if (theme === "dark") {
+        setupCanvas();
+        initParticles("stars", 120); // 🌌 étoiles animées
+      } else {
+        stopParticles(); // ⛔ enlève les étoiles
+      }
+    }
+
     // Charger le thème sauvegardé
     let savedTheme = localStorage.getItem("site-theme") || "light";
-    root.setAttribute("data-theme", savedTheme);
-    themeBtn.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+    applyTheme(savedTheme);
 
     // Basculer le thème au clic
     themeBtn.addEventListener("click", () => {
       let current = root.getAttribute("data-theme");
       let newTheme = current === "light" ? "dark" : "light";
-      root.setAttribute("data-theme", newTheme);
-      localStorage.setItem("site-theme", newTheme);
-      themeBtn.textContent = newTheme === "dark" ? "☀️" : "🌙";
+      applyTheme(newTheme);
     });
   }, 100);
 });
