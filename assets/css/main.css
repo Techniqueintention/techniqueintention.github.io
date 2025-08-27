@@ -1,14 +1,14 @@
 /* Fichier central - main.css */
 
 /* Reset + styles globaux */
-@import url("base.css");
+@import url("/assets/css/base.css");
 
 /* Layout générique */
-@import url("layout.css");
+@import url("/assets/css/layout.css");
 
 /* Bandeau et navigation */
-@import url("menu.css");
+@import url("/assets/css/menu.css");
 
 /* Thèmes */
-@import url("themes/theme-light.css");
-@import url("themes/theme-dark.css");
+@import url("/assets/css/themes/theme-light.css");
+@import url("assets/css/themes/theme-dark.css");
