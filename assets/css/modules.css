@@ -1,0 +1,8 @@
+/* assets/css/modules.css */
+/* ordre : reset/base → composants → thèmes (les thèmes définissent les variables) */
+@import url("/assets/css/base.css");
+@import url("/assets/css/viewer.css");
+
+/* Thèmes : on en charge 2, mais l’activation se fait via data-theme sur <html> */
+@import url("/assets/css/themes/theme-light.css");
+@import url("/assets/css/themes/theme-dark.css");
