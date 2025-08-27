@@ -1,11 +1,18 @@
-/* assets/js/inject-footer.js */
+// Injecte /partials/footer.html dans #footer-placeholder
+(async () => {
+  const host = document.getElementById('footer-placeholder');
+  if (!host) return;
 
-(async function(){
-  const el = document.getElementById('site-footer');
-  if (!el) return;
-  const url = el.dataset.partial;
-  try{
-    const html = await (await fetch(url, {cache:'no-store'})).text();
-    el.innerHTML = html;
-  }catch(e){ el.textContent = ''; }
+  try {
+    const res = await fetch('/partials/footer.html', { cache: 'no-store' });
+    if (!res.ok) {
+      console.error('Footer partial not found:', res.status);
+      host.innerHTML = '';
+      return;
+    }
+    host.innerHTML = await res.text();
+  } catch (e) {
+    console.error('Footer inject error:', e);
+    host.innerHTML = '';
+  }
 })();
