@@ -1,102 +1,57 @@
-/* Bandeau header */
+/* Bandeau */
 .site-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.8rem 2rem;
-  background: var(--header-bg, #fafafa);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 1rem 2rem;
+  background: var(--header-bg, rgba(255,255,255,0.9));
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
+/* Titre */
 .site-title a {
-  font-size: 1.3rem;
-  font-weight: bold;
+  font-family: "Cinzel", serif;
+  font-size: 1.6rem;
+  font-weight: 700;
   color: var(--text-color, #222);
   text-decoration: none;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
 }
 
+.site-title a:hover {
+  color: #8a6df1; /* violet lumineux en hover */
+}
+
+/* Menu */
 .menu-primary {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .menu-primary a {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.1rem;
+  color: var(--text-color, #333);
   text-decoration: none;
-  color: var(--text-color, #222);
-  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
 
+/* Effet hover + actif */
 .menu-primary a:hover {
-  text-decoration: underline;
+  background: rgba(138,109,241,0.15);
+  color: #8a6df1;
+  box-shadow: 0 0 10px rgba(138,109,241,0.4);
 }
 
-/* Switch thème à droite */
-.menu-switch {
-  display: flex;
-  align-items: center;
-}
-
-/* Switch thème */
-.switch {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.switch input {
-  display: none; /* cache le vrai checkbox */
-}
-
-.switch .slider {
-  width: 40px;
-  height: 20px;
-  background: #ccc;
-  border-radius: 20px;
-  position: relative;
-  transition: background 0.3s ease;
-  margin: 0 8px;
-}
-
-.switch .slider::before {
-  content: "";
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 16px;
-  height: 16px;
-  background: white;
-  border-radius: 50%;
-  transition: transform 0.3s ease;
-}
-
-/* Soleil et lune */
-.switch .icon {
-  width: 18px;
-  height: 18px;
-  fill: var(--text-color, #222);
-  transition: opacity 0.3s ease;
-}
-
-.switch .moon {
-  opacity: 0;
-}
-
-.switch input:checked ~ .slider {
-  background: #444;
-}
-
-.switch input:checked ~ .slider::before {
-  transform: translateX(20px);
-}
-
-.switch input:checked ~ .moon {
-  opacity: 1;
-}
-
-.switch input:checked ~ .sun {
-  opacity: 0;
+.menu-primary a.active {
+  background: rgba(138,109,241,0.25);
+  color: #8a6df1;
+  font-weight: 600;
+  box-shadow: inset 0 0 8px rgba(138,109,241,0.6);
 }
