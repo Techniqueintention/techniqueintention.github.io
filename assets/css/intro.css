@@ -46,7 +46,7 @@ body, html {
   text-align: center;
   opacity: 0;
   animation: fadeIn 2s ease forwards;
-  gap: 25px; /* espace entre les éléments */
+  gap: 30px; /* espace entre les éléments */
   transform: translateY(-40px); /* remonte légèrement le bloc */
 }
 
