@@ -1,29 +1,25 @@
-/* Structure générique */
+/* ===============================
+   Layout global
+   =============================== */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Le contenu prend tout l’espace dispo */
 main {
-  min-height: calc(100vh - 120px); /* laisse de la place pour header/footer */
+  flex: 1;
   padding: 2rem;
 }
 
+/* Footer toujours collé au contenu (pas de gris) */
 footer {
   text-align: center;
   padding: 1rem;
   background: transparent !important;
-  color: var(--footer-text, #999);
+  color: #999;
   font-size: 0.8rem;
-}
-
-header {
-  background: var(--header-bg);
-}
-
-body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: var(--bg-color);
-  color: var(--text-color);
-}
-
-main {
-  flex: 1;
 }
