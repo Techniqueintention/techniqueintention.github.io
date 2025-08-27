@@ -1,28 +1,21 @@
-/* assets/js/theme.js */
+const html = document.documentElement;
+const saved = localStorage.getItem('ti_theme') || 'light';
 
-(function(){
-  const link = document.getElementById('theme-link');
-  const body = document.body;
-  const saved = localStorage.getItem('ti_theme') || 'light';
+function ensureStars(){ /* dessin canvas si dark */ }
+function removeStars(){ const c=document.getElementById('ti-starfield'); if(c) c.remove(); }
 
-  // charge la bonne feuille
-  function applyTheme(mode){
-    body.setAttribute('data-theme', mode);
-    link.setAttribute('href', mode === 'dark'
-      ? 'assets/css/theme-dark.css'
-      : 'assets/css/theme-light.css');
-    localStorage.setItem('ti_theme', mode);
-    const sw = document.getElementById('themeSwitch');
-    if (sw) sw.checked = (mode === 'dark');
+function applyTheme(mode){
+  html.setAttribute('data-theme', mode);
+  localStorage.setItem('ti_theme', mode);
+  const sw = document.getElementById('themeSwitch');
+  if (sw) sw.checked = (mode === 'dark');
+  if (mode === 'dark') ensureStars(); else removeStars();
+}
+
+applyTheme(saved);
+
+document.addEventListener('change', (e)=>{
+  if (e.target?.id === 'themeSwitch') {
+    applyTheme(e.target.checked ? 'dark' : 'light');
   }
-
-  // init
-  applyTheme(saved);
-
-  // écouteur switch
-  document.addEventListener('change', (e)=>{
-    if (e.target && e.target.id === 'themeSwitch') {
-      applyTheme(e.target.checked ? 'dark' : 'light');
-    }
-  });
-})();
+});
