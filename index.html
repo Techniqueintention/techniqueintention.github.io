@@ -1,41 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sanctuaire Intérieur – Accueil</title>
-  <meta name="description" content="Un espace pour ralentir, ressentir et se reconnecter – sanctuaire intérieur." />
-  <link rel="stylesheet" href="assets/css/themes/theme-celeste-v4.css">
-  <link rel="stylesheet" href="assets/css/menu-responsive.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TECHNIQUE INTENTION – Introduction</title>
+  <link rel="preload" href="assets/css/base.css" as="style">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/theme-light.css" id="theme-link">
+  <script defer src="assets/js/intro-gate.js"></script>
+  <style>
+    /* décor doux : pluie de petites lumières */
+    .intro-wrap{min-height:100dvh;display:grid;place-items:center;position:relative;overflow:hidden}
+    .intro{text-align:center;z-index:1}
+    .ti-title{font-size:clamp(28px,5vw,56px);letter-spacing:.08em}
+    .ti-sub{opacity:.7;margin-top:.5rem}
+    .ti-enter{margin-top:2rem;padding:.8rem 1.2rem;border-radius:999px;border:1px solid var(--line);
+      background:var(--card);backdrop-filter:saturate(1.2) blur(2px)}
+    .ti-enter:hover{transform:translateY(-1px)}
+    .spark{position:absolute;top:-10vh;width:2px;height:2px;background:var(--accent);
+      box-shadow:0 0 6px var(--accent);border-radius:2px;animation:fall linear infinite}
+    @keyframes fall{to{transform:translateY(120vh)}}
+  </style>
 </head>
-<body class="theme-celeste-v4">
-
-    <!-- Menu injecté dynamiquement -->
-  <script src="assets/js/inject-menu.js" defer></script>
-
-  <!-- Zone des étoiles animées -->
-  <div class="etoiles-container">
-    <canvas id="etoiles-canvas"></canvas>
+<body data-theme="light">
+  <div class="intro-wrap">
+    <div class="intro">
+      <h1 class="ti-title">TECHNIQUE&nbsp;INTENTION</h1>
+      <p class="ti-sub">message d'introduction</p>
+      <button class="ti-enter" id="enterBtn">Entrer</button>
+    </div>
+    <!-- petites lumières générées en JS -->
   </div>
 
-  <!-- Contenu principal -->
-  <main style="position: relative; z-index: 1; padding: 4rem 2rem; max-width: 800px; margin: auto; text-align: center;">
-    <h1>Créer son sanctuaire intérieur</h1>
-    <p>
-      Bienvenue dans un espace hors du temps,  
-      un lieu pour ralentir, ressentir, et se reconnecter.  
-      Ici commence un chemin doux, fait de lumière, de silence,  
-      et d'intentions posées comme des étoiles dans l'obscurité.
-    </p>
-    <p>
-      Que ce site soit un espace de respiration,  
-      un carnet d'exploration spirituelle,  
-      un sanctuaire pour accueillir la paix en soi.
-    </p>
-  </main>
-
-  <!-- Scripts -->
-  <script src="assets/js/theme-celeste.js" defer></script>
-
+  <script>
+    // petites lumières
+    const wrap = document.querySelector('.intro-wrap');
+    for(let i=0;i<60;i++){
+      const s=document.createElement('div'); s.className='spark';
+      s.style.left=Math.random()*100+'%';
+      s.style.animationDuration=(6+Math.random()*6)+'s';
+      s.style.animationDelay=(-Math.random()*6)+'s';
+      s.style.opacity=0.5+Math.random()*0.5;
+      wrap.appendChild(s);
+    }
+    // entrer
+    document.getElementById('enterBtn').addEventListener('click', ()=>{
+      localStorage.setItem('ti_seen_intro','1');
+      location.href='home.html';
+    });
+  </script>
 </body>
 </html>
