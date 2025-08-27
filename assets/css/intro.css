@@ -1,58 +1,28 @@
-/* Reset minimal */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body, html {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  font-family: "Cinzel", serif;
-  background: linear-gradient(180deg, #dcd2f0, #c8b7e6); /* violet/gris clair */
-  background-size: cover;
-  color: #fff;
-}
-
-/* Canvas étoiles */
-#stars-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  background: transparent;
-}
-
-/* Contenu centré */
+/* Contenu centré avec plus d’air */
 #intro-content {
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start; /* on aligne vers le haut */
   align-items: center;
   height: 100%;
   text-align: center;
   opacity: 0;
   animation: fadeIn 2s ease forwards;
-  padding: 2rem;
-  gap: 40px; /* espace entre titre / sous-titre / bouton */
+  padding-top: 15vh; /* espace pour remonter */
+  gap: 60px; /* espace plus large entre éléments */
 }
 
 /* Titre */
 #intro-logo {
-  font-size: 3rem;
+  font-size: 3.2rem;
   font-weight: 600;
-  color: #fdfdfd; /* blanc cassé */
+  color: #ffffff;
   text-shadow:
-    1px 1px 2px rgba(0, 0, 0, 0.25),
-    0 2px 6px rgba(0, 0, 0, 0.2);
-  opacity: 0;
-  transform: translateY(-20px);
-  animation: slideFadeIn 2s ease forwards 0.5s;
+    1px 1px 3px rgba(0, 0, 0, 0.25),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 30px; /* plus d’espace */
 }
 
 /* Sous-titre */
@@ -60,37 +30,33 @@ body, html {
   font-size: 1.2rem;
   max-width: 650px;
   line-height: 1.6;
-  color: #f3effc;
-  opacity: 0.9;
-  animation: fadeIn 2s ease forwards 1.5s;
+  color: #f6f2ff;
+  opacity: 0.95;
+  margin-bottom: 40px;
 }
 
-/* Bouton */
+/* Bouton raffiné */
 #enter-btn {
-  padding: 12px 32px;
-  border: none;
-  border-radius: 25px;
-  font-size: 1rem;
+  padding: 14px 36px;
+  border-radius: 30px;
+  font-size: 1.05rem;
+  font-family: "Playfair Display", serif; /* police élégante */
+  font-weight: 500;
+  letter-spacing: 1px;
   cursor: pointer;
-  background: #8f7cc5; /* violet doux */
-  color: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-  transition: background 0.3s, transform 0.2s;
-  opacity: 0;
-  animation: fadeIn 2s ease forwards 2.5s;
+  background: #8f7cc5;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 
+    0 2px 6px rgba(0,0,0,0.25),
+    inset 0 1px 2px rgba(255,255,255,0.2);
+  transition: all 0.3s ease;
 }
 
 #enter-btn:hover {
   background: #7a69ad;
-  transform: scale(1.05);
-}
-
-/* Animations */
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
-
-@keyframes slideFadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 
+    0 4px 10px rgba(0,0,0,0.3),
+    inset 0 1px 2px rgba(255,255,255,0.3);
 }
