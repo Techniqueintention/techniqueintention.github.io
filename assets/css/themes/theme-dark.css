@@ -1,15 +1,58 @@
+/* ===============================
+   Thème sombre - Nuit étoilée
+   =============================== */
+
 :root[data-theme="dark"] {
-  --bg-color: #0d1b2a;
-  --text-color: #f0f0f0;
-  --link-color: #8ecae6;
-  --header-bg: rgba(0, 0, 0, 0.6);
+  --bg-color: radial-gradient(ellipse at bottom, #0a0f23 0%, #000000 100%);
+  --text-color: #f5f5f5;
+  --link-color: #9d4edd;   /* violet lumineux */
+  --accent-color: #ffb703; /* jaune étoile */
+  --header-bg: rgba(0, 0, 20, 0.6);
+  --footer-bg: rgba(0, 0, 20, 0.6);
 }
 
 [data-theme="dark"] body {
-  background: radial-gradient(ellipse at bottom, #0d1b2a, #000);
+  background: var(--bg-color);
   color: var(--text-color);
+  overflow-x: hidden;
 }
 
+/* Canvas des étoiles (couvrant toute la page) */
+[data-theme="dark"] #theme-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* Header & footer translucides */
+[data-theme="dark"] header,
+[data-theme="dark"] footer {
+  background: var(--header-bg);
+  color: var(--text-color);
+  backdrop-filter: blur(6px);
+}
+
+/* Liens */
 [data-theme="dark"] a {
   color: var(--link-color);
+  transition: color 0.3s ease;
+}
+
+[data-theme="dark"] a:hover {
+  color: var(--accent-color);
+  text-shadow: 0 0 6px var(--accent-color);
+}
+
+/* Bouton thème */
+[data-theme="dark"] #theme-btn {
+  font-size: 1.3rem;
+  color: var(--text-color);
+  transition: transform 0.2s ease, text-shadow 0.3s ease;
+}
+
+[data-theme="dark"] #theme-btn:hover {
+  transform: scale(1.2);
+  text-shadow: 0 0 8px var(--accent-color);
 }
