@@ -1,7 +1,3 @@
-/* ===============================
-   Bandeau + Menu
-   =============================== */
-
 .site-header {
   display: flex;
   align-items: center;
@@ -23,7 +19,7 @@
   text-decoration: none;
 }
 
-/* Menu centré */
+/* Menu */
 .menu-primary {
   display: flex;
   gap: 1.5rem;
@@ -44,13 +40,7 @@
   color: #8a6df1;
 }
 
-.menu-primary a.active {
-  background: rgba(138,109,241,0.2);
-  color: #8a6df1;
-  font-weight: 600;
-}
-
-/* Switch simple */
+/* Switch simple texte NB */
 #themeToggle button {
   background: none;
   border: none;
@@ -59,7 +49,6 @@
   color: var(--text-color, #222);
   transition: transform 0.2s ease;
 }
-
 #themeToggle button:hover {
   transform: scale(1.2);
 }
