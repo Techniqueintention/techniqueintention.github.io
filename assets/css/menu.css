@@ -29,29 +29,26 @@
 /* Menu */
 .menu-primary {
   display: flex;
-  gap: 2rem;
+  gap: 1.2rem; /* réduit l’espacement */
 }
 
 .menu-primary a {
   font-family: "Poppins", sans-serif;
-  font-size: 1.1rem;
+  font-size: 0.95rem; /* plus petit */
   color: var(--text-color, #333);
   text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  transition: all 0.3s ease;
+  padding: 0.3rem 0.6rem; /* réduit les blocs */
+  border-radius: 6px;
+  transition: all 0.2s ease;
 }
 
 /* Effet hover + actif */
 .menu-primary a:hover {
-  background: rgba(138,109,241,0.15);
+  background: rgba(138,109,241,0.12);
   color: #8a6df1;
-  box-shadow: 0 0 10px rgba(138,109,241,0.4);
 }
 
 .menu-primary a.active {
   background: rgba(138,109,241,0.25);
-  color: #8a6df1;
   font-weight: 600;
-  box-shadow: inset 0 0 8px rgba(138,109,241,0.6);
 }
