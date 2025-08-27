@@ -1,0 +1,12 @@
+/* Structure générique */
+main {
+  min-height: calc(100vh - 120px); /* laisse de la place pour header/footer */
+  padding: 2rem;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: var(--footer-bg, #eee);
+  color: var(--footer-text, #333);
+}
