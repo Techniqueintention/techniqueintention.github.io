@@ -1,24 +1,19 @@
-// Gestion du switch clair/sombre
 window.addEventListener("DOMContentLoaded", () => {
-  // Thème par défaut : light
+  const themeBtn = document.getElementById("theme-btn");
+
+  // Thème initial
   let savedTheme = localStorage.getItem("tiTheme") || "light";
   document.documentElement.setAttribute("data-theme", savedTheme);
+  themeBtn.textContent = savedTheme === "dark" ? "☀︎" : "☾";
 
-  // Quand le menu est injecté, on active le switch
-  const observer = new MutationObserver(() => {
-    const themeToggle = document.getElementById("themeSwitch");
-    if (themeToggle) {
-      themeToggle.checked = savedTheme === "dark";
+  // Clic
+  themeBtn.addEventListener("click", () => {
+    let current = document.documentElement.getAttribute("data-theme");
+    let newTheme = current === "light" ? "dark" : "light";
 
-      themeToggle.addEventListener("change", () => {
-        const newTheme = themeToggle.checked ? "dark" : "light";
-        document.documentElement.setAttribute("data-theme", newTheme);
-        localStorage.setItem("tiTheme", newTheme);
-      });
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("tiTheme", newTheme);
 
-      observer.disconnect(); // stop l’observation une fois trouvé
-    }
+    themeBtn.textContent = newTheme === "dark" ? "☀︎" : "☾";
   });
-
-  observer.observe(document.body, { childList: true, subtree: true });
 });
