@@ -1,18 +1,15 @@
-/* assets/js/intro-gate.js – redirige intro vers home si déjà vu */
-
-// /assets/js/intro-gate.js
-// S'exécute UNIQUEMENT sur la page d'intro
+// intro-gate.js — MINIMAL
 (function () {
   const isIntro = /\/index\.html$|^\/$/.test(location.pathname);
-  if (!isIntro) return; // ne fait rien ailleurs
+  if (!isIntro) return;
 
-  // Bouton "Entrer" : on pose le flag et on va sur Home
+  // ❌ supprime/commande toute redirection auto ici
+
+  // ✅ bouton "Entrer" uniquement
   document.addEventListener('click', (e) => {
     const btn = e.target.closest('#enterBtn');
     if (!btn) return;
     try { localStorage.setItem('ti_seen_intro', '1'); } catch (_) {}
     location.href = '/home.html';
   });
-
-  // 👉 Aucune redirection automatique au chargement.
 })();
