@@ -1,10 +1,14 @@
 // Gestion du switch thème
 window.addEventListener("DOMContentLoaded", () => {
   const themeToggle = document.getElementById("themeSwitch");
-  const currentTheme = localStorage.getItem("tiTheme") || "light";
-  document.documentElement.setAttribute("data-theme", currentTheme);
+  if (!themeToggle) return; // évite l'erreur quand pas de switch
 
-  if (currentTheme === "dark") themeToggle.checked = true;
+  // Vérifie si un thème est sauvegardé
+  const savedTheme = localStorage.getItem("tiTheme") || "light";
+  document.documentElement.setAttribute("data-theme", savedTheme);
+
+  // Active la position du switch
+  themeToggle.checked = savedTheme === "dark";
 
   themeToggle.addEventListener("change", () => {
     const newTheme = themeToggle.checked ? "dark" : "light";
