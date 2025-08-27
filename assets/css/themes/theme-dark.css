@@ -1,0 +1,13 @@
+/* assets/css/theme-dark.css (nuit étoilée) */
+
+:root{
+  --bg: #0b0d14;              /* nuit profonde */
+  --text: #e9ecf4;
+  --muted: #a2a9bd;
+  --line: #23283a;
+  --card: rgba(22,26,38,.65);
+  --accent: #7aa2ff;          /* lumière froide */
+  --accent-2: #f2a7d8;        /* reflet rosé si besoin */
+}
+
+/* optionnel : petites "étoiles" en arrière-plan si tu veux plus tard */
