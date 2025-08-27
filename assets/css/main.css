@@ -1,0 +1,14 @@
+/* Fichier central - main.css */
+
+/* Reset + styles globaux */
+@import url("base.css");
+
+/* Layout générique */
+@import url("layout.css");
+
+/* Bandeau et navigation */
+@import url("menu.css");
+
+/* Thèmes */
+@import url("themes/theme-light.css");
+@import url("themes/theme-dark.css");
