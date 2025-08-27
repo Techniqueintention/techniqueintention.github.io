@@ -10,20 +10,12 @@ body, html {
   height: 100%;
   overflow: hidden;
   font-family: "Cinzel", serif;
-  background: linear-gradient(-45deg, #e6c6f7, #f2c6e6, #dec6f7);
-  background-size: 300% 300%;
-  animation: gradientShift 18s ease infinite;
-  color: #3a004d;
+  background: linear-gradient(180deg, #e8d8f7, #f2e6f9);
+  background-size: cover;
+  color: #2e003d;
 }
 
-/* Animation fond dégradé subtil */
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Canvas en arrière-plan */
+/* Canvas étoiles */
 #stars-canvas {
   position: fixed;
   top: 0;
@@ -46,18 +38,18 @@ body, html {
   text-align: center;
   opacity: 0;
   animation: fadeIn 2s ease forwards;
-  gap: 30px; /* espace entre les éléments */
-  transform: translateY(-40px); /* remonte légèrement le bloc */
+  padding: 2rem;
 }
 
-/* Titre style gravé/embossé */
+/* Titre sobre et élégant */
 #intro-logo {
-  font-size: 3.2rem;
-  font-weight: 700;
-  color: #f5edff;
+  font-size: 3rem;
+  font-weight: 600;
+  color: #f9f6ff;
   text-shadow:
-    1px 1px 3px rgba(60, 0, 90, 0.3),
-    -1px -1px 3px rgba(255, 255, 255, 0.4);
+    1px 1px 3px rgba(50, 0, 80, 0.25),
+    -1px -1px 2px rgba(255, 255, 255, 0.5);
+  margin-bottom: 40px;
   opacity: 0;
   transform: translateY(-20px);
   animation: slideFadeIn 2s ease forwards 0.5s;
@@ -66,20 +58,22 @@ body, html {
 /* Sous-titre */
 #intro-subtitle {
   font-size: 1.2rem;
-  color: #fdf7ff;
-  opacity: 0.9;
-  text-shadow: 0 1px 2px rgba(80, 0, 80, 0.25);
+  max-width: 600px;
+  line-height: 1.6;
+  color: #fdfaff;
+  opacity: 0.85;
+  margin-bottom: 50px;
   animation: fadeIn 2s ease forwards 1.5s;
 }
 
-/* Bouton sobre et pastel */
+/* Bouton plus sobre */
 #enter-btn {
   padding: 12px 32px;
   border: none;
   border-radius: 25px;
   font-size: 1rem;
   cursor: pointer;
-  background: #cfa6f7;
+  background: #bda7e6;
   color: #2b003a;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   transition: background 0.3s, transform 0.2s;
@@ -88,11 +82,11 @@ body, html {
 }
 
 #enter-btn:hover {
-  background: #b88ce6;
+  background: #a68ed1;
   transform: scale(1.05);
 }
 
-/* Animations fade */
+/* Animations */
 @keyframes fadeIn {
   to { opacity: 1; }
 }
