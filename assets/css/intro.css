@@ -11,13 +11,24 @@ body, html {
   overflow: hidden;
   font-family: "Cinzel", serif;
   background: 
-  radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.35), transparent 60%),
-  linear-gradient(180deg, #dcd2f0, #c8b7e6);
+    radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.3), transparent 60%),
+    linear-gradient(180deg, #dcd2f0, #c8b7e6); /* halo + fond doux */
   background-size: 150% 150%, cover;
   animation: haloPulse 12s ease-in-out infinite;
   color: #fff;
 }
 
+/* Animation halo doux */
+@keyframes haloPulse {
+  0%, 100% {
+    background-size: 140% 140%, cover;
+    background-position: 50% 35%, center;
+  }
+  50% {
+    background-size: 160% 160%, cover;
+    background-position: 50% 38%, center;
+  }
+}
 
 /* Canvas étoiles */
 #stars-canvas {
@@ -36,14 +47,14 @@ body, html {
   z-index: 1;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* alignement haut */
+  justify-content: flex-start;
   align-items: center;
   height: 100%;
   text-align: center;
   opacity: 0;
   animation: fadeIn 2s ease forwards;
-  padding-top: 15vh; /* remonte le bloc */
-  gap: 60px; /* espace large entre titre / sous-titre / bouton */
+  padding-top: 15vh;
+  gap: 60px;
 }
 
 /* Titre */
@@ -65,16 +76,17 @@ body, html {
   font-family: 'Great Vibes', cursive;
   font-size: 1.8rem;
   color: #ffffff;
-  opacity: 0;
+  opacity: 1;
   white-space: nowrap;
   overflow: hidden;
-  border-right: 2px solid rgba(255,255,255,0.75); /* curseur */
+  border-right: 2px solid rgba(255,255,255,0.75);
   width: 0;
+  min-width: 1px; /* évite bug invisible */
   margin-bottom: 40px;
-  animation: typing 4s steps(40, end) forwards 1.5s, blink 0.7s step-end infinite alternate 1.5s;
+  animation: typing 4s steps(35, end) forwards 1.5s, blink 0.7s step-end infinite 1.5s;
 }
 
-/* Effet machine à écrire */
+/* Effet écriture progressive */
 @keyframes typing {
   from { width: 0 }
   to { width: 100% }
@@ -91,7 +103,7 @@ body, html {
   padding: 14px 36px;
   border-radius: 30px;
   font-size: 1.05rem;
-  font-family: "Playfair Display", serif; /* police élégante */
+  font-family: "Playfair Display", serif;
   font-weight: 500;
   letter-spacing: 1px;
   cursor: pointer;
@@ -114,7 +126,7 @@ body, html {
     inset 0 1px 2px rgba(255,255,255,0.3);
 }
 
-/* Animations */
+/* Animations fade */
 @keyframes fadeIn {
   to { opacity: 1; }
 }
@@ -122,15 +134,4 @@ body, html {
 @keyframes slideFadeIn {
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes haloPulse {
-  0%, 100% {
-    background-size: 140% 140%, cover;
-    background-position: 50% 40%, center;
-  }
-  50% {
-    background-size: 160% 160%, cover;
-    background-position: 50% 42%, center;
-  }
 }
