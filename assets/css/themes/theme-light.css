@@ -1,13 +1,14 @@
 /* ===============================
-   Thème clair - doux violet/rose
+   Thème clair - amélioré violet/rose
    =============================== */
 
 :root[data-theme="light"] {
-  --bg-color: linear-gradient(to bottom, #f3edf8, #e6d6f4);
-  --text-color: #222;
-  --link-color: #5a3d7a;
-  --header-bg: rgba(255, 255, 255, 0.7);
-  --footer-bg: transparent;
+  --bg-color: linear-gradient(to bottom, #fefefe, #f3eaff); /* plus lumineux */
+  --text-color: #1e1e1e;     /* gris anthracite pour lisibilité */
+  --link-color: #6a4c93;     /* violet plus profond */
+  --accent-color: #e07a5f;   /* accent orange doux */
+  --header-bg: rgba(255, 255, 255, 0.85);
+  --footer-bg: rgba(245, 240, 255, 0.8);
 }
 
 [data-theme="light"] body {
@@ -23,8 +24,19 @@
 
 [data-theme="light"] a {
   color: var(--link-color);
+  transition: color 0.3s ease;
+}
+
+[data-theme="light"] a:hover {
+  color: var(--accent-color); /* effet accent au survol */
 }
 
 [data-theme="light"] #theme-btn {
   font-size: 1.3rem;
+  transition: transform 0.2s ease, text-shadow 0.3s ease;
+}
+
+[data-theme="light"] #theme-btn:hover {
+  transform: scale(1.2);
+  text-shadow: 0 0 6px var(--accent-color);
 }
