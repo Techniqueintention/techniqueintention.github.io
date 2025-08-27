@@ -1,6 +1,32 @@
+/* Theme clair - style intro (violet pâle lumineux + étoiles) */
 :root[data-theme="light"] {
-  --bg-color: #f7f5fb;
+  --bg-color: linear-gradient(180deg, #e8dff5 0%, #d7c9f0 100%);
   --text-color: #222;
-  --header-bg: #fff;
-  --footer-bg: #eee;
+  --header-bg: rgba(255, 255, 255, 0.85);
+  --link-color: #5c4db1;
+  --link-hover: #8a6df1;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-family: "Poppins", sans-serif;
+  transition: background 0.5s ease, color 0.3s ease;
+}
+
+/* Effet étoiles comme sur l’intro */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: transparent url("/assets/img/fond-celeste-clair.png") repeat;
+  background-size: cover;
+  opacity: 0.4;
+  pointer-events: none;
+  animation: starsmove 40s linear infinite;
+}
+
+@keyframes starsmove {
+  from { background-position: 0 0; }
+  to { background-position: -1000px 1000px; }
 }
