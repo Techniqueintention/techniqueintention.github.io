@@ -79,17 +79,17 @@ body, html {
   opacity: 1;
   white-space: nowrap;
   overflow: hidden;
-  border-right: 2px solid rgba(255,255,255,0.75);
+  border-right: 2px solid rgba(255,255,255,0.75); /* curseur */
   width: 0;
-  min-width: 1px; /* évite bug invisible */
   margin-bottom: 40px;
-  animation: typing 4s steps(35, end) forwards 1.5s, blink 0.7s step-end infinite 1.5s;
+  /* 36 caractères → steps(36), durée 7s */
+  animation: typing 7s steps(36, end) forwards 1.5s,
+             blink 0.7s step-end infinite 1.5s;
 }
 
-/* Effet écriture progressive */
 @keyframes typing {
   from { width: 0 }
-  to { width: 100% }
+  to { width: 22ch } /* largeur calculée en “caractères” */
 }
 
 /* Clignotement curseur */
