@@ -11,8 +11,8 @@ body, html {
   overflow: hidden;
   font-family: "Cinzel", serif;
   background: 
-    radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.25), transparent 70%),
-    linear-gradient(180deg, #dcd2f0, #c8b7e6);
+  radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.35), transparent 60%),
+  linear-gradient(180deg, #dcd2f0, #c8b7e6);
   background-size: 150% 150%, cover;
   animation: haloPulse 12s ease-in-out infinite;
   color: #fff;
