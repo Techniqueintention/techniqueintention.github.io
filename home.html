@@ -5,40 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TECHNIQUE INTENTION – Accueil</title>
 
-      <!-- modules imports -->
+  <!-- imports centraux -->
   <link rel="stylesheet" href="/assets/css/modules.css?v=1">
   <script type="module" src="/assets/js/modules.js?v=1"></script>
-
 </head>
-<body data-theme="light">
-  <header class="topbar">
-    <a class="brand" href="index.html" title="Revoir l’intro">TECHNIQUE&nbsp;INTENTION</a>
-
-    <nav id="top-menu" class="topmenu" data-partial="partials/menu.html"></nav>
+<body>
+  <!-- 🧠 Menu principal (injecté dynamiquement) -->
+  <header id="menu-placeholder"></header>
 
   <main class="shell">
-    <!-- colonne catégories -->
-    <aside class="side-menu" id="sideMenu" aria-label="Navigation secondaire"></aside>
-
-    <!-- visualiseur -->
-    <section id="viewer" class="viewer" aria-live="polite">
+    <!-- Accueil : pas de viewer -->
+    <section class="viewer" aria-live="polite">
       <article class="welcome">
         <h1>Bienvenue</h1>
         <p>
-      Bienvenue dans un espace hors du temps,<br>  
-      un lieu pour ralentir, ressentir, et se reconnecter.  <br>
-      Ici commence un chemin doux, fait de lumière, de silence,  <br>
-      et d'intentions posées comme des étoiles dans l'obscurité.
-    </p>
-    <p>
-      Que ce site soit un espace de respiration,  <br>
-      un carnet d'exploration spirituelle,  <br>
-      un sanctuaire pour accueillir la paix en soi.
-    </p>
+          Bienvenue dans un espace hors du temps,<br>  
+          un lieu pour ralentir, ressentir, et se reconnecter.<br>
+          Ici commence un chemin doux, fait de lumière, de silence,<br>
+          et d'intentions posées comme des étoiles dans l'obscurité.
+        </p>
+        <p>
+          Que ce site soit un espace de respiration,<br>
+          un carnet d'exploration spirituelle,<br>
+          un sanctuaire pour accueillir la paix en soi.
+        </p>
       </article>
     </section>
   </main>
 
-  <footer id="site-footer" data-partial="partials/footer.html"></footer>
+  <footer id="site-footer" data-partial="/partials/footer.html"></footer>
 </body>
 </html>
