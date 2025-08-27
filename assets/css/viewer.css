@@ -1,0 +1,38 @@
+/* bloc menu (liens du bandeau) */
+.menu-primary {
+  display: flex; gap: 1rem; justify-content: center; align-items: center;
+}
+
+/* conteneur du switch sous le menu */
+.menu-switch {
+  display: flex; justify-content: center; margin-top: .35rem;
+}
+
+/* switch discret */
+.menu-switch .switch {
+  --w: 50px; --h: 26px;
+  position: relative; display: inline-flex; align-items: center; gap: 6px;
+  padding: 0 6px; width: var(--w); height: var(--h); border-radius: 999px;
+  background: var(--line); cursor: pointer; user-select: none;
+}
+.menu-switch input { display: none; }
+.menu-switch .icon { width: 14px; height: 14px; opacity: .6; }
+.menu-switch .sun { order: 0; }
+.menu-switch .moon { order: 3; opacity: .25; }
+
+.menu-switch .slider {
+  position: absolute; left: 3px; top: 3px; width: 20px; height: 20px;
+  border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.15);
+  transition: transform .25s ease;
+}
+
+/* état dark */
+.menu-switch input:checked + .icon.sun ~ .slider { transform: translateX(24px); }
+.menu-switch input:checked ~ .icon.moon { opacity: 1; }
+.menu-switch input:checked ~ .icon.sun  { opacity: .25; }
+
+/* petit resserrage sur mobile */
+@media (max-width: 640px){
+  .menu-primary { flex-wrap: wrap; gap: .6rem; }
+  .menu-switch { margin-top: .25rem; }
+}
