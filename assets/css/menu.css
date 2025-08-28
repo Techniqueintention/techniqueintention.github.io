@@ -1,64 +1,62 @@
-.site-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.8rem 2rem;
-  background: var(--header-bg, rgba(255,255,255,0.8));
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+/* ===== Bandeau / menu principal ===== */
+
+:root{
+  --accent: #8a6df1;
+  --accent-bg: color-mix(in oklab, var(--accent) 16%, transparent);
 }
 
-/* Titre */
-.site-title a {
-  font-family: "Cinzel", serif;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--text-color, #222);
-  text-decoration: none; /* pas de soulignement */
+.site-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:.8rem 2rem;
+  background: var(--header-bg, rgba(255,255,255,.8));
+  box-shadow:0 2px 5px rgba(0,0,0,.08);
+  position:sticky; top:0; z-index:100;
 }
 
-.site-title a:hover {
-  opacity: 0.8; /* effet discret */
+/* Titre à gauche cliquable, sans soulignement */
+.site-title a{
+  font-family:"Cinzel",serif;
+  font-size:1.4rem; font-weight:700;
+  color:var(--text-color,#222); text-decoration:none;
 }
+.site-title a:hover{ opacity:.8; }
 
 /* Menu principal */
-.menu-primary {
-  display: flex;
-  gap: 1.5rem;
+.menu-primary{ display:flex; gap:1.4rem; }
+
+.menu-primary a{
+  font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  font-size:1rem; font-weight:500;
+  text-decoration:none; color:var(--text-color,#333);
+  padding:.35rem .7rem; border-radius:8px;
+  transition:background .2s ease, color .2s ease, box-shadow .2s ease, transform .08s ease;
+  outline:none;
 }
 
-.menu-primary a {
-  font-family: "Poppins", sans-serif;
-  font-size: 1rem;
-  text-decoration: none;
-  color: var(--text-color, #333);
-  padding: 0.3rem 0.6rem;
-  border-radius: 6px;
-  transition: background 0.2s ease, color 0.2s ease;
+/* Hover / focus */
+.menu-primary a:hover,
+.menu-primary a:focus-visible{
+  background: var(--accent-bg);
+  color: var(--accent);
 }
 
-.menu-primary a:hover {
-  background: rgba(138,109,241,0.12);
-  color: #8a6df1;
+/* ÉTAT ACTIF (page en cours) */
+.menu-primary a.active{
+  color: var(--accent);
+  background: var(--accent-bg);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 38%, transparent) inset;
+  font-weight:600;
 }
 
-/* Switch simple (☀️/🌙) */
-.menu-switch {
-  display: flex;
-  align-items: center;
+/* Commutateur thème */
+.menu-switch{ display:flex; align-items:center; }
+#theme-btn{
+  background:none; border:none; font-size:1.3rem; cursor:pointer;
+  color:var(--text-color,#222); transition:transform .2s ease;
 }
+#theme-btn:hover{ transform:scale(1.2); }
 
-#theme-btn {
-  background: none;
-  border: none;
-  font-size: 1.3rem;
-  cursor: pointer;
-  color: var(--text-color, #222);
-  transition: transform 0.2s ease;
-}
-
-#theme-btn:hover {
-  transform: scale(1.2);
+/* Mode sombre (si tu as data-theme="dark" sur :root) */
+:root[data-theme="dark"]{
+  --accent-bg: color-mix(in oklab, var(--accent) 22%, transparent);
 }
