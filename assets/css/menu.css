@@ -40,14 +40,16 @@
   color: var(--accent);
 }
 
-/* ÉTAT ACTIF (page en cours) */
+/* État actif du lien */
 .menu-primary a.active,
-.menu-primary a[aria-current="page"]{
+.menu-primary a[aria-current="page"] {
   color: var(--accent);
   background: var(--accent-bg);
   box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 38%, transparent) inset;
-  font-weight:600;
+  font-weight: 600;
+  border-radius: 6px;
 }
+
 
 
 /* Commutateur thème */
