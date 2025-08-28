@@ -7,7 +7,9 @@ import '/assets/js/nav-active.js';      // bandeau menu principal, mise en valeu
 import '/assets/js/viewer.js';                   //viewer blog et son menu
 import '/assets/js/viewer-menu.js';
 
-// plus tard : import "./viewer.js";
+// MOBILE RESPONSIVE
+import '/assets/js/mobile.js';
+
 // etc.
 
 
