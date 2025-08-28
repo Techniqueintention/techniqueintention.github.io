@@ -1,75 +1,94 @@
+/* ===== Viewer : charge un fichier HTML externe dans #article-viewer ===== */
+
 (function(){
   const viewer = document.getElementById('article-viewer');
-  if (!viewer) return;
+  const menu   = document.getElementById('viewer-menu');
+  if (!viewer || !menu) return;
 
-  // insère outils de partage dans l’article courant
-  function injectShareTools(container, articleId){
+  // bouton Partager injecté dans chaque article
+  function injectShareTools(container, url){
     const tools = document.createElement('div');
     tools.id = 'article-tools';
     tools.innerHTML = `
       <button class="btn-share-article" id="btn-share">
-        <span class="icon">🔗</span> Partager
+        <span>🔗</span> Partager
       </button>
     `;
     container.prepend(tools);
-
     const btn = tools.querySelector('#btn-share');
     btn.addEventListener('click', async () => {
-      const url = new URL(window.location.href);
-      url.searchParams.set('a', articleId);
-      const shareUrl = url.toString();
-
+      const shareUrl = withQuery(url);
       if (navigator.share){
-        try {
-          await navigator.share({ title: document.title, url: shareUrl });
-        } catch(_) {}
+        try { await navigator.share({ title: document.title, url: shareUrl }); } catch(_){}
       } else {
         await navigator.clipboard.writeText(shareUrl);
         btn.textContent = 'Lien copié !';
-        setTimeout(() => btn.innerHTML = '<span class="icon">🔗</span> Partager', 1200);
+        setTimeout(()=> btn.innerHTML = '<span>🔗</span> Partager', 1200);
       }
     });
   }
 
-  function setActiveLink(articleId){
-    document.querySelectorAll('#viewer-menu a').forEach(a=>{
-      a.classList.toggle('active', a.dataset.view === articleId);
-    });
+  function withQuery(articlePath){
+    const u = new URL(location.href);
+    u.searchParams.set('a', articlePath);
+    return u.toString();
   }
 
-  function loadArticle(articleId){
-    const tpl = document.getElementById('tpl-' + articleId);
-    if (!tpl){ 
-      viewer.innerHTML = `<p class="erreur">Contenu introuvable.</p>`;
-      return;
+  // charge et rend un article (un fichier .html qui contient <section class="article">)
+  async function loadArticle(articlePath){
+    try{
+      const res = await fetch(articlePath, { cache: "no-cache" });
+      if (!res.ok) throw new Error(res.statusText);
+      const html = await res.text();
+      const dom = new DOMParser().parseFromString(html, 'text/html');
+      const section = dom.querySelector('section.article') || dom.body;
+
+      // injecte dans le viewer
+      viewer.innerHTML = '';
+      // on clone juste le contenu (évite les styles externes)
+      const node = document.createElement('div');
+      node.className = 'article';
+      node.innerHTML = section.innerHTML;
+      viewer.appendChild(node);
+
+      // outils partager
+      injectShareTools(node, articlePath);
+
+      // active le lien de menu
+      setActive(articlePath);
+      // ouvre la catégorie correspondante
+      openGroupFor(articlePath);
+
+      // history + scroll top
+      history.replaceState({}, '', withQuery(articlePath));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }catch(e){
+      viewer.innerHTML = `<p class="erreur">Impossible de charger l’article.</p>`;
     }
-    viewer.innerHTML = '';
-    const node = tpl.content.cloneNode(true);
-    viewer.appendChild(node);
-    injectShareTools(viewer.querySelector('.article') || viewer, articleId);
-    setActiveLink(articleId);
-    window.history.replaceState({}, '', updateQuery(articleId));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    // referme le menu en mobile
-    const menu = document.getElementById('viewer-menu');
-    if (menu && menu.classList.contains('open')) menu.classList.remove('open');
   }
 
-  function updateQuery(a){
-    const url = new URL(location.href);
-    url.searchParams.set('a', a);
-    return url.toString();
+  function setActive(articlePath){
+    menu.querySelectorAll('a[data-viewer], .menu-card[data-viewer]')
+      .forEach(a => a.classList.toggle('active', normalize(a.dataset.viewer) === normalize(articlePath)));
   }
+  function openGroupFor(articlePath){
+    const link = menu.querySelector(`a[data-viewer="${CSS.escape(articlePath)}"]`);
+    if (!link) return;
+    const det = link.closest('details');
+    if (det) det.setAttribute('open','');
+  }
+  const normalize = s => (s || '').replace(/^[.\/]*/,''); // ./intro.html -> intro.html
 
-  // click sur les liens de menu
-  document.addEventListener('click', (e)=>{
-    const a = e.target.closest('#viewer-menu a[data-view]');
+  // clics de menu
+  menu.addEventListener('click', (e)=>{
+    const a = e.target.closest('a[data-viewer], .menu-card[data-viewer]');
     if (!a) return;
     e.preventDefault();
-    loadArticle(a.dataset.view);
+    loadArticle(a.dataset.viewer);
   });
 
-  // deep-link ?a=intro
+  // deep-link ?a=./intro.html
   const param = new URLSearchParams(location.search).get('a');
-  loadArticle(param || 'intro');
+  const start = param ? param : './intro.html';
+  loadArticle(start);
 })();
