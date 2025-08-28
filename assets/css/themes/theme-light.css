@@ -1,24 +1,25 @@
 /* ===============================
-   Thème clair - amélioré violet/rose
+   Thème clair — lavande doux (style intro)
    =============================== */
 
 :root[data-theme="light"] {
-  --bg-color: linear-gradient(to bottom, #fefefe, #f3eaff); /* dégradé lumineux */
-  --text-color: #1e1e1e;     /* gris anthracite lisible */
-  --link-color: #6a4c93;     /* violet profond */
-  --accent-color: #e07a5f;   /* accent orange doux */
-  --header-bg: rgba(255, 255, 255, 0.65); /* translucide */
-  --footer-bg: rgba(245, 240, 255, 0.65); /* translucide */
+  --bg-color: linear-gradient(to bottom, #fefefe, #f3eaff);
+  --text-color: #1e1e1e;
+  --link-color: #6a4c93;
+  --accent-color: #e07a5f;
+  --header-bg: rgba(255, 255, 255, 0.65);
+  --footer-bg: rgba(245, 240, 255, 0.65);
 }
 
+/* Fond + sécurité overflow */
 [data-theme="light"] body {
   background: var(--bg-color);
   color: var(--text-color);
-  overflow-x: hidden; /* évite les débordements horizontaux */
+  overflow-x: hidden;
   min-height: 100%;
 }
 
-/* Header & footer translucides avec léger blur */
+/* Header & footer translucides avec blur */
 [data-theme="light"] header,
 [data-theme="light"] footer {
   background: var(--header-bg);
@@ -30,7 +31,7 @@
 /* Liens */
 [data-theme="light"] a {
   color: var(--link-color);
-  transition: color 0.3s ease;
+  transition: color .3s ease, text-shadow .3s ease;
 }
 
 [data-theme="light"] a:hover {
@@ -41,7 +42,7 @@
 /* Bouton thème */
 [data-theme="light"] #theme-btn {
   font-size: 1.3rem;
-  transition: transform 0.2s ease, text-shadow 0.3s ease;
+  transition: transform .2s ease, text-shadow .3s ease;
 }
 
 [data-theme="light"] #theme-btn:hover {
@@ -49,7 +50,7 @@
   text-shadow: 0 0 6px var(--accent-color);
 }
 
-/* Laisse le dégradé du body visible */
+/* Laisse le dégradé visible : pas de fond sur les wrappers */
 [data-theme="light"] main,
 [data-theme="light"] .home-shell,
 [data-theme="light"] .welcome,
@@ -57,12 +58,11 @@
   background: transparent !important;
 }
 
-/* Neutralise le canvas étoiles en thème clair */
+/* Neutralise le canvas en clair (et évite le décalage de layout) */
 [data-theme="light"] #theme-canvas {
-  position: fixed;   /* on le sort du flux pour éviter de pousser le header */
+  position: fixed;
   inset: 0;
   z-index: -1;
-  opacity: 0;        /* invisible en clair */
+  opacity: 0;              /* invisible en clair */
   pointer-events: none;
 }
-
