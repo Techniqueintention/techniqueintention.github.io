@@ -21,8 +21,10 @@ main {
 
 /* Footer collé au contenu, pas d’espace parasite */
 footer {
+  width:100%;
   text-align: center;
-  padding: 1rem;
+  padding: 1rem 0;
+  margin: 0 auto;
   background: transparent !important;
   color: #999;
   font-size: 0.8rem;
