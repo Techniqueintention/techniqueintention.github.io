@@ -1,0 +1,67 @@
+/* ===============================
+   NOTES / CALLOUTS (style Codex)
+   =============================== */
+
+/* Base */
+.codex-note{
+  position: relative;
+  margin: 1.6rem 0;
+  padding: 1.1rem 1.2rem 1.1rem 1.2rem;
+  border-radius: 12px;
+  background: var(--note-bg, rgba(6,10,24,.75)); /* sombre par défaut */
+  color: var(--note-fg, var(--text-color));
+  line-height: 1.65;
+  border: 1px solid var(--note-border, rgba(255,255,255,.15));
+  box-shadow: 0 10px 26px rgba(0,0,0,.25) inset, 0 6px 20px rgba(0,0,0,.10);
+}
+
+/* Barre lumineuse sur le côté */
+.codex-note::before{
+  content:"";
+  position:absolute;
+  left:-10px; top:12px; bottom:12px;
+  width:6px; border-radius:6px;
+  background: var(--note-accent, #5cf);
+  box-shadow: 0 0 10px var(--note-accent, #5cf), 0 0 24px rgba(92,255,255,.35);
+}
+
+/* Titre (chip) optionnel via data-title */
+.codex-note[data-title]::after{
+  content: attr(data-title);
+  position:absolute;
+  top:-12px; left:12px;
+  padding:.18rem .55rem;
+  font-size:.8rem; font-weight:700; letter-spacing:.25px;
+  color: var(--note-chip-fg, #00121c);
+  background: var(--note-chip-bg, var(--note-accent, #5cf));
+  border-radius: 999px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.25);
+}
+
+/* Contenu */
+.codex-note h4{ margin:.2rem 0 .4rem; font-size:1rem; }
+.codex-note p{ margin: .55rem 0; }
+.codex-note small,.note-small{ font-size:.9em; opacity:.85; }
+
+/* Variantes */
+.note-info   { --note-accent:#5cf; --note-chip-fg:#06223b; }
+.note-tip    { --note-accent:#7dff9e; --note-chip-fg:#062b0f; }
+.note-warn   { --note-accent:#ffb703; --note-chip-fg:#271a00; }
+.note-danger { --note-accent:#ff5d73; --note-chip-fg:#2b0006; }
+
+/* Thème clair : fond plus doux */
+:root[data-theme="light"] .codex-note{
+  --note-bg: rgba(255,255,255,.65);
+  --note-border: rgba(0,0,0,.08);
+  box-shadow: 0 4px 18px rgba(0,0,0,.06);
+}
+:root[data-theme="light"] .codex-note::before{
+  box-shadow: 0 0 8px var(--note-accent), 0 0 16px color-mix(in oklab, var(--note-accent) 40%, transparent);
+}
+
+/* Thème sombre : fond plus dense, texte adouci */
+:root[data-theme="dark"] .codex-note{
+  --note-bg: rgba(4, 10, 22, .85);
+  --note-border: rgba(255,255,255,.12);
+  --note-fg: #dce7ff;
+}
