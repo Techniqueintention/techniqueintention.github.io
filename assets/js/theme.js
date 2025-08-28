@@ -16,13 +16,18 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("site-theme", theme);
       themeBtn.textContent = theme === "dark" ? "☀️" : "🌙";
 
-      if (theme === "dark") {
-        setupCanvas();
-        initParticles("stars", 120); // 🌌 étoiles animées
-      } else {
-        stopParticles(); // ⛔ enlève les étoiles
-      }
-    }
+      // ...dans applyTheme(theme)
+if (theme === "dark") {
+  setupCanvas();
+  initParticles("stars", 140);
+  const c = document.getElementById("theme-canvas");
+  if (c) c.style.opacity = '1';   // <-- rend visible
+} else {
+  stopParticles();
+  const c = document.getElementById("theme-canvas");
+  if (c) c.style.opacity = '0';   // <-- invisible en clair
+}
+
 
     // Charger le thème sauvegardé
     let savedTheme = localStorage.getItem("site-theme") || "light";
