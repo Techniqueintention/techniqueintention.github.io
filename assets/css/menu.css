@@ -41,12 +41,14 @@
 }
 
 /* ÉTAT ACTIF (page en cours) */
-.menu-primary a.active{
+.menu-primary a.active,
+.menu-primary a[aria-current="page"]{
   color: var(--accent);
   background: var(--accent-bg);
   box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 38%, transparent) inset;
   font-weight:600;
 }
+
 
 /* Commutateur thème */
 .menu-switch{ display:flex; align-items:center; }
