@@ -3,31 +3,43 @@
    =============================== */
 
 :root[data-theme="dark"] {
-  /* fond bleu nuit doux (pas noir pur) */
-  --bg-color: radial-gradient(ellipse at 50% 100%, #0b1126 0%, #050917 55%, #040612 100%);
+  /* bleu-nuit plus lumineux, proche Codex */
+  --bg-color: radial-gradient(
+    ellipse at 50% 100%,
+    #0f1b2e 0%,
+    #0b1626 55%,
+    #0a1422 100%
+  );
 
-  /* textes et liens inspirés du thème stellaire */
-  --text-color: #eaf4ff;               /* texte principal doux */
-  --muted-color: #b7cff5;              /* texte secondaire */
-  --link-color: #9dbdff;               /* liens clair bleuté */
-  --accent-color: #77caff;             /* accent / hover bleu ciel */
+  --text-color: #eaf4ff;
+  --muted-color: #c2d6f8;
+  --link-color: #a6c8ff;
+  --accent-color: #7fd1ff;
 
-  /* bandeau et footer translucides bleutés (pas ultra sombres) */
-  --header-bg: rgba(10, 14, 30, 0.55);
-  --footer-bg: rgba(10, 14, 30, 0.55);
+  --header-bg: rgba(12, 18, 34, 0.55);
+  --footer-bg: rgba(12, 18, 34, 0.55);
 
-  /* hover du menu (léger voile) */
   --nav-hover-bg: rgba(255, 255, 255, 0.06);
 }
 
-/* Fond + couleur */
+/* Fond global */
 [data-theme="dark"] body {
   background: var(--bg-color);
   color: var(--text-color);
   overflow-x: hidden;
 }
 
-/* Canvas d’étoiles couvrant tout l’écran */
+/* Halo doux en haut pour alléger le fond */
+[data-theme="dark"] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 28%, rgba(160, 195, 255, 0.08), transparent 60%);
+  z-index: -1;
+}
+
+/* Canvas étoiles plein écran (visibilité gérée par theme.js) */
 [data-theme="dark"] #theme-canvas {
   position: fixed;
   inset: 0;
@@ -36,7 +48,7 @@
   pointer-events: none;
 }
 
-/* Bandeau + pied translucides avec léger blur */
+/* Bandeau & pied translucides */
 [data-theme="dark"] header,
 [data-theme="dark"] footer {
   background: var(--header-bg);
@@ -45,7 +57,7 @@
   -webkit-backdrop-filter: blur(6px);
 }
 
-/* Liens et hover lumineux doux */
+/* Liens */
 [data-theme="dark"] a {
   color: var(--link-color);
   transition: color .25s ease, text-shadow .25s ease, background .25s ease;
@@ -53,7 +65,7 @@
 
 [data-theme="dark"] a:hover {
   color: var(--accent-color);
-  text-shadow: 0 0 6px rgba(119, 202, 255, .5);
+  text-shadow: 0 0 6px rgba(127, 209, 255, .5);
 }
 
 /* Bouton thème */
@@ -65,16 +77,16 @@
 
 [data-theme="dark"] #theme-btn:hover {
   transform: scale(1.1);
-  text-shadow: 0 0 8px rgba(119, 202, 255, .7);
+  text-shadow: 0 0 8px rgba(127, 209, 255, .7);
 }
 
-/* Menu hover (si tes liens du header utilisent .menu-primary a) */
+/* Hover du menu */
 [data-theme="dark"] .menu-primary a:hover {
   background: var(--nav-hover-bg);
   border-radius: 6px;
 }
 
-/* Évite les “plaques” sombres : pas de fond forcé sur le contenu */
+/* pas de plaques opaques côté contenu */
 [data-theme="dark"] main,
 [data-theme="dark"] .home-shell,
 [data-theme="dark"] .welcome,
