@@ -12,3 +12,6 @@
 /* Thèmes */
 @import url("/assets/css/themes/theme-light.css");
 @import url("/assets/css/themes/theme-dark.css");
+
+/* Typographie spécifique */
+@import url("/assets/css/home.css");
