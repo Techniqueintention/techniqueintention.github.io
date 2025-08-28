@@ -1,14 +1,14 @@
 /* ===============================
-   Thème sombre — Nuit étoilée (style stellaire)
+   Thème sombre — Nuit étoilée (autonome, style Codex plus lumineux)
    =============================== */
 
 :root[data-theme="dark"] {
-  /* bleu-nuit plus lumineux, proche Codex */
+  /* bleu-nuit plus clair */
   --bg-color: radial-gradient(
     ellipse at 50% 100%,
-    #0f1b2e 0%,
-    #0b1626 55%,
-    #0a1422 100%
+    #13233f 0%,
+    #0f1f37 55%,
+    #0b1a2e 100%
   );
 
   --text-color: #eaf4ff;
@@ -16,39 +16,38 @@
   --link-color: #a6c8ff;
   --accent-color: #7fd1ff;
 
-  --header-bg: rgba(12, 18, 34, 0.55);
-  --footer-bg: rgba(12, 18, 34, 0.55);
+  --header-bg: rgba(16, 28, 48, 0.52);
+  --footer-bg: rgba(16, 28, 48, 0.52);
 
   --nav-hover-bg: rgba(255, 255, 255, 0.06);
 }
 
-/* Fond global */
 [data-theme="dark"] body {
   background: var(--bg-color);
   color: var(--text-color);
   overflow-x: hidden;
 }
 
-/* Halo doux en haut pour alléger le fond */
+/* halo léger pour alléger le haut de l'écran */
 [data-theme="dark"] body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse at 50% 28%, rgba(160, 195, 255, 0.08), transparent 60%);
-  z-index: -1;
+  background: radial-gradient(ellipse at 50% 26%, rgba(160, 195, 255, 0.08), transparent 60%);
+  z-index: 0; /* sous le contenu, au-dessus du fond */
 }
 
-/* Canvas étoiles plein écran (visibilité gérée par theme.js) */
+/* Canvas étoiles : au-dessus du fond, sous le contenu (z=0) */
 [data-theme="dark"] #theme-canvas {
   position: fixed;
   inset: 0;
-  z-index: -1;
-  opacity: 1;
+  z-index: 0;      /* ⚠️ pas -1 */
+  opacity: 1;      /* la visibilité est confirmée dans theme.js */
   pointer-events: none;
 }
 
-/* Bandeau & pied translucides */
+/* Header & footer translucides */
 [data-theme="dark"] header,
 [data-theme="dark"] footer {
   background: var(--header-bg);
