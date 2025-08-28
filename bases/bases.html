@@ -8,7 +8,6 @@
   <!-- styles site -->
   <link rel="stylesheet" href="/assets/css/main.css">
   <script type="module" src="/assets/js/main.js"></script>
-  
 </head>
 <body>
   <canvas id="theme-canvas"></canvas>
@@ -16,7 +15,6 @@
 
   <main class="viewer-layout">
 
-    <h1>LES BASES</h1>
     <!-- MENU FIXE À GAUCHE -->
     <nav id="viewer-menu" class="blog-menu" aria-label="Navigation Bases">
       <!-- Titre cliquable (hors catégorie) -->
@@ -46,14 +44,19 @@
       </details>
     </nav>
 
-    <!-- VIEWER AU CENTRE -->
+    <!-- COLONNE ARTICLE -->
     <section id="article-viewer" role="region" aria-live="polite">
+      <header class="section-title">
+        <h1>LES BASES</h1>
+      </header>
+
       <div class="placeholder">
         <h2>Bienvenue dans les Bases de la Technique</h2>
         <p>Cette section présente les fondations de Technique Intention : un chemin simple et vivant, posé dans la douceur et la clarté.</p>
         <p class="notes-fin">Cliquez à gauche pour afficher l’article souhaité.</p>
       </div>
     </section>
+
   </main>
 
   <div id="footer-placeholder"></div>
@@ -63,6 +66,3 @@
   <script src="/assets/js/viewer-menu.js"></script>
 </body>
 </html>
-
-
-
