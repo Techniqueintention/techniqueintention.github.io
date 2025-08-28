@@ -2,29 +2,33 @@
    RESET & BASE LAYOUT UNIFIÉS
    =============================== */
 
-/* Reset minimal (ex-base.css) */
+/* Reset minimal */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* Layout global (ex-layout.css) : page en colonne, pas de scroll parasite */
+/* Layout global : page en colonne, pas de scroll parasite */
 html, body {
   height: 100%;
-  margin: 0;
-  overflow-x: hidden;          /* sécurité horizontale */
+  overflow-x: hidden;                 /* sécurité horizontale */
+}
+
+/* Le BODY devient le conteneur flex vertical */
+body {
+  min-height: 100dvh;                 /* couvre toute la hauteur écran (mobile friendly) */
   display: flex;
-  flex-direction: column;      /* header -> main -> footer */
+  flex-direction: column;             /* header -> main -> footer */
 }
 
-/* Le contenu principal prend la place dispo et est centré par Grid */
+/* Le contenu principal occupe l’espace restant (pas de centrage global ici) */
 main {
-  flex: 1;                     /* occupe la hauteur restante */
-  min-height: 0;               /* évite les dépassements internes */
-  display: grid;
-  place-items: center;         /* centre horizontal + vertical */
-  padding: 0;                  /* pas de padding global ici */
+  flex: 1;                            /* pousse le footer en bas si page courte */
+  min-height: 0;                      /* évite les dépassements internes */
+  display: block;                     /* pas de grid/centrage global */
+  padding: 0;
 }
 
-/* Footer collé au contenu, sans “barre” visuelle imposée */
-footer {
+/* Footer “sticky” : collé au bas si page courte, sinon sous le contenu */
+footer,
+.site-footer {
   width: 100%;
   text-align: center;
   padding: 1rem 1.4rem;
@@ -34,11 +38,21 @@ footer {
   background: transparent;
   color: var(--text-color);
   box-sizing: border-box;
+  margin-top: auto;                   /* clé du sticky footer */
+}
+
+/* --------- Utilitaires (optionnels) --------- */
+
+/* Centrer une page précise (ex. accueil) SANS impacter tout le site :
+   envelopper le contenu dans .centered-page */
+.centered-page {
+  min-height: calc(100dvh - var(--header-h, 56px));
+  display: grid;
+  place-items: center;
 }
 
 /* Titre au-dessus du viewer si tu décides de le garder sur certaines pages */
 .viewer-title {
-  /* si tu utilises la grille du viewer à 5 colonnes, cible la colonne “article” */
   grid-column: 4;
   margin: 0 0 12px 0;
   padding: .6rem 1rem;
@@ -47,8 +61,5 @@ footer {
   border: 1px solid var(--bloc-border, rgba(0,0,0,.1));
 }
 
-/* ---------------------------------
-   Remarques :
-   - Laisse .home-shell SANS min-height:100vh;
-   - Toute typo/couleurs globales restent dans tes autres fichiers (main.css/theme.css).
----------------------------------- */
+/* Ancrages lisibles si header sticky */
+:target { scroll-margin-top: 72px; }
