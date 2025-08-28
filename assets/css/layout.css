@@ -21,13 +21,15 @@ main {
 
 /* Footer collé au contenu, pas d’espace parasite */
 footer {
-  width:100%;
+  width: 100%;
   text-align: center;
-  padding: 1rem 0;
-  margin: 0 auto;
-  background: transparent !important;
-  color: #999;
-  font-size: 0.8rem;
+  padding: 1rem 1.4rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  opacity: 0.85;
+  background: transparent; /* garde la transparence, pas de bloc qui jure */
+  color: var(--text-color);
+  box-sizing: border-box;
 }
 
 /* Le canvas/pseudo-éléments étant en position:fixed, ils ne doivent pas créer de scroll */
