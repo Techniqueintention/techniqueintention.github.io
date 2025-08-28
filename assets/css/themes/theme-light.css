@@ -56,3 +56,13 @@
 [data-theme="light"] section {
   background: transparent !important;
 }
+
+/* Neutralise le canvas étoiles en thème clair */
+[data-theme="light"] #theme-canvas {
+  position: fixed;   /* on le sort du flux pour éviter de pousser le header */
+  inset: 0;
+  z-index: -1;
+  opacity: 0;        /* invisible en clair */
+  pointer-events: none;
+}
+
