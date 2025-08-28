@@ -73,3 +73,50 @@ img, video, canvas, svg, iframe { max-width: 100%; height: auto; }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
+
+/* ===== Burger mobile (n’impacte pas le desktop) ===== */
+
+/* Desktop: tout le système burger est caché */
+@media (min-width: 901px) {
+  #mb-burger, #mb-drawer, #mb-scrim { display: none !important; }
+}
+
+/* Mobile: on masque la barre desktop, on montre le burger */
+@media (max-width: 900px) {
+  .menu-primary { display: none !important; }
+
+  .mb-burger {
+    position: fixed; top: .6rem; right: .8rem; z-index: 1100;
+    width: 42px; height: 42px; border-radius: 10px;
+    border: 1px solid currentColor; background: none; padding: 0;
+    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+  }
+  .mb-burger span { width: 20px; height: 2px; background: currentColor; display: block; }
+
+  .mb-drawer {
+    position: fixed; inset: 0 auto 0 0; width: min(82vw, 360px);
+    transform: translateX(-100%); transition: transform .25s ease;
+    background: color-mix(in oklab, currentColor 12%, black);
+    color: inherit; z-index: 1099; padding: 1rem .8rem;
+  }
+  .mb-drawer.is-open { transform: translateX(0); }
+  .mb-drawer[hidden] { display: block; } /* garde l’élément pour l’anim */
+
+  .mb-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .25rem; }
+  .mb-list a {
+    display: block; padding: .7rem .8rem; border-radius: 10px; text-decoration: none;
+  }
+  .mb-list a[aria-current="page"] {
+    outline: 2px solid currentColor; outline-offset: 2px; font-weight: 600;
+  }
+
+  .mb-scrim {
+    position: fixed; inset: 0; background: rgba(0,0,0,.35);
+    opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 1090;
+  }
+  .mb-scrim.is-open { opacity: 1; pointer-events: auto; }
+
+  /* Empêche le scroll de fond quand le tiroir est ouvert */
+  html.mb-no-scroll, body.mb-no-scroll { overflow: hidden; }
+}
+
