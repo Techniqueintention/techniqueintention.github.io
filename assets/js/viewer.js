@@ -45,7 +45,6 @@
 
       // injecte dans le viewer
       viewer.innerHTML = '';
-      // on clone juste le contenu (évite les styles externes)
       const node = document.createElement('div');
       node.className = 'article';
       node.innerHTML = section.innerHTML;
@@ -71,12 +70,14 @@
     menu.querySelectorAll('a[data-viewer], .menu-card[data-viewer]')
       .forEach(a => a.classList.toggle('active', normalize(a.dataset.viewer) === normalize(articlePath)));
   }
+
   function openGroupFor(articlePath){
     const link = menu.querySelector(`a[data-viewer="${CSS.escape(articlePath)}"]`);
     if (!link) return;
     const det = link.closest('details');
     if (det) det.setAttribute('open','');
   }
+
   const normalize = s => (s || '').replace(/^[.\/]*/,''); // ./intro.html -> intro.html
 
   // clics de menu
@@ -91,4 +92,16 @@
   const param = new URLSearchParams(location.search).get('a');
   const start = param ? param : './intro.html';
   loadArticle(start);
+
+  /* ===== Accordéon exclusif pour les <details> du menu ===== */
+  const groups = menu.querySelectorAll("details");
+  groups.forEach(det => {
+    det.addEventListener("toggle", () => {
+      if (det.open) {
+        groups.forEach(other => {
+          if (other !== det) other.removeAttribute("open");
+        });
+      }
+    });
+  });
 })();
