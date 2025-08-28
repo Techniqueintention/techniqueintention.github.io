@@ -1,20 +1,17 @@
 /* Reset & base */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 html, body {
   height: 100%;
   margin: 0;
-  overflow-x: hidden; /* sécurité horizontale */
-  overflow-y: auto;   /* scroll seulement si nécessaire */
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
+/* ❌ Enlever min-height:100vh ici */
 .home-shell {
-  min-height: 100vh;       /* occupe l’écran */
-  box-sizing: border-box;  /* calcule avec padding */
+  /* min-height: 100vh;  <-- retire */
+  box-sizing: border-box;
   padding: 2rem;
   display: flex;
   align-items: center;
