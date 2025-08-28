@@ -3,17 +3,18 @@
    =============================== */
 
 :root {
-  --pad-left: 28px;      /* marge extérieure à gauche */
-  --menu-w: 300px;       /* largeur colonne menu */
-  --article-w: 980px;    /* largeur bloc article */
-  --gap-fixed: 28px;     /* gouttière entre menu et article */
-  --header-h: 64px;      /* hauteur du bandeau */
+  --pad-left: 40px;
+  --menu-w: 300px;
+  --article-min: 720px;    /* largeur mini pour la lisibilité */
+  --article-max: 1180px;   /* largeur maxi */
+  --gap-fixed: 40px;
+  --header-h: 64px;
 }
 
 /* Container principal */
 .viewer-layout {
   display: grid;
-  grid-template-columns: var(--pad-left) var(--menu-w) var(--gap-fixed) var(--article-w) 1fr;
+  grid-template-columns: var(--pad-left) var(--menu-w) var(--gap-fixed) minmax(var(--article-min), var(--article-max)) 1fr;
   max-width: none;
   margin: calc(var(--header-h) + 18px) 0 28px 0;
   padding: 0;
@@ -38,7 +39,7 @@
 /* Bloc article */
 #article-viewer {
   grid-column: 4;
-  width: var(--article-w);
+  width: 100%;   /* occupe toute la colonne fluide */
   max-width: none;
   min-height: 460px;
   padding: 2rem 2.6rem;
