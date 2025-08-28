@@ -1,21 +1,25 @@
 /* ===============================
-   Layout global
+   Layout global (sans scroll fantôme)
    =============================== */
 
 html, body {
   height: 100%;
   margin: 0;
+  overflow-x: hidden;   /* sécurité horizontale */
   display: flex;
   flex-direction: column;
 }
 
-/* Le contenu prend tout l’espace dispo */
+/* Le contenu prend tout l’espace dispo, centré par Grid */
 main {
   flex: 1;
-  padding: 2rem;
+  min-height: 0;              /* important pour éviter les dépassements */
+  display: grid;
+  place-items: center;        /* centre horizontal + vertical */
+  padding: 0;                 /* pas de padding ici (évite le surplus) */
 }
 
-/* Footer toujours collé au contenu (pas de gris) */
+/* Footer collé au contenu, pas d’espace parasite */
 footer {
   text-align: center;
   padding: 1rem;
@@ -23,3 +27,5 @@ footer {
   color: #999;
   font-size: 0.8rem;
 }
+
+/* Le canvas/pseudo-éléments étant en position:fixed, ils ne doivent pas créer de scroll */
