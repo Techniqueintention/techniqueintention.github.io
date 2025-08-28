@@ -96,6 +96,20 @@
   box-shadow: 0 6px 18px rgba(0,0,0,.15);
 }
 
+/* Bloc article : fond adapté selon thème */
+:root[data-theme="light"] #article-viewer {
+  background: rgba(255, 255, 255, 0.75);
+  color: #222;
+}
+
+:root[data-theme="dark"] #article-viewer {
+  background: rgba(6, 10, 24, 0.9); /* fond sombre dense */
+  color: #f0f0f0;                   /* texte clair */
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 0 20px rgba(0,0,0,.4);
+}
+
+
 /* Responsive */
 @media (max-width: 980px) {
   .viewer-layout {
