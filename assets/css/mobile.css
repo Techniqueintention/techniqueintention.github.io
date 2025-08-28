@@ -1,137 +1,75 @@
-/* Mobile CSS global — s’applique seulement si media query du <link> le charge */
-/* 1) Base & fluidité */
-:root {
-  --container-max: 1100px;
-  --gap: 1rem;
-  --radius: 12px;
-  --tap: 12px; /* zone de tap minimum */
+/* ===== Responsive mobile/tablette (couche additive) ===== */
+
+/* 1) Sécurité globale */
+html, body { max-width: 100%; overflow-x: hidden; }
+
+/* 2) Médias toujours fluides */
+img, video, canvas, svg, iframe { max-width: 100%; height: auto; }
+
+/* 3) Header/menu : garder ton menu, le faire respirer et s’adapter */
+@media (max-width: 1024px) {
+  .site-header {
+    padding: .6rem 1rem;           /* header plus compact */
+    gap: .6rem;
+  }
+  .site-title a {
+    font-size: 1.1rem;             /* titre un peu réduit */
+  }
+
+  /* La barre principale se met sur plusieurs lignes si besoin */
+  .menu-primary {
+    flex-wrap: wrap;               /* << clé responsive */
+    gap: .5rem .8rem;
+  }
+  .menu-primary a {
+    padding: .5rem .7rem;          /* meilleures zones de tap */
+    border-radius: 8px;
+  }
 }
 
-/* Typo fluide : 16px → 18px selon largeur */
-html { font-size: clamp(15px, 1.7vw, 18px); }
-body {
-  -webkit-text-size-adjust: 100%;
-  text-rendering: optimizeLegibility;
-  word-wrap: break-word;
-  overflow-x: hidden;
+/* 4) Très petits écrans : basculer la nav en colonne si ça coince */
+@media (max-width: 640px) {
+  .menu-primary { 
+    width: 100%;
+    justify-content: flex-start;
+  }
+  /* si tu préfères une colonne pure, décommente :
+  .menu-primary { flex-direction: column; align-items: stretch; }
+  .menu-primary a { text-align: left; }
+  */
 }
 
-/* 2) Container & grilles génériques */
-.container,
-.wrapper,
-.site-inner,
-.main,
-#content,
-#article-viewer {
-  width: min(100%, var(--container-max));
-  margin-inline: auto;
-  padding-inline: 1rem;
+/* 5) Footer : toujours en bas, sans remonter (complémente ton layout) */
+@media (max-width: 1024px) {
+  footer { padding: .9rem 1rem; font-size: .92rem; }
 }
 
-.grid,
-.row,
-.columns { display: grid; gap: var(--gap); }
-
-.grid-2, .two-col,
-.grid-3, .three-col,
-.grid-4, .four-col {
-  display: grid; gap: var(--gap);
+/* 6) Grilles/colonnes génériques → empilement simple */
+@media (max-width: 980px) {
+  .grid-2, .two-col,
+  .grid-3, .three-col,
+  .grid-4, .four-col {
+    display: grid; gap: 1rem; grid-template-columns: 1fr;
+  }
 }
 
-/* Empilement mobile par défaut */
-.grid-2, .two-col        { grid-template-columns: 1fr; }
-.grid-3, .three-col      { grid-template-columns: 1fr; }
-.grid-4, .four-col       { grid-template-columns: 1fr; }
-
-/* 3) Médias & éléments larges */
-img, video, canvas, svg, iframe {
-  max-width: 100%;
-  height: auto;
-}
-table { width: 100%; border-collapse: collapse; display: block; overflow-x: auto; }
-pre, code { white-space: pre-wrap; word-break: break-word; }
-
-/* 4) Header / bandeau / menu primaire */
-.site-header {
-  position: sticky; top: 0; z-index: 1000;
-  backdrop-filter: saturate(140%) blur(8px);
+/* 7) Blog viewer : ton CSS gère déjà l’empilement à 980px — on complète juste les espacements */
+@media (max-width: 980px) {
+  .viewer-layout { margin: calc(var(--header-h) + 12px) 0 20px 0; }
+  #article-viewer { padding: 1.1rem; }
 }
 
-.menu-primary {
-  display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
-}
-.menu-primary a {
-  padding: .5rem .7rem;
-  border-radius: 8px;
-  touch-action: manipulation;
-}
-.menu-primary a[aria-current="page"],
-.menu-primary a.is-active {
-  outline: 2px solid currentColor;
+/* 8) Accueil : carte plus souple en mobile */
+@media (max-width: 768px) {
+  .welcome { margin: 1rem; padding: 1.2rem 1.4rem; }
+  .welcome h1 { font-size: 1.7rem; }
+  .welcome-text { font-size: 1rem; line-height: 1.65; }
 }
 
-/* 5) Nav compacte + burger auto si trop d’items */
-.nav-wrap { display: flex; gap: .5rem; align-items: center; }
-#nav-burger {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 42px; height: 42px; border-radius: 10px; border: 1px solid currentColor;
-}
-#nav-burger[hidden] { display: none; }
+/* 9) Ancrage lisible avec header sticky */
+:target { scroll-margin-top: 72px; }
 
-@media (max-width: 900px) {
-  .menu-primary { display:none; }
-  .menu-primary.is-open { display:flex; flex-direction: column; align-items: stretch; }
-}
-
-/* 6) Sidebars / colonnes latérales → empilement */
-aside, .sidebar, .left-col, .right-col {
-  order: 2;
-}
-main, .content { order: 1; }
-
-/* 7) Cartes / blocs */
-.card, .panel, .widget, .block {
-  border-radius: var(--radius);
-  padding: 1rem;
-  overflow: hidden;
-}
-
-/* 8) Boutons tactiles */
-button, .btn, [role="button"], input[type="button"], input[type="submit"] {
-  min-height: 42px; min-width: 42px; padding: .6rem .9rem;
-  border-radius: 10px;
-}
-
-/* 9) Accordéons génériques (collapsibles) */
-details { border-radius: 10px; padding: .6rem .8rem; }
-details + details { margin-top: .5rem; }
-details[open] > summary { font-weight: 600; }
-summary { cursor: pointer; padding: .4rem 0; }
-
-/* 10) Iframes responsives (YouTube, etc.) */
-.responsive-16x9,
-.embed-16x9 { position: relative; padding-top: 56.25%; height: 0; overflow: hidden; }
-.responsive-16x9 > iframe,
-.embed-16x9 > iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-
-/* 11) Corrections vh sur mobile (classe ajoutée par JS) */
-.vh-fix-100 {
-  min-height: calc(var(--vh, 1vh) * 100);
-}
-
-/* 12) Masquer décorations trop larges en mobile */
-.hide-on-mobile { display: none !important; }
-
-/* 13) Espacements de base */
-section, article { margin-block: 1.25rem; }
-h1 { font-size: clamp(1.6rem, 5vw, 2.1rem); line-height: 1.2; }
-h2 { font-size: clamp(1.3rem, 4.2vw, 1.7rem); }
-h3 { font-size: clamp(1.15rem, 3.6vw, 1.35rem); }
-
-/* 14) Footer empilé */
-.site-footer { padding: 1rem; }
-
-/* 15) Préférence utilisateur (réduction mouvement) */
+/* 10) Préférence utilisateur (réduction mouvement) */
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
