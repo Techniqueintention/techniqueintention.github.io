@@ -1,49 +1,141 @@
-/* ========= Layout Viewer — menu bien à gauche, article large ========= */
+/* ===============================
+   Layout Viewer — menu fixe gauche
+   =============================== */
 
-:root { --header-h: 64px; }
+:root {
+  --pad-left: 28px;      /* marge extérieure à gauche */
+  --menu-w: 300px;       /* largeur colonne menu */
+  --article-w: 980px;    /* largeur bloc article */
+  --gap-fixed: 28px;     /* gouttière entre menu et article */
+  --header-h: 64px;      /* hauteur du bandeau */
+}
 
-.viewer-layout{
-  max-width: 1440px;
-  margin: calc(var(--header-h) + 18px) auto 28px;
-  padding: 0 28px;
+/* Container principal */
+.viewer-layout {
   display: grid;
-  grid-template-columns: 320px minmax(0, 1fr); /* menu / article */
-  gap: 28px;
+  grid-template-columns: var(--pad-left) var(--menu-w) var(--gap-fixed) var(--article-w) 1fr;
+  max-width: none;
+  margin: calc(var(--header-h) + 18px) 0 28px 0;
+  padding: 0;
   align-items: start;
-  box-sizing: border-box;
+}
+
+/* Menu latéral */
+.blog-menu {
+  grid-column: 2;
+  position: sticky;
+  top: calc(var(--header-h) + 16px);
+  align-self: start;
+  width: var(--menu-w);
+  max-width: none;
+}
+
+.blog-menu details {
+  margin-bottom: .7rem;
+  border-radius: 12px;
 }
 
 /* Bloc article */
-#article-viewer{
+#article-viewer {
+  grid-column: 4;
+  width: var(--article-w);
+  max-width: none;
+  min-height: 460px;
   padding: 2rem 2.6rem;
   border-radius: 16px;
   background: var(--bloc-bg, rgba(255,255,255,.08));
   border: 1px solid var(--bloc-border, rgba(0,0,0,.1));
   box-shadow: 0 0 20px var(--bloc-shadow, rgba(0,0,0,.12));
-  min-height: 460px;
   line-height: 1.75;
   overflow-wrap: anywhere;
 }
 
 /* Typo article */
-#article-viewer h1{ font-family:"Cinzel",serif; font-size:1.9rem; text-align:center; color:var(--link-color); margin:0 0 1rem; }
-#article-viewer h2{ font-size:1.2rem; margin:1.4rem 0 .7rem; }
-#article-viewer p { margin:0 0 1rem; }
-#article-viewer .placeholder{ opacity:.7; }
-
-/* Tools (partager) */
-#article-tools{ text-align:right; margin-bottom:.8rem; }
-#article-tools .btn-share-article{
-  display:inline-flex; align-items:center; gap:.5rem;
-  padding:.45em .9em; border-radius:10px;
-  background: var(--btn-bg, rgba(255,255,255,.08));
-  border:1px solid var(--btn-border, rgba(255,255,255,.25));
-  cursor:pointer; transition:.2s;
+#article-viewer h1 {
+  font-family: "Cinzel", serif;
+  font-size: 1.9rem;
+  text-align: center;
+  color: var(--link-color);
+  margin: 0 0 1rem;
 }
-#article-tools .btn-share-article:hover{ transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,0,0,.15); }
+
+#article-viewer h2 {
+  font-size: 1.2rem;
+  margin: 1.4rem 0 .7rem;
+}
+
+#article-viewer p {
+  margin: 0 0 1rem;
+}
+
+#article-viewer .placeholder {
+  opacity: .7;
+}
+
+/* Tools (partager, etc.) */
+#article-tools {
+  text-align: right;
+  margin-bottom: .8rem;
+}
+
+#article-tools .btn-share-article {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .45em .9em;
+  border-radius: 10px;
+  background: var(--btn-bg, rgba(255,255,255,.08));
+  border: 1px solid var(--btn-border, rgba(255,255,255,.25));
+  cursor: pointer;
+  transition: .2s;
+}
+
+#article-tools .btn-share-article:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.15);
+}
+
+/* Notes (style Codex) */
+.codex-note {
+  margin: 1.4rem 0;
+  padding: 1rem 1.2rem;
+  border-left: 4px solid var(--accent-color, #9d4edd);
+  border-radius: 8px;
+  background: rgba(0,0,0,0.06);
+}
+
+.codex-note[data-title]::before {
+  content: attr(data-title);
+  display: block;
+  font-weight: 600;
+  margin-bottom: .5rem;
+  color: var(--link-color);
+}
+
+.codex-note.note-tip {
+  border-color: #2ecc71;
+}
+.codex-note.note-warn {
+  border-color: #e67e22;
+}
+.codex-note.note-danger {
+  border-color: #e74c3c;
+}
 
 /* Responsive */
-@media (max-width: 980px){
-  .viewer-layout{ grid-template-columns: 1fr; padding: 0 16px; }
-  #article-viewer{ padding: 1.2rem; }
+@media (max-width: 980px) {
+  .viewer-layout {
+    grid-template-columns: 16px 1fr 16px;
+    gap: 0;
+  }
+  .blog-menu {
+    grid-column: 2;
+    position: static;
+    width: 100%;
+  }
+  #article-viewer {
+    grid-column: 2;
+    width: 100%;
+    padding: 1.2rem;
+  }
 }
