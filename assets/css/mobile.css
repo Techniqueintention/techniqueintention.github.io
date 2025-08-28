@@ -14,9 +14,11 @@ img, video, canvas, svg, iframe { max-width: 100%; height: auto; }
   }
   .site-title a {
     font-size: 1.1rem;             /* titre un peu réduit */
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    max-width: 65vw;               /* évite le chevauchement en très petit écran */
   }
 
-  /* La barre principale se met sur plusieurs lignes si besoin */
+  /* La barre principale peut passer sur plusieurs lignes si besoin */
   .menu-primary {
     flex-wrap: wrap;               /* << clé responsive */
     gap: .5rem .8rem;
@@ -29,14 +31,14 @@ img, video, canvas, svg, iframe { max-width: 100%; height: auto; }
 
 /* 4) Très petits écrans : basculer la nav en colonne si ça coince */
 @media (max-width: 640px) {
-  .menu-primary { 
+  .menu-primary {
     width: 100%;
     justify-content: flex-start;
+    /* si tu préfères une colonne pure, décommente :
+    flex-direction: column; align-items: stretch;
+    */
   }
-  /* si tu préfères une colonne pure, décommente :
-  .menu-primary { flex-direction: column; align-items: stretch; }
-  .menu-primary a { text-align: left; }
-  */
+  /* .menu-primary a { text-align: left; }  <-- si colonne */
 }
 
 /* 5) Footer : toujours en bas, sans remonter (complémente ton layout) */
@@ -53,9 +55,9 @@ img, video, canvas, svg, iframe { max-width: 100%; height: auto; }
   }
 }
 
-/* 7) Blog viewer : ton CSS gère déjà l’empilement à 980px — on complète juste les espacements */
+/* 7) Blog viewer : adoucir les espacements en mobile */
 @media (max-width: 980px) {
-  .viewer-layout { margin: calc(var(--header-h) + 12px) 0 20px 0; }
+  .viewer-layout { margin: calc(var(--header-h, 56px) + 12px) 0 20px 0; }
   #article-viewer { padding: 1.1rem; }
 }
 
@@ -74,30 +76,42 @@ img, video, canvas, svg, iframe { max-width: 100%; height: auto; }
   * { animation: none !important; transition: none !important; }
 }
 
-/* ===== Burger mobile (n’impacte pas le desktop) ===== */
+/* ===== Burger mobile (sans impacter le desktop) ===== */
 
-/* Desktop: tout le système burger est caché */
+/* Desktop : le système burger est caché */
 @media (min-width: 901px) {
   #mb-burger, #mb-drawer, #mb-scrim { display: none !important; }
 }
 
-/* Mobile: on masque la barre desktop, on montre le burger */
+/* Mobile : on masque la barre desktop, on montre le burger */
 @media (max-width: 900px) {
+  /* On garde le titre (.site-title) et le switch thème (.menu-switch) visibles */
   .menu-primary { display: none !important; }
 
+  /* Le header devient référentiel pour positionner le burger */
+  .site-header { position: sticky; top: 0; z-index: 1000; }
+  .site-header { position: relative; }
+
+  /* Burger */
   .mb-burger {
-    position: fixed; top: .6rem; right: .8rem; z-index: 1100;
+    position: absolute; top: .6rem; right: .8rem; z-index: 1100;
     width: 42px; height: 42px; border-radius: 10px;
     border: 1px solid currentColor; background: none; padding: 0;
     display: inline-flex; align-items: center; justify-content: center; gap: 4px;
   }
   .mb-burger span { width: 20px; height: 2px; background: currentColor; display: block; }
 
+  /* Un peu d’air pour le titre et le bouton thème pour éviter le chevauchement */
+  .site-title a { padding-right: 52px; }
+  .menu-switch { margin-right: 52px; }
+
+  /* Drawer */
   .mb-drawer {
     position: fixed; inset: 0 auto 0 0; width: min(82vw, 360px);
     transform: translateX(-100%); transition: transform .25s ease;
-    background: color-mix(in oklab, currentColor 12%, black);
-    color: inherit; z-index: 1099; padding: 1rem .8rem;
+    background: var(--drawer-bg, rgba(18,18,18,.96));
+    color: var(--text-color, inherit);
+    z-index: 1099; padding: 1rem .8rem;
   }
   .mb-drawer.is-open { transform: translateX(0); }
   .mb-drawer[hidden] { display: block; } /* garde l’élément pour l’anim */
@@ -110,13 +124,13 @@ img, video, canvas, svg, iframe { max-width: 100%; height: auto; }
     outline: 2px solid currentColor; outline-offset: 2px; font-weight: 600;
   }
 
+  /* Voile */
   .mb-scrim {
     position: fixed; inset: 0; background: rgba(0,0,0,.35);
     opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 1090;
   }
   .mb-scrim.is-open { opacity: 1; pointer-events: auto; }
 
-  /* Empêche le scroll de fond quand le tiroir est ouvert */
+  /* Bloquer le scroll de fond quand le tiroir est ouvert */
   html.mb-no-scroll, body.mb-no-scroll { overflow: hidden; }
 }
-
