@@ -1,8 +1,6 @@
 /* Fichier central - main.css */
 
 /* Reset + styles globaux */
-@import url("/assets/css/base.css");
-
 /* Layout générique */
 @import url("/assets/css/layout.css");
 
