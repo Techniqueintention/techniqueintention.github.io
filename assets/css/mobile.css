@@ -1,0 +1,137 @@
+/* Mobile CSS global — s’applique seulement si media query du <link> le charge */
+/* 1) Base & fluidité */
+:root {
+  --container-max: 1100px;
+  --gap: 1rem;
+  --radius: 12px;
+  --tap: 12px; /* zone de tap minimum */
+}
+
+/* Typo fluide : 16px → 18px selon largeur */
+html { font-size: clamp(15px, 1.7vw, 18px); }
+body {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  word-wrap: break-word;
+  overflow-x: hidden;
+}
+
+/* 2) Container & grilles génériques */
+.container,
+.wrapper,
+.site-inner,
+.main,
+#content,
+#article-viewer {
+  width: min(100%, var(--container-max));
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+.grid,
+.row,
+.columns { display: grid; gap: var(--gap); }
+
+.grid-2, .two-col,
+.grid-3, .three-col,
+.grid-4, .four-col {
+  display: grid; gap: var(--gap);
+}
+
+/* Empilement mobile par défaut */
+.grid-2, .two-col        { grid-template-columns: 1fr; }
+.grid-3, .three-col      { grid-template-columns: 1fr; }
+.grid-4, .four-col       { grid-template-columns: 1fr; }
+
+/* 3) Médias & éléments larges */
+img, video, canvas, svg, iframe {
+  max-width: 100%;
+  height: auto;
+}
+table { width: 100%; border-collapse: collapse; display: block; overflow-x: auto; }
+pre, code { white-space: pre-wrap; word-break: break-word; }
+
+/* 4) Header / bandeau / menu primaire */
+.site-header {
+  position: sticky; top: 0; z-index: 1000;
+  backdrop-filter: saturate(140%) blur(8px);
+}
+
+.menu-primary {
+  display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
+}
+.menu-primary a {
+  padding: .5rem .7rem;
+  border-radius: 8px;
+  touch-action: manipulation;
+}
+.menu-primary a[aria-current="page"],
+.menu-primary a.is-active {
+  outline: 2px solid currentColor;
+}
+
+/* 5) Nav compacte + burger auto si trop d’items */
+.nav-wrap { display: flex; gap: .5rem; align-items: center; }
+#nav-burger {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 42px; height: 42px; border-radius: 10px; border: 1px solid currentColor;
+}
+#nav-burger[hidden] { display: none; }
+
+@media (max-width: 900px) {
+  .menu-primary { display:none; }
+  .menu-primary.is-open { display:flex; flex-direction: column; align-items: stretch; }
+}
+
+/* 6) Sidebars / colonnes latérales → empilement */
+aside, .sidebar, .left-col, .right-col {
+  order: 2;
+}
+main, .content { order: 1; }
+
+/* 7) Cartes / blocs */
+.card, .panel, .widget, .block {
+  border-radius: var(--radius);
+  padding: 1rem;
+  overflow: hidden;
+}
+
+/* 8) Boutons tactiles */
+button, .btn, [role="button"], input[type="button"], input[type="submit"] {
+  min-height: 42px; min-width: 42px; padding: .6rem .9rem;
+  border-radius: 10px;
+}
+
+/* 9) Accordéons génériques (collapsibles) */
+details { border-radius: 10px; padding: .6rem .8rem; }
+details + details { margin-top: .5rem; }
+details[open] > summary { font-weight: 600; }
+summary { cursor: pointer; padding: .4rem 0; }
+
+/* 10) Iframes responsives (YouTube, etc.) */
+.responsive-16x9,
+.embed-16x9 { position: relative; padding-top: 56.25%; height: 0; overflow: hidden; }
+.responsive-16x9 > iframe,
+.embed-16x9 > iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* 11) Corrections vh sur mobile (classe ajoutée par JS) */
+.vh-fix-100 {
+  min-height: calc(var(--vh, 1vh) * 100);
+}
+
+/* 12) Masquer décorations trop larges en mobile */
+.hide-on-mobile { display: none !important; }
+
+/* 13) Espacements de base */
+section, article { margin-block: 1.25rem; }
+h1 { font-size: clamp(1.6rem, 5vw, 2.1rem); line-height: 1.2; }
+h2 { font-size: clamp(1.3rem, 4.2vw, 1.7rem); }
+h3 { font-size: clamp(1.15rem, 3.6vw, 1.35rem); }
+
+/* 14) Footer empilé */
+.site-footer { padding: 1rem; }
+
+/* 15) Préférence utilisateur (réduction mouvement) */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
