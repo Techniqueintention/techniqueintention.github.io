@@ -88,10 +88,13 @@
     loadArticle(a.dataset.viewer);
   });
 
-  // deep-link ?a=./intro.html
-  const param = new URLSearchParams(location.search).get('a');
-  const start = param ? param : './intro.html';
-  loadArticle(start);
+// deep-link ?a=./intro.html
+const param = new URLSearchParams(location.search).get('a');
+if (param) {
+  loadArticle(param);
+}
+// sinon, on laisse le placeholder affiché
+
 
   /* ===== Accordéon exclusif pour les <details> du menu ===== */
   const groups = menu.querySelectorAll("details");
