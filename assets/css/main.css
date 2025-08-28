@@ -18,3 +18,7 @@
 /* Blogs */
 @import url("/assets/css/viewer.css");
 @import url("/assets/css/viewer-menu.css");
+
+
+/* MOBILE RESPONSIVE */
+@import url("/assets/css/mobile.css");
