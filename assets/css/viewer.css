@@ -95,33 +95,6 @@
   box-shadow: 0 6px 18px rgba(0,0,0,.15);
 }
 
-/* Notes (style Codex) */
-.codex-note {
-  margin: 1.4rem 0;
-  padding: 1rem 1.2rem;
-  border-left: 4px solid var(--accent-color, #9d4edd);
-  border-radius: 8px;
-  background: rgba(0,0,0,0.06);
-}
-
-.codex-note[data-title]::before {
-  content: attr(data-title);
-  display: block;
-  font-weight: 600;
-  margin-bottom: .5rem;
-  color: var(--link-color);
-}
-
-.codex-note.note-tip {
-  border-color: #2ecc71;
-}
-.codex-note.note-warn {
-  border-color: #e67e22;
-}
-.codex-note.note-danger {
-  border-color: #e74c3c;
-}
-
 /* Responsive */
 @media (max-width: 980px) {
   .viewer-layout {
