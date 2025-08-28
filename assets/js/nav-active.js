@@ -6,21 +6,29 @@ document.addEventListener("DOMContentLoaded", () => {
   const here = new URL(location.href);
   const herePath = here.pathname.replace(/\/index\.html?$/i, "/");
 
+  // Normaliser les chemins de référence du menu
+  const normalize = p => p.replace(/\/index\.html?$/i, "/");
+
+  // Liste des items du bandeau
   nav.querySelectorAll("a[href]").forEach(a => {
     const href = a.getAttribute("href") || "";
+    if (/^(#|mailto:|tel:|javascript:)/i.test(href)) return; // liens spéciaux ignorés
 
-    // Ignore ancres et schémas spéciaux
-    if (/^(#|mailto:|tel:|javascript:)/i.test(href)) return;
-
-    // Résout l'URL
     let url;
     try { url = new URL(href, here); } catch { return; }
+    if (url.origin !== here.origin) return; // ignorer Forum externe
 
-    // Ignore hors domaine (Forum, etc.)
-    if (url.origin !== here.origin) return;
+    const targetPath = normalize(url.pathname);
 
-    const targetPath = url.pathname.replace(/\/index\.html?$/i, "/");
-    if (targetPath === herePath) a.setAttribute("aria-current", "page");
-    else a.removeAttribute("aria-current");
+    // Match exact OU page à l’intérieur du dossier
+    const samePage = targetPath === herePath;
+    const sameSection = herePath.startsWith(targetPath.replace(/[^/]+$/, "")) 
+                        && targetPath.endsWith(".html");
+
+    if (samePage || sameSection) {
+      a.setAttribute("aria-current", "page");
+    } else {
+      a.removeAttribute("aria-current");
+    }
   });
 });
