@@ -1,0 +1,43 @@
+/* Centrage global du bloc */
+.home-shell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 120px); /* ajuste selon header/footer */
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Section bienvenue */
+.welcome {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 3rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.1); /* translucide en clair/sombre */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+}
+
+/* Titre */
+.welcome h1 {
+  font-family: "Cinzel", serif;
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  color: var(--link-color);
+  text-shadow: 0 0 8px rgba(0,0,0,0.15);
+}
+
+/* Texte justifié dans un bloc */
+.welcome-text {
+  text-align: justify;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-color);
+}
+
+.welcome-text p {
+  margin-bottom: 1.2rem;
+}
