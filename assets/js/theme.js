@@ -1,27 +1,26 @@
-// === Theme manager (clair / nuit étoilée) ===
-// Gère aussi le canvas des étoiles via canvas.js
-
+// Thèmes clair / sombre + étoiles en sombre (autonome)
 import { setupCanvas, initParticles, stopParticles } from "/assets/js/canvas.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.documentElement;
 
-  // attend que le menu injecté contienne #theme-btn
-  const checkBtn = setInterval(() => {
+  // attendre l'injection du menu et du bouton
+  const check = setInterval(() => {
     const themeBtn = document.getElementById("theme-btn");
-    if (!themeBtn) return;
-    clearInterval(checkBtn);
+    const canvas = document.getElementById("theme-canvas");
+    if (!themeBtn || !canvas) return;
+    clearInterval(check);
 
-    function setCanvasVisible(isVisible) {
-      const c = document.getElementById("theme-canvas");
-      if (c) {
-        // évite tout décalage de layout même en light
-        c.style.position = "fixed";
-        c.style.inset = "0";
-        c.style.zIndex = "-1";
-        c.style.pointerEvents = "none";
-        c.style.opacity = isVisible ? "1" : "0";
-      }
+    // prépare le canvas: au-dessus du fond, sous le contenu
+    function prepareCanvas() {
+      canvas.style.position = "fixed";
+      canvas.style.inset = "0";
+      canvas.style.zIndex = "0";          // ⚠️ plus -1
+      canvas.style.pointerEvents = "none";
+    }
+
+    function setCanvasVisible(visible) {
+      canvas.style.opacity = visible ? "1" : "0";
     }
 
     function applyTheme(theme) {
@@ -30,24 +29,22 @@ document.addEventListener("DOMContentLoaded", () => {
       themeBtn.textContent = theme === "dark" ? "☀️" : "🌙";
 
       if (theme === "dark") {
-        setupCanvas();                 // prépare le canvas
-        initParticles("stars", 140);   // étoiles scintillantes
-        setCanvasVisible(true);        // rend visibles les étoiles
+        prepareCanvas();
+        setupCanvas();
+        initParticles("stars", 140); // étoiles
+        setCanvasVisible(true);
       } else {
-        stopParticles();               // stoppe + nettoie
-        setCanvasVisible(false);       // invisible en clair
+        stopParticles();
+        setCanvasVisible(false);
       }
     }
 
-    // thème au chargement
     const saved = localStorage.getItem("site-theme") || "light";
     applyTheme(saved);
 
-    // bascule au clic
     themeBtn.addEventListener("click", () => {
-      const current = root.getAttribute("data-theme");
-      const next = current === "light" ? "dark" : "light";
+      const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
       applyTheme(next);
     });
-  }, 100);
+  }, 50);
 });
