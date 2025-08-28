@@ -16,4 +16,19 @@
   <div class="menu-switch">
     <button id="theme-btn" aria-label="Basculer le thème">🌙</button>
   </div>
+
+<!-- Bouton burger (mobile only) -->
+<button id="mb-burger" class="mb-burger" aria-label="Ouvrir le menu" aria-controls="mb-drawer" aria-expanded="false">
+  <span></span><span></span><span></span>
+</button>
+
+<!-- Tiroir mobile (le contenu sera cloné depuis .menu-primary) -->
+<nav id="mb-drawer" class="mb-drawer" aria-label="Menu mobile" hidden>
+  <ul class="mb-list"></ul>
+</nav>
+
+<!-- Voile -->
+<div id="mb-scrim" class="mb-scrim" hidden></div>
+
+  
 </header>
