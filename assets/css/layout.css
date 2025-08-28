@@ -1,25 +1,29 @@
 /* ===============================
-   Layout global (sans scroll fantôme)
+   RESET & BASE LAYOUT UNIFIÉS
    =============================== */
 
+/* Reset minimal (ex-base.css) */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* Layout global (ex-layout.css) : page en colonne, pas de scroll parasite */
 html, body {
   height: 100%;
   margin: 0;
-  overflow-x: hidden;   /* sécurité horizontale */
+  overflow-x: hidden;          /* sécurité horizontale */
   display: flex;
-  flex-direction: column;
+  flex-direction: column;      /* header -> main -> footer */
 }
 
-/* Le contenu prend tout l’espace dispo, centré par Grid */
+/* Le contenu principal prend la place dispo et est centré par Grid */
 main {
-  flex: 1;
-  min-height: 0;              /* important pour éviter les dépassements */
+  flex: 1;                     /* occupe la hauteur restante */
+  min-height: 0;               /* évite les dépassements internes */
   display: grid;
-  place-items: center;        /* centre horizontal + vertical */
-  padding: 0;                 /* pas de padding ici (évite le surplus) */
+  place-items: center;         /* centre horizontal + vertical */
+  padding: 0;                  /* pas de padding global ici */
 }
 
-/* Footer collé au contenu, pas d’espace parasite */
+/* Footer collé au contenu, sans “barre” visuelle imposée */
 footer {
   width: 100%;
   text-align: center;
@@ -27,14 +31,15 @@ footer {
   font-size: 0.85rem;
   line-height: 1.4;
   opacity: 0.85;
-  background: transparent; /* garde la transparence, pas de bloc qui jure */
+  background: transparent;
   color: var(--text-color);
   box-sizing: border-box;
 }
 
-/* si tu gardes un h1 au-dessus du viewer */
+/* Titre au-dessus du viewer si tu décides de le garder sur certaines pages */
 .viewer-title {
-  grid-column: 4;             /* colonne du bloc article */
+  /* si tu utilises la grille du viewer à 5 colonnes, cible la colonne “article” */
+  grid-column: 4;
   margin: 0 0 12px 0;
   padding: .6rem 1rem;
   border-radius: 12px;
@@ -42,5 +47,8 @@ footer {
   border: 1px solid var(--bloc-border, rgba(0,0,0,.1));
 }
 
-
-/* Le canvas/pseudo-éléments étant en position:fixed, ils ne doivent pas créer de scroll */
+/* ---------------------------------
+   Remarques :
+   - Laisse .home-shell SANS min-height:100vh;
+   - Toute typo/couleurs globales restent dans tes autres fichiers (main.css/theme.css).
+---------------------------------- */
