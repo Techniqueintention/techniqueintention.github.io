@@ -1,35 +1,189 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TECHNIQUE INTENTION – Bases</title>
-  <link rel="stylesheet" href="/assets/css/modules.css">
-  <script type="module" src="/assets/js/modules.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bases — Technique Intention</title>
+
+  <!-- styles globaux du site -->
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <!-- viewer (centre) + menu latéral -->
+  <link rel="stylesheet" href="/assets/css/viewer.css">
+  <link rel="stylesheet" href="/assets/css/viewer-menu.css">
+
+  <!-- script global (injecte menu, thème, footer, etc.) -->
+  <script type="module" src="/assets/js/main.js"></script>
 </head>
 <body>
+  <!-- fond étoiles si thème sombre -->
+  <canvas id="theme-canvas"></canvas>
+
+  <!-- bandeau (injecté) -->
   <header id="menu-placeholder"></header>
 
-  <main class="shell">
-    <aside class="side-menu" id="viewer-menu">
-      <nav class="side-list">
-        <a href="#" class="menu-link block" data-viewer="introduction">Introduction</a>
+  <!-- layout viewer -->
+  <main class="viewer-layout blog-layout">
+    <!-- MENU LATERAL -->
+    <div id="viewer-menu-container">
+      <!-- bouton burger (mobile) -->
+      <button id="viewer-menu-burger" aria-label="Ouvrir le menu des sections">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav id="viewer-menu" class="blog-menu">
+        <div class="viewer-menu-header">
+          <h2>📚 Bases</h2>
+          <button id="viewer-menu-close" aria-label="Fermer">×</button>
+        </div>
+
+        <!-- 🔽 Un seul <details> ouvert à la fois -->
+        <details open>
+          <summary>🧭 Introduction</summary>
+          <ul>
+            <li><a href="#" data-view="intro">Présentation</a></li>
+          </ul>
+        </details>
+
         <details>
-          <summary>Sanctuaire intérieur</summary>
-          <div class="content">
-            <a href="#" class="menu-link" data-viewer="creation-sanctuaire">Création</a>
-            <a href="#" class="menu-link" data-viewer="developpement-sanctuaire">Développement</a>
-            <a href="#" class="menu-link" data-viewer="utilisation-sanctuaire">Utilisation</a>
-          </div>
+          <summary>🪙 Fondamentaux</summary>
+          <ul>
+            <li><a href="#" data-view="axiomes">Axiomes</a></li>
+            <li><a href="#" data-view="intentions">Intention — principe</a></li>
+            <li><a href="#" data-view="hygiene">Hygiène mentale</a></li>
+          </ul>
+        </details>
+
+        <details>
+          <summary>🧰 Pratiques</summary>
+          <ul>
+            <li><a href="#" data-view="respiration">Respiration consciente</a></li>
+            <li><a href="#" data-view="notebook">Carnet d’exploration</a></li>
+            <li><a href="#" data-view="rituels">Rituels simples</a></li>
+          </ul>
+        </details>
+
+        <details>
+          <summary>🧪 Outils</summary>
+          <ul>
+            <li><a href="#" data-view="ancrage">Ancrage</a></li>
+            <li><a href="#" data-view="mises-en-forme">Mettre en forme une intention</a></li>
+          </ul>
         </details>
       </nav>
-    </aside>
+    </div>
 
-    <section id="article-viewer" class="viewer" data-basepath="/bases/">
-      <article class="welcome"><h1>Bases</h1></article>
+    <!-- VIEWER -->
+    <section id="article-viewer">
+      <div class="placeholder">
+        <h2>Bases — Introduction</h2>
+        <p>Sélectionnez un élément à gauche pour l’afficher ici.</p>
+      </div>
     </section>
   </main>
 
-  <footer id="footer-placeholder"></footer>
+  <!-- pied de page (injecté) -->
+  <div id="footer-placeholder"></div>
+
+  <!-- scripts viewer -->
+  <script src="/assets/js/viewer.js"></script>
+  <script src="/assets/js/viewer-menu.js"></script>
+
+  <!-- 🔒 Modèles d’articles (chargés dans le viewer) -->
+  <template id="tpl-intro">
+    <article class="article">
+      <div id="article-tools"></div>
+      <h1>Bienvenue dans les Bases</h1>
+      <p>
+        Cette section présente les fondations de Technique Intention : un chemin
+        simple et vivant, posé dans la douceur et la clarté. Vous y trouverez
+        une introduction aux principes, à l’hygiène intérieure, et des pratiques
+        concrètes pour cultiver présence et intention.
+      </p>
+      <blockquote>
+        « Commencer, c’est déjà orienter sa boussole intérieure. »
+      </blockquote>
+      <p class="notes-fin">Astuce : vous pouvez partager chaque page avec le menu “Partager” en haut à droite du contenu.</p>
+    </article>
+  </template>
+
+  <template id="tpl-axiomes">
+    <article class="article">
+      <div id="article-tools"></div>
+      <h1>Axiomes</h1>
+      <p>Quelques propositions simples pour orienter la pratique :</p>
+      <ul>
+        <li>La clarté précède l’action.</li>
+        <li>L’intention guide la direction.</li>
+        <li>La douceur est un accélérateur silencieux.</li>
+      </ul>
+      <p class="notes-fin">Ces axiomes ne sont pas des dogmes : ce sont des points d’appui.</p>
+    </article>
+  </template>
+
+  <template id="tpl-intentions">
+    <article class="article">
+      <div id="article-tools"></div>
+      <h1>L’intention — principe</h1>
+      <p>
+        Formuler une intention, c’est donner une forme subtile à ce que l’on
+        souhaite voir éclore. Elle est courte, positive, précise, et reliée
+        à une sensation juste.
+      </p>
+      <h2>Exemple</h2>
+      <blockquote>« J’avance avec calme et clarté. »</blockquote>
+    </article>
+  </template>
+
+  <template id="tpl-hygiene">
+    <article class="article">
+      <div id="article-tools"></div>
+      <h1>Hygiène mentale</h1>
+      <p>Des habitudes légères pour garder de l’espace intérieur : sommeil, respiration, écriture, limites douces.</p>
+    </article>
+  </template>
+
+  <template id="tpl-respiration">
+    <article class="article">
+      <div id="article-tools"></div>
+      <h1>Respiration consciente</h1>
+      <p>Un cycle simple 4-4-6 : inspirer 4, pause 4, expirer 6. Trois minutes suffisent pour relancer la présence.</p>
+    </article>
+  </template>
+
+  <template id="tpl-notebook">
+    <article class="article">
+      <div id="article-tools"></div>
+      <h1>Carnet d’exploration</h1>
+      <p>Notez ressentis, rêves, inspirations, pistes d’actions. Le carnet devient cartographie vivante.</p>
+    </article>
+  </template>
+
+  <template id="tpl-rituels">
+    <article class="article">
+      <div id="article-tools"></div>
+      <h1>Rituels simples</h1>
+      <ul>
+        <li>Ouverture : 1 bougie + 1 souffle long.</li>
+        <li>Intention : une phrase claire.</li>
+        <li>Clôture : gratitude + journal bref.</li>
+      </ul>
+    </article>
+  </template>
+
+  <template id="tpl-ancrage">
+    <article class="article">
+      <div id="article-tools"></div>
+      <h1>Ancrage</h1>
+      <p>Ressentir les appuis (pieds, bassin), ralentir le regard ; ramener l’attention dans le corps, ici et maintenant.</p>
+    </article>
+  </template>
+
+  <template id="tpl-mises-en-forme">
+    <article class="article">
+      <div id="article-tools"></div>
+      <h1>Mettre en forme une intention</h1>
+      <p>Clé : forme courte, au présent, alignée avec une sensation vraie. Exemple : « Je m’accorde du temps pour respirer chaque jour. »</p>
+    </article>
+  </template>
 </body>
 </html>
