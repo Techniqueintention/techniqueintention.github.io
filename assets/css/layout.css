@@ -32,4 +32,15 @@ footer {
   box-sizing: border-box;
 }
 
+/* si tu gardes un h1 au-dessus du viewer */
+.viewer-title {
+  grid-column: 4;             /* colonne du bloc article */
+  margin: 0 0 12px 0;
+  padding: .6rem 1rem;
+  border-radius: 12px;
+  background: var(--bloc-bg, rgba(255,255,255,.08));
+  border: 1px solid var(--bloc-border, rgba(0,0,0,.1));
+}
+
+
 /* Le canvas/pseudo-éléments étant en position:fixed, ils ne doivent pas créer de scroll */
