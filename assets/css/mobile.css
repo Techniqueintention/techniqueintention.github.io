@@ -123,6 +123,10 @@
     font-weight: 500;
     transition: all 0.2s ease;
     border: 1px solid transparent;
+    /* Amélioration accessibilité tactile - AJOUT */
+    min-height: 44px;
+    display: flex;
+    align-items: center;
   }
   
   .mb-list a:hover {
@@ -178,10 +182,18 @@
 /* ===== Responsive général ===== */
 
 /* 1) Sécurité globale */
-html, body { max-width: 100%; overflow-x: hidden; }
+html, body { 
+  max-width: 100%; 
+  overflow-x: hidden; 
+  /* Compensation pour header fixe - AJOUT IMPORTANT */
+  padding-top: var(--header-h, 64px);
+}
 
 /* 2) Médias toujours fluides */
-img, video, canvas, svg, iframe { max-width: 100%; height: auto; }
+img, video, canvas, svg, iframe { 
+  max-width: 100%; 
+  height: auto; 
+}
 
 /* 3) Header/menu : garder ton menu, le faire respirer et s'adapter */
 @media (max-width: 1024px) {
@@ -221,7 +233,7 @@ img, video, canvas, svg, iframe { max-width: 100%; height: auto; }
 /* 6) Blog viewer : adoucir les espacements en mobile */
 @media (max-width: 980px) {
   .viewer-layout { 
-    margin: calc(var(--header-h, 56px) + 12px) 0 20px 0; 
+    margin: 28px 0 20px 0; /* Ajusté pour compensation header */
     grid-template-columns: 1fr;
     gap: 1rem;
     padding: 0 1rem;
@@ -267,7 +279,18 @@ img, video, canvas, svg, iframe { max-width: 100%; height: auto; }
   scroll-margin-top: 80px; 
 }
 
-/* 9) Préférence utilisateur (réduction mouvement) */
+/* 9) Optimisation spécifique tablette - AJOUT */
+@media (max-width: 900px) and (min-width: 600px) {
+  .site-title a {
+    font-size: 1.2rem; /* Taille intermédiaire */
+  }
+  
+  .mb-drawer {
+    width: min(75vw, 300px); /* Drawer un peu plus étroit */
+  }
+}
+
+/* 10) Préférence utilisateur (réduction mouvement) */
 @media (prefers-reduced-motion: reduce) {
   * { 
     animation: none !important; 
@@ -277,4 +300,27 @@ img, video, canvas, svg, iframe { max-width: 100%; height: auto; }
   .mb-drawer {
     transition: none !important;
   }
+}
+
+/* 11) Empêche le zoom sur focus iOS - AJOUT IMPORTANT */
+input, select, textarea {
+  font-size: 16px;
+}
+
+/* 12) Amélioration accessibilité tactile pour tous les boutons - AJOUT */
+a, button, [role="button"] {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 13) Correction hauteur viewport mobile - AJOUT */
+html {
+  height: -webkit-fill-available;
+}
+
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
 }
