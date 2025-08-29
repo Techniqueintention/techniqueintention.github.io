@@ -67,3 +67,7 @@ footer,
 /* Si tu utilises un canvas de fond */
 #theme-canvas { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
 
+/* Footer via placeholder DIV (même mécanique que Codex) */
+#footer-placeholder { margin-top: auto; background: transparent; }
+
+
