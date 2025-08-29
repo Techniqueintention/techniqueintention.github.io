@@ -4,7 +4,7 @@
 
 .blog-menu {
   position: sticky;
-  top: calc(var(--header-h) + 16px);
+  top: var(--header-h); /* sous le bandeau */
   align-self: start;
   width: 100%;
   max-width: 320px;
@@ -13,6 +13,8 @@
   gap: 1rem;
   font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, sans-serif;
   font-size: 1rem;
+  max-height: calc(100dvh - var(--header-h)); /* reste visible dans l’écran */
+  overflow: auto; /* scroll interne si trop long */
 }
 
 /* Liens carte hors catégories (ex: Introduction) */
@@ -116,5 +118,7 @@
   .blog-menu {
     position: static;
     max-width: none;
+    max-height: none;
+    overflow: visible;
   }
 }
