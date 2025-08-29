@@ -25,10 +25,12 @@
 .blog-menu {
   grid-column: 2;
   position: sticky;
-  top: calc(var(--header-h) + 16px);
+  top: calc(var(--header-h) + 20px); /* Position sous le header */
   align-self: start;
   width: var(--menu-w);
   max-width: none;
+  height: calc(100vh - var(--header-h) - 40px); /* Hauteur ajustée */
+  overflow-y: auto; /* Scroll si nécessaire */
 }
 
 .blog-menu details {
@@ -109,7 +111,6 @@
   box-shadow: 0 0 20px rgba(0,0,0,.4);
 }
 
-
 /* Responsive */
 @media (max-width: 980px) {
   .viewer-layout {
@@ -120,6 +121,7 @@
     grid-column: 2;
     position: static;
     width: 100%;
+    height: auto;
   }
   #article-viewer {
     grid-column: 2;
