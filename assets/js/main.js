@@ -1,15 +1,19 @@
-// Main JS centralisé – importe tous les scripts
-import '/assets/js/loader.js';            // laoder menu et footer
-import '/assets/js/theme.js';            //  gère les thèmes
-import '/assets/js/nav-active.js';      // bandeau menu principal, mise en valeur
+// ========================================================
+// main.js (Technique Intention) — même mécanique que Codex
+// ========================================================
 
-// BLOGS
-import '/assets/js/viewer.js';                   //viewer blog et son menu
+// Modules d'UI
+import '/assets/js/theme.js';
+import '/assets/js/nav-active.js';
+import '/assets/js/viewer.js';
 import '/assets/js/viewer-menu.js';
-
-// MOBILE RESPONSIVE
 import '/assets/js/mobile.js';
 
-// etc.
+// Injection partiels (comme Codex)
+import { IDS } from '/assets/js/ids.js';
+import { injectPartial } from '/assets/js/partials.js';
 
-
+window.addEventListener('DOMContentLoaded', () => {
+  injectPartial(IDS.MENU,   '/menu.html');   // <header id="menu-placeholder"></header>
+  injectPartial(IDS.FOOTER, '/footer.html'); // <div id="footer-placeholder"></div>
+});
