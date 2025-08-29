@@ -23,9 +23,9 @@
   transition: all 0.3s ease; /* Animation fluide */
 }
 
-/* Ajustement du contenu principal pour compenser le header fixe */
+/* Compensation pour header fixe - AJOUT IMPORTANT */
 body {
-  padding-top: var(--header-h); /* Compense la hauteur du header fixe */
+  padding-top: var(--header-h, 64px);
 }
 
 /* Titre à gauche cliquable, sans soulignement */
@@ -39,15 +39,25 @@ body {
 .site-title a:hover{ opacity:.8; }
 
 /* Menu principal */
-.menu-primary{ display:flex; gap:1.4rem; }
+.menu-primary{ 
+  display:flex; 
+  gap:1.4rem; 
+}
 
 .menu-primary a{
   font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-  font-size:1rem; font-weight:500;
-  text-decoration:none; color:var(--text-color,#333);
-  padding:.35rem .7rem; border-radius:8px;
+  font-size:1rem; 
+  font-weight:500;
+  text-decoration:none; 
+  color:var(--text-color,#333);
+  padding:.35rem .7rem; 
+  border-radius:8px;
   transition:background .2s ease, color .2s ease, box-shadow .2s ease, transform .08s ease;
   outline:none;
+  /* Amélioration accessibilité tactile */
+  min-height: 44px;
+  display: flex;
+  align-items: center;
 }
 
 /* Hover / focus */
@@ -68,10 +78,24 @@ body {
 }
 
 /* Commutateur thème */
-.menu-switch{ display:flex; align-items:center; }
+.menu-switch{ 
+  display:flex; 
+  align-items:center; 
+}
+
 #theme-btn{
-  background:none; border:none; font-size:1.3rem; cursor:pointer;
-  color:var(--text-color,#222); transition:transform .2s ease;
+  background:none; 
+  border:none; 
+  font-size:1.3rem; 
+  cursor:pointer;
+  color:var(--text-color,#222); 
+  transition:transform .2s ease;
+  /* Amélioration accessibilité tactile */
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 #theme-btn:hover{ transform:scale(1.2); }
 
@@ -80,22 +104,245 @@ body {
   --accent-bg: color-mix(in oklab, var(--accent) 22%, transparent);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 1024px) {
   .site-header {
-    padding: 0.6rem 1rem;
-  }
-  
-  .menu-primary {
-    gap: 0.8rem;
-  }
-  
-  .menu-primary a {
-    font-size: 0.9rem;
-    padding: 0.3rem 0.6rem;
+    padding:.6rem 1rem;           /* header plus compact */
+    gap:.6rem;
   }
   
   .site-title a {
-    font-size: 1.2rem;
+    font-size:1.1rem;             /* titre un peu réduit */
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    max-width: 65vw;               /* évite le chevauchement en très petit écran */
   }
+
+  /* La barre principale peut passer sur plusieurs lignes si besoin */
+  .menu-primary {
+    flex-wrap: wrap;               /* << clé responsive */
+    gap: .5rem .8rem;
+  }
+  
+  .menu-primary a {
+    padding:.5rem .7rem;          /* meilleures zones de tap */
+    border-radius:8px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Très petits écrans : basculer la nav en colonne si ça coince */
+@media (max-width: 640px) {
+  .menu-primary {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+/* Mobile : on masque la barre desktop, on montre le burger */
+@media (max-width: 900px) {
+  /* On garde le titre (.site-title) et le switch thème (.menu-switch) visibles */
+  .menu-primary { 
+    display: none !important; 
+  }
+
+  /* Header avec position relative pour positionner le burger */
+  .site-header { 
+    position: relative;
+    padding-right: 60px; /* Espace pour le burger */
+  }
+
+  /* Burger - CORRECTION COMPLÈTE */
+  .mb-burger {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    z-index: 1100;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: var(--header-bg, rgba(255,255,255,0.9));
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .mb-burger:hover {
+    background: var(--accent-bg);
+    border-color: var(--accent);
+  }
+  
+  .mb-burger span {
+    width: 22px;
+    height: 2px;
+    background: currentColor;
+    display: block;
+    transition: all 0.3s ease;
+    transform-origin: center;
+  }
+  
+  /* Animation burger -> croix */
+  .mb-burger[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  
+  .mb-burger[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .mb-burger[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Ajustements pour le titre et le bouton thème */
+  .site-title a { 
+    max-width: calc(100% - 100px);
+    padding-right: 10px;
+  }
+  
+  .menu-switch { 
+    position: absolute;
+    right: 65px; /* À gauche du burger */
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 0;
+  }
+
+  /* Drawer - CORRECTION */
+  .mb-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(85vw, 320px);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    background: var(--drawer-bg, rgba(255, 255, 255, 0.98));
+    backdrop-filter: blur(10px);
+    color: var(--text-color, #333);
+    z-index: 1099;
+    padding: 70px 1rem 1rem 1rem;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.15);
+  }
+  
+  .mb-drawer.is-open { 
+    transform: translateX(0); 
+  }
+  
+  .mb-drawer[hidden] { 
+    display: block !important; /* Garde l'élément pour l'animation */
+  }
+
+  /* Liste du drawer */
+  .mb-list { 
+    list-style: none; 
+    margin: 0; 
+    padding: 0; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 0.5rem; 
+  }
+  
+  .mb-list a {
+    display: block;
+    padding: 1rem 1rem;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    /* Amélioration accessibilité tactile */
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .mb-list a:hover {
+    background: var(--accent-bg);
+    color: var(--accent);
+  }
+  
+  .mb-list a[aria-current="page"] {
+    background: var(--accent-bg);
+    color: var(--accent);
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* Voile */
+  .mb-scrim {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1090;
+    backdrop-filter: blur(2px);
+  }
+  
+  .mb-scrim.is-open { 
+    opacity: 1; 
+    pointer-events: auto; 
+  }
+
+  /* Bloquer le scroll de fond quand le tiroir est ouvert */
+  html.mb-no-scroll, 
+  body.mb-no-scroll { 
+    overflow: hidden; 
+    position: fixed;
+    width: 100%;
+  }
+}
+
+/* Mode sombre pour le drawer */
+@media (max-width: 900px) {
+  :root[data-theme="dark"] .mb-drawer {
+    background: rgba(20, 20, 30, 0.98);
+    color: #fff;
+  }
+  
+  :root[data-theme="dark"] .mb-list a {
+    color: #fff;
+  }
+}
+
+/* Optimisation spécifique tablette */
+@media (max-width: 900px) and (min-width: 600px) {
+  .site-title a {
+    font-size: 1.2rem; /* Taille intermédiaire */
+  }
+  
+  .mb-drawer {
+    width: min(75vw, 300px); /* Drawer un peu plus étroit */
+  }
+}
+
+/* Préférence utilisateur (réduction mouvement) */
+@media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .mb-burger,
+  .mb-drawer,
+  .mb-scrim {
+    transition: none !important;
+  }
+  
+  .mb-burger span {
+    transition: none !important;
+  }
+}
+
+/* Empêche le zoom sur focus iOS - AJOUT IMPORTANT */
+input, select, textarea {
+  font-size: 16px;
 }
