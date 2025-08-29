@@ -1,82 +1,4 @@
-/* ===== Responsive mobile/tablette (couche additive) ===== */
-
-/* 1) Sécurité globale */
-html, body { max-width: 100%; overflow-x: hidden; }
-
-/* 2) Médias toujours fluides */
-img, video, canvas, svg, iframe { max-width: 100%; height: auto; }
-
-/* 3) Header/menu : garder ton menu, le faire respirer et s’adapter */
-@media (max-width: 1024px) {
-  .site-header {
-    padding: .6rem 1rem;           /* header plus compact */
-    gap: .6rem;
-  }
-  .site-title a {
-    font-size: 1.1rem;             /* titre un peu réduit */
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    max-width: 65vw;               /* évite le chevauchement en très petit écran */
-  }
-
-  /* La barre principale peut passer sur plusieurs lignes si besoin */
-  .menu-primary {
-    flex-wrap: wrap;               /* << clé responsive */
-    gap: .5rem .8rem;
-  }
-  .menu-primary a {
-    padding: .5rem .7rem;          /* meilleures zones de tap */
-    border-radius: 8px;
-  }
-}
-
-/* 4) Très petits écrans : basculer la nav en colonne si ça coince */
-@media (max-width: 640px) {
-  .menu-primary {
-    width: 100%;
-    justify-content: flex-start;
-    /* si tu préfères une colonne pure, décommente :
-    flex-direction: column; align-items: stretch;
-    */
-  }
-  /* .menu-primary a { text-align: left; }  <-- si colonne */
-}
-
-/* 5) Footer : toujours en bas, sans remonter (complémente ton layout) */
-@media (max-width: 1024px) {
-  footer { padding: .9rem 1rem; font-size: .92rem; }
-}
-
-/* 6) Grilles/colonnes génériques → empilement simple */
-@media (max-width: 980px) {
-  .grid-2, .two-col,
-  .grid-3, .three-col,
-  .grid-4, .four-col {
-    display: grid; gap: 1rem; grid-template-columns: 1fr;
-  }
-}
-
-/* 7) Blog viewer : adoucir les espacements en mobile */
-@media (max-width: 980px) {
-  .viewer-layout { margin: calc(var(--header-h, 56px) + 12px) 0 20px 0; }
-  #article-viewer { padding: 1.1rem; }
-}
-
-/* 8) Accueil : carte plus souple en mobile */
-@media (max-width: 768px) {
-  .welcome { margin: 1rem; padding: 1.2rem 1.4rem; }
-  .welcome h1 { font-size: 1.7rem; }
-  .welcome-text { font-size: 1rem; line-height: 1.65; }
-}
-
-/* 9) Ancrage lisible avec header sticky */
-:target { scroll-margin-top: 72px; }
-
-/* 10) Préférence utilisateur (réduction mouvement) */
-@media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; }
-}
-
-/* ===== Burger mobile (sans impacter le desktop) ===== */
+/* ===== Burger mobile (corrections) ===== */
 
 /* Desktop : le système burger est caché */
 @media (min-width: 901px) {
@@ -88,49 +10,271 @@ img, video, canvas, svg, iframe { max-width: 100%; height: auto; }
   /* On garde le titre (.site-title) et le switch thème (.menu-switch) visibles */
   .menu-primary { display: none !important; }
 
-  /* Le header devient référentiel pour positionner le burger */
-  .site-header { position: sticky; top: 0; z-index: 1000; }
-  .site-header { position: relative; }
+  /* Header avec position relative pour positionner le burger */
+  .site-header { 
+    position: relative;
+    padding-right: 60px; /* Espace pour le burger */
+  }
 
-  /* Burger */
+  /* Burger - CORRECTION COMPLÈTE */
   .mb-burger {
-    position: absolute; top: .6rem; right: .8rem; z-index: 1100;
-    width: 42px; height: 42px; border-radius: 10px;
-    border: 1px solid currentColor; background: none; padding: 0;
-    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    z-index: 1100;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: var(--header-bg, rgba(255,255,255,0.9));
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
   }
-  .mb-burger span { width: 20px; height: 2px; background: currentColor; display: block; }
+  
+  .mb-burger:hover {
+    background: var(--accent-bg);
+    border-color: var(--accent);
+  }
+  
+  .mb-burger span {
+    width: 22px;
+    height: 2px;
+    background: currentColor;
+    display: block;
+    transition: all 0.3s ease;
+    transform-origin: center;
+  }
+  
+  /* Animation burger -> croix */
+  .mb-burger[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  
+  .mb-burger[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .mb-burger[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
 
-  /* Un peu d’air pour le titre et le bouton thème pour éviter le chevauchement */
-  .site-title a { padding-right: 52px; }
-  .menu-switch { margin-right: 52px; }
+  /* Ajustements pour le titre et le bouton thème */
+  .site-title a { 
+    max-width: calc(100% - 100px);
+    padding-right: 10px;
+  }
+  
+  .menu-switch { 
+    position: absolute;
+    right: 65px; /* À gauche du burger */
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 0;
+  }
 
-  /* Drawer */
+  /* Drawer - CORRECTION */
   .mb-drawer {
-    position: fixed; inset: 0 auto 0 0; width: min(82vw, 360px);
-    transform: translateX(-100%); transition: transform .25s ease;
-    background: var(--drawer-bg, rgba(18,18,18,.96));
-    color: var(--text-color, inherit);
-    z-index: 1099; padding: 1rem .8rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(85vw, 320px);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    background: var(--drawer-bg, rgba(255, 255, 255, 0.98));
+    backdrop-filter: blur(10px);
+    color: var(--text-color, #333);
+    z-index: 1099;
+    padding: 70px 1rem 1rem 1rem;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.15);
   }
-  .mb-drawer.is-open { transform: translateX(0); }
-  .mb-drawer[hidden] { display: block; } /* garde l’élément pour l’anim */
+  
+  .mb-drawer.is-open { 
+    transform: translateX(0); 
+  }
+  
+  .mb-drawer[hidden] { 
+    display: block !important; /* Garde l'élément pour l'animation */
+  }
 
-  .mb-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .25rem; }
-  .mb-list a {
-    display: block; padding: .7rem .8rem; border-radius: 10px; text-decoration: none;
+  /* Liste du drawer */
+  .mb-list { 
+    list-style: none; 
+    margin: 0; 
+    padding: 0; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 0.5rem; 
   }
+  
+  .mb-list a {
+    display: block;
+    padding: 1rem 1rem;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+  }
+  
+  .mb-list a:hover {
+    background: var(--accent-bg);
+    color: var(--accent);
+  }
+  
   .mb-list a[aria-current="page"] {
-    outline: 2px solid currentColor; outline-offset: 2px; font-weight: 600;
+    background: var(--accent-bg);
+    color: var(--accent);
+    border-color: var(--accent);
+    font-weight: 600;
   }
 
   /* Voile */
   .mb-scrim {
-    position: fixed; inset: 0; background: rgba(0,0,0,.35);
-    opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 1090;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1090;
+    backdrop-filter: blur(2px);
   }
-  .mb-scrim.is-open { opacity: 1; pointer-events: auto; }
+  
+  .mb-scrim.is-open { 
+    opacity: 1; 
+    pointer-events: auto; 
+  }
 
   /* Bloquer le scroll de fond quand le tiroir est ouvert */
-  html.mb-no-scroll, body.mb-no-scroll { overflow: hidden; }
+  html.mb-no-scroll, 
+  body.mb-no-scroll { 
+    overflow: hidden; 
+    position: fixed;
+    width: 100%;
+  }
+}
+
+/* Mode sombre pour le drawer */
+@media (max-width: 900px) {
+  :root[data-theme="dark"] .mb-drawer {
+    background: rgba(20, 20, 30, 0.98);
+    color: #fff;
+  }
+  
+  :root[data-theme="dark"] .mb-list a {
+    color: #fff;
+  }
+}
+
+/* ===== Responsive général ===== */
+
+/* 1) Sécurité globale */
+html, body { max-width: 100%; overflow-x: hidden; }
+
+/* 2) Médias toujours fluides */
+img, video, canvas, svg, iframe { max-width: 100%; height: auto; }
+
+/* 3) Header/menu : garder ton menu, le faire respirer et s'adapter */
+@media (max-width: 1024px) {
+  .site-header {
+    padding: .6rem 1rem;
+    gap: .6rem;
+  }
+  
+  .site-title a {
+    font-size: 1.1rem;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    max-width: 65vw;
+  }
+}
+
+/* 4) Footer : toujours en bas */
+@media (max-width: 1024px) {
+  footer, .site-footer, #footer-placeholder { 
+    padding: .9rem 1rem; 
+    font-size: .92rem; 
+  }
+}
+
+/* 5) Grilles/colonnes génériques → empilement simple */
+@media (max-width: 980px) {
+  .grid-2, .two-col,
+  .grid-3, .three-col,
+  .grid-4, .four-col {
+    display: grid; 
+    gap: 1rem; 
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 6) Blog viewer : adoucir les espacements en mobile */
+@media (max-width: 980px) {
+  .viewer-layout { 
+    margin: calc(var(--header-h, 56px) + 12px) 0 20px 0; 
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+  
+  #article-viewer { 
+    padding: 1.2rem; 
+    min-height: 300px;
+  }
+  
+  .blog-menu {
+    position: static;
+    max-width: none;
+    height: auto;
+  }
+  
+  .viewer-title {
+    margin: 0 0 1rem 0;
+    padding: 0.8rem 1.2rem;
+    font-size: 1.4rem;
+  }
+}
+
+/* 7) Accueil : carte plus souple en mobile */
+@media (max-width: 768px) {
+  .welcome { 
+    margin: 1rem; 
+    padding: 1.2rem 1.4rem; 
+  }
+  
+  .welcome h1 { 
+    font-size: 1.7rem; 
+  }
+  
+  .welcome-text { 
+    font-size: 1rem; 
+    line-height: 1.65; 
+  }
+}
+
+/* 8) Ancrage lisible avec header sticky */
+:target { 
+  scroll-margin-top: 80px; 
+}
+
+/* 9) Préférence utilisateur (réduction mouvement) */
+@media (prefers-reduced-motion: reduce) {
+  * { 
+    animation: none !important; 
+    transition: none !important; 
+  }
+  
+  .mb-drawer {
+    transition: none !important;
+  }
 }
