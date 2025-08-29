@@ -63,3 +63,7 @@ footer,
 
 /* Ancrages lisibles si header sticky */
 :target { scroll-margin-top: 72px; }
+
+/* Si tu utilises un canvas de fond */
+#theme-canvas { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+
