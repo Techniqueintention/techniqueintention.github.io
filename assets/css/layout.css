@@ -18,17 +18,19 @@ body {
   flex-direction: column;             /* header -> main -> footer */
 }
 
-/* Le contenu principal occupe l’espace restant (pas de centrage global ici) */
+/* Le contenu principal occupe l'espace restant */
 main {
   flex: 1;                            /* pousse le footer en bas si page courte */
   min-height: 0;                      /* évite les dépassements internes */
   display: block;                     /* pas de grid/centrage global */
   padding: 0;
+  width: 100%;                        /* assurance largeur complète */
 }
 
-/* Footer “sticky” : collé au bas si page courte, sinon sous le contenu */
+/* Footer sticky - RÈGLES UNIFIÉES */
 footer,
-.site-footer {
+.site-footer,
+#footer-placeholder {
   width: 100%;
   text-align: center;
   padding: 1rem 1.4rem;
@@ -39,6 +41,14 @@ footer,
   color: var(--text-color);
   box-sizing: border-box;
   margin-top: auto;                   /* clé du sticky footer */
+  flex-shrink: 0;                     /* empêche le rétrécissement */
+}
+
+/* Contenu du footer injecté */
+.footer-inner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* --------- Utilitaires (optionnels) --------- */
@@ -61,13 +71,47 @@ footer,
   border: 1px solid var(--bloc-border, rgba(0,0,0,.1));
 }
 
+/* Correction spécifique pour le viewer-layout */
+.viewer-layout {
+  min-height: 60vh; /* Empêche l'effondrement du layout */
+  display: grid;
+  grid-template-columns: var(--pad-left) var(--menu-w) var(--gap-fixed) minmax(var(--article-min), var(--article-max)) 1fr;
+  max-width: none;
+  margin: calc(var(--header-h) + 18px) 0 28px 0;
+  padding: 0;
+  align-items: start;
+  width: 100%; /* Assurance largeur complète */
+}
+
 /* Ancrages lisibles si header sticky */
 :target { scroll-margin-top: 72px; }
 
 /* Si tu utilises un canvas de fond */
 #theme-canvas { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
 
-/* Footer via placeholder DIV (même mécanique que Codex) */
-#footer-placeholder { margin-top: auto; background: transparent; }
-
-
+/* Responsive */
+@media (max-width: 980px) {
+  .viewer-layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: calc(var(--header-h) + 18px) 0 28px 0;
+    padding: 0 1rem;
+  }
+  
+  .viewer-title {
+    grid-column: 1;
+    margin: 0 0 1rem 0;
+  }
+  
+  .blog-menu {
+    position: static;
+    max-width: none;
+  }
+  
+  /* Ajustements footer en mobile */
+  footer,
+  .site-footer,
+  #footer-placeholder {
+    padding: 1rem;
+  }
+}
