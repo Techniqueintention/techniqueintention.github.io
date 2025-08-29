@@ -2,48 +2,109 @@
 <html lang="fr" data-theme="light">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-
-
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Technique Intention – Accueil</title>
+  
   <!-- CSS global -->
-  <link rel="stylesheet" href="assets/css/main.css">
-   <link rel="stylesheet" href="/assets/css/mobile.css" media="(max-width: 1024px)">
-
-    <!-- ⚙️ Script principal -->
-<script type="module" src="/assets/js/main.js"></script>
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <!-- CSS home -->
+  <link rel="stylesheet" href="/assets/css/home.css">
+  
+  <!-- ⚙️ Script principal -->
+  <script type="module" src="/assets/js/main.js"></script>
+  
+  <!-- Script pour les onglets -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      function initTabs() {
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            const tabId = button.getAttribute('data-tab');
+            
+            // Désactiver tous les onglets
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Activer l'onglet cliqué
+            button.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+          });
+        });
+      }
+      
+      initTabs();
+    });
+  </script>
+  
+  <style>
+    /* Correction header fixe */
+    body {
+      padding-top: var(--header-h, 64px);
+    }
+  </style>
 </head>
 <body>
 
   <!-- ⭐ effets étoiles  -->  
   <canvas id="theme-canvas"></canvas>
+  
   <!-- 🧭 bandeau injecté -->
-  <header id="menu-placeholder"></header>
+  <div id="menu-placeholder"></div>
 
   <!-- Contenu principal -->
-<main class="home-shell">
-  <section class="welcome">
-    <h1>Bienvenue</h1>
-    <div class="welcome-text">
-      <p>
-        Bienvenue dans un espace hors du temps,<br>
-        un lieu pour ralentir, ressentir, et se reconnecter.<br>
-        Ici commence un chemin doux, fait de lumière, de silence,<br>
-        et d’intentions posées comme des étoiles dans l’obscurité.
-      </p>
-      <p>
-        Que ce site soit un espace de respiration,<br>
-        un carnet d’exploration spirituelle,<br>
-        un sanctuaire pour accueillir la paix en soi.
-      </p>
-    </div>
-  </section>
-</main>
+  <main class="home-shell">
+  
 
+    <!-- Système d'onglets -->
+    <div class="tabs-container">
+      <div class="tabs-header">
+        <button class="tab-button active" data-tab="tab1">Bienvenue</button>
+        <button class="tab-button" data-tab="tab2">Méthodes</button>
+        <button class="tab-button" data-tab="tab3">Témoignages</button>
+        <button class="tab-button" data-tab="tab4">Ressources</button>
+      </div>
+      
+      <div id="tab1" class="tab-content active">
+        <h3>Bienvenue</h3>
+         <p>
+          Bienvenue dans un espace hors du temps,<br>
+          un lieu pour ralentir, ressentir, et se reconnecter.<br>
+          Ici commence un chemin doux, fait de lumière, de silence,<br>
+          et d'intentions posées comme des étoiles dans l'obscurité.
+        </p>
+        <p>
+          Que ce site soit un espace de respiration,<br>
+          un carnet d'exploration spirituelle,<br>
+          un sanctuaire pour accueillir la paix en soi.
+        </p>
+      </div>
+      
+      <div id="tab2" class="tab-content">
+        <h3>Nos Méthodes</h3>
+        <p>Découvrez différentes techniques adaptées à vos besoins : méditation guidée, respiration consciente, visualisation créative, et travail sur les intentions.</p>
+        <p>Chaque méthode est expliquée pas à pas pour une pratique en toute autonomie.</p>
+      </div>
+      
+      <div id="tab3" class="tab-content">
+        <h3>Témoignages</h3>
+        <p>"Cette technique a transformé ma relation à moi-même. Je me sens plus aligné et en paix." - Marie</p>
+        <p>"Un accompagnement bienveillant qui m'a aidé à traverser une période difficile." - Thomas</p>
+      </div>
+      
+      <div id="tab4" class="tab-content">
+        <h3>Ressources</h3>
+        <p>Accédez à nos guides pratiques, méditations audio, et exercices pour approfondir votre pratique.</p>
+        <p>Rejoignez également notre communauté pour échanger et partager vos experiences.</p>
+      </div>
+    </div>
+
+  </main>
 
   <!-- 📌 footer injecté -->
-  <footer id="footer-placeholder"></footer>
-
+  <div id="footer-placeholder"></div>
 
 </body>
 </html>
