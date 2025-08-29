@@ -4,7 +4,7 @@
 
 .blog-menu {
   position: sticky;
-  top: calc(var(--header-h) + 20px); /* Position sous le header */
+  top: calc(var(--header-h) + 20px); /* Ajusté pour le header fixe */
   align-self: start;
   width: 100%;
   max-width: 320px;
@@ -120,5 +120,6 @@
     max-width: none;
     height: auto;
     overflow-y: visible;
+    top: 0; /* Réinitialiser la position top */
   }
 }
