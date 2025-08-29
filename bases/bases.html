@@ -8,38 +8,6 @@
   <!-- styles site -->
   <link rel="stylesheet" href="/assets/css/main.css">
   <script type="module" src="/assets/js/main.js"></script>
-  
-  <!-- Style correctif pour le footer -->
-  <style>
-    /* Correction spécifique pour garantir le bon comportement du footer */
-    body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    
-    main {
-      flex: 1 0 auto;
-      width: 100%;
-    }
-    
-    /* S'assurer que le viewer-layout ne perturbe pas le flux */
-    .viewer-layout {
-      min-height: 60vh;
-    }
-    
-    /* Garantir que le footer reste en bas */
-    #footer-placeholder {
-      margin-top: auto;
-      flex-shrink: 0;
-    }
-    
-    /* Style pour le footer injecté */
-    .site-footer, .footer-inner {
-      width: 100%;
-      text-align: center;
-    }
-  </style>
 </head>
 <body>
 
@@ -50,7 +18,7 @@
   <div id="menu-placeholder"></div>
 
   <main class="viewer-layout">
-    <!-- A utiliser seulement si tu gardes un titre hors viewer -->
+    <!-- Titre centré -->
     <h1 class="viewer-title">LES BASES</h1>
 
     <!-- MENU FIXE À GAUCHE -->
@@ -59,11 +27,11 @@
         <span>Introduction</span>
       </a>
 
-      <details open>
+      <details>
         <summary>Fondamentaux</summary>
         <ul>
           <li><a href="#" data-viewer="./definition.html" data-date="2025-08-28">Définition</a></li>
-          <li><a href="#" data-viewer="./test.html">Tests</a></li>
+          <li><a href="#" data-viewer="./tests.html">Tests</a></li>
         </ul>
       </details>
 
@@ -97,4 +65,3 @@
 
 </body>
 </html>
-
