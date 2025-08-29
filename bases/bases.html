@@ -8,6 +8,33 @@
   <!-- styles site -->
   <link rel="stylesheet" href="/assets/css/main.css">
   <script type="module" src="/assets/js/main.js"></script>
+  
+  <!-- Style correctif pour le footer -->
+  <style>
+    /* Correction structurelle pour isoler le footer */
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    main {
+      flex: 1 0 auto;
+      width: 100%;
+    }
+    
+    /* Container principal qui contient SEULEMENT le viewer */
+    .viewer-container {
+      display: contents; /* Permet au viewer-layout de fonctionner normalement */
+    }
+    
+    /* S'assurer que le footer reste en dehors du viewer */
+    #footer-placeholder {
+      margin-top: auto;
+      flex-shrink: 0;
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
 
@@ -17,50 +44,55 @@
   <!-- 🧠 Menu injecté dynamiquement -->
   <div id="menu-placeholder"></div>
 
-  <main class="viewer-layout">
-    <!-- Titre centré -->
-    <h1 class="viewer-title">LES BASES</h1>
+  <!-- Container principal - CONTIENT SEULEMENT LE VIEWER -->
+  <main class="viewer-container">
+    <div class="viewer-layout">
+      
+      <!-- Titre centré -->
+      <h1 class="viewer-title">LES BASES</h1>
 
-    <!-- MENU FIXE À GAUCHE -->
-    <nav id="viewer-menu" class="blog-menu" aria-label="Navigation Bases">
-      <a class="menu-card" href="#" data-viewer="./intro.html" data-date="2025-08-28">
-        <span>Introduction</span>
-      </a>
+      <!-- MENU FIXE À GAUCHE -->
+      <nav id="viewer-menu" class="blog-menu" aria-label="Navigation Bases">
+        <a class="menu-card" href="#" data-viewer="./intro.html" data-date="2025-08-28">
+          <span>Introduction</span>
+        </a>
 
-      <details>
-        <summary>Fondamentaux</summary>
-        <ul>
-          <li><a href="#" data-viewer="./definition.html" data-date="2025-08-28">Définition</a></li>
-          <li><a href="#" data-viewer="./tests.html">Tests</a></li>
-        </ul>
-      </details>
+        <details>
+          <summary>Fondamentaux</summary>
+          <ul>
+            <li><a href="#" data-viewer="./definition.html" data-date="2025-08-28">Définition</a></li>
+            <li><a href="#" data-viewer="./tests.html">Tests</a></li>
+          </ul>
+        </details>
 
-      <details>
-        <summary>Pratiques</summary>
-        <ul>
-          <li><a href="#" data-viewer="./respiration.html">Respiration consciente</a></li>
-        </ul>
-      </details>
+        <details>
+          <summary>Pratiques</summary>
+          <ul>
+            <li><a href="#" data-viewer="./respiration.html">Respiration consciente</a></li>
+          </ul>
+        </details>
 
-      <details>
-        <summary>Outils</summary>
-        <ul>
-          <li><a href="#" data-viewer="./mise-en-forme.html">Mettre en forme une intention</a></li>
-        </ul>
-      </details>
-    </nav>
+        <details>
+          <summary>Outils</summary>
+          <ul>
+            <li><a href="#" data-viewer="./mise-en-forme.html">Mettre en forme une intention</a></li>
+          </ul>
+        </details>
+      </nav>
 
-    <!-- COLONNE ARTICLE -->
-    <section id="article-viewer" role="region" aria-live="polite">
-      <div class="placeholder">
-        <h2>Bienvenue dans les Bases de la Technique</h2>
-        <p>Cette section présente les fondations de Technique Intention : un chemin simple et vivant, posé dans la douceur et la clarté.</p>
-        <p class="notes-fin">Cliquez à gauche pour afficher l'article souhaité.</p>
-      </div>
-    </section>
+      <!-- COLONNE ARTICLE -->
+      <section id="article-viewer" role="region" aria-live="polite">
+        <div class="placeholder">
+          <h2>Bienvenue dans les Bases de la Technique</h2>
+          <p>Cette section présente les fondations de Technique Intention : un chemin simple et vivant, posé dans la douceur et la clarté.</p>
+          <p class="notes-fin">Cliquez à gauche pour afficher l'article souhaité.</p>
+        </div>
+      </section>
+      
+    </div>
   </main>
 
-  <!-- PIED DE PAGE -->
+  <!-- PIED DE PAGE - EN DEHORS DU MAIN ET DU VIEWER -->
   <div id="footer-placeholder"></div>
 
 </body>
