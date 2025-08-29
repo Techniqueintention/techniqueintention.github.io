@@ -1,48 +1,146 @@
 /* ===============================
-   Accueil — bloc centré, texte justifié
+   Accueil — avec système d'onglets
    =============================== */
 
-/* main est déjà en Grid + centré via layout.css, on ne rajoute pas de min-height */
+/* Container principal */
 .home-shell {
   width: 100%;
+  padding: 2rem 1rem;
 }
 
-/* Carte centrale */
+/* Carte centrale ÉLARGIE */
 .welcome {
-  max-width: 820px;
-  margin: 2rem;                          /* respiration sans pousser la page */
-  padding: 2rem 2.5rem;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.10); /* translucide clair/sombre */
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  max-width: 920px; /* Élargi de 820px à 920px */
+  margin: 0 auto;
+  padding: 2.5rem 3rem;
+  border-radius: 20px;
+  background: var(--bloc-bg, rgba(255, 255, 255, 0.12));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+  border: 1px solid var(--bloc-border, rgba(255,255,255,0.1));
 }
 
-/* Titre centré, présence douce */
+/* Titre centré */
 .welcome h1 {
   font-family: "Cinzel", serif;
-  font-size: 2.2rem;
-  margin: 0 0 1.2rem 0;
+  font-size: 2.4rem;
+  margin: 0 0 2rem 0;
   text-align: center;
   color: var(--link-color);
-  text-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  text-shadow: 0 2px 15px rgba(0,0,0,0.15);
 }
 
-/* Texte justifié et confortable */
+/* Texte justifié */
 .welcome-text {
   text-align: justify;
   font-family: "Poppins", sans-serif;
-  font-size: 1.08rem;
-  line-height: 1.75;
+  font-size: 1.1rem;
+  line-height: 1.8;
   color: var(--text-color);
 }
 
-.welcome-text p { margin: 0 0 1rem 0; }
+.welcome-text p { 
+  margin: 0 0 1.5rem 0; 
+}
 
-/* Centrage réel de la page d’accueil, compatible avec layout.css actuel */
-.home-shell {
-  min-height: calc(100dvh - var(--header-h, 64px));
-  display: grid;
-  place-items: center;
+/* ===== SYSTÈME D'ONGLETS ===== */
+.tabs-container {
+  max-width: 920px;
+  margin: 3rem auto;
+}
+
+.tabs-header {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.tab-button {
+  padding: 1rem 2rem;
+  border: none;
+  background: var(--tab-inactive-bg, rgba(255,255,255,0.08));
+  color: var(--text-color);
+  border-radius: 12px 12px 0 0;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.tab-button:hover {
+  background: var(--tab-hover-bg, rgba(255,255,255,0.15));
+}
+
+.tab-button.active {
+  background: var(--tab-active-bg, rgba(255,255,255,0.2));
+  color: var(--link-color);
+  border-bottom-color: var(--link-color);
+}
+
+.tab-content {
+  display: none;
+  padding: 2.5rem;
+  background: var(--bloc-bg, rgba(255, 255, 255, 0.1));
+  border-radius: 0 16px 16px 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--bloc-border, rgba(255,255,255,0.1));
+}
+
+.tab-content.active {
+  display: block;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .welcome {
+    padding: 2rem 1.5rem;
+    margin: 1rem;
+    max-width: calc(100% - 2rem);
+  }
+  
+  .welcome h1 {
+    font-size: 2rem;
+  }
+  
+  .welcome-text {
+    font-size: 1rem;
+    text-align: left;
+  }
+  
+  .tabs-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .tab-button {
+    border-radius: 8px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .tab-content {
+    padding: 1.5rem;
+    border-radius: 0 0 12px 12px;
+  }
+}
+
+/* Mode sombre */
+:root[data-theme="dark"] .welcome {
+  background: rgba(10, 15, 30, 0.85);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+:root[data-theme="dark"] .tab-content {
+  background: rgba(10, 15, 30, 0.8);
+  border: 1px solid rgba(255,255,255,0.08);
 }
