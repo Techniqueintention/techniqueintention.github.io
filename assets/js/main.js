@@ -1,8 +1,10 @@
-// main.js — Ordre corrigé
+// main.js — Technique Intention
+
+// ORDRE CORRIGÉ : viewer-menu.js doit être chargé avant viewer.js
 import '/assets/js/theme.js';
 import '/assets/js/nav-active.js';
-import '/assets/js/viewer-menu.js';   // Doit être chargé avant viewer.js
-import '/assets/js/viewer.js';
+import '/assets/js/viewer-menu.js';   // Chargé en premier
+import '/assets/js/viewer.js';        // Chargé après (contient l'accordéon)
 import '/assets/js/mobile.js';
 
 import { IDS } from '/assets/js/ids.js';
