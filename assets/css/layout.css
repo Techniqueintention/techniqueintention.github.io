@@ -8,14 +8,15 @@
 /* Layout global : page en colonne, pas de scroll parasite */
 html, body {
   height: 100%;
-  overflow-x: hidden;                 /* sécurité horizontale */
+  overflow-x: hidden;
 }
 
 /* Le BODY devient le conteneur flex vertical */
 body {
   min-height: 100dvh;
   display: flex;
-  flex-direction: column;             /* header -> main -> footer */
+  flex-direction: column;
+  padding-top: var(--header-h, 64px); /* Compensation pour header fixe */
 }
 
 /* Le contenu principal occupe l'espace restant */
@@ -76,17 +77,18 @@ footer,
   justify-self: center; /* Centre horizontalement */
 }
 
-/* Correction spécifique pour le viewer-layout */
+/* Viewer layout - AJUSTÉ */
 .viewer-layout {
-  min-height: 60vh; /* Empêche l'effondrement du layout */
+  min-height: 60vh;
   display: grid;
   grid-template-columns: var(--pad-left) var(--menu-w) var(--gap-fixed) minmax(var(--article-min), var(--article-max)) 1fr;
   max-width: none;
-  margin: calc(var(--header-h) + 18px) 0 28px 0;
+  margin: calc(var(--header-h, 64px) + 38px) 0 28px 0; /* Marge supérieure augmentée */
   padding: 0;
   align-items: start;
-  width: 100%; /* Assurance largeur complète */
+  width: 100%;
 }
+
 
 /* Ancrages lisibles si header sticky */
 :target { scroll-margin-top: 72px; }
