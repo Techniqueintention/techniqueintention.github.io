@@ -5,66 +5,64 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Bases — Technique Intention</title>
 
-  <!-- styles site -->
+  <!-- styles & scripts -->
   <link rel="stylesheet" href="/assets/css/main.css">
   <script type="module" src="/assets/js/main.js"></script>
 </head>
 <body>
 
-     <!-- EFFET ETOILE SI THEME DARK -->
+  <!-- Effet étoile si thème dark -->
   <canvas id="theme-canvas"></canvas>
 
-     <!-- MENU PRINCIPAL BANCDEAU -->
-  <header id="menu-placeholder"></header>
+  <!-- 1) BANDEAU / MENU (injection du partial menu.html) -->
+  <div id="menu-placeholder"></div>
 
-  <main class="viewer-layout">
+  <!-- 2) CONTENU / CORPS -->
+  <main id="site-main" class="site-main" data-layout="sidebar">
+    <div class="viewer-grid">
 
-   <!-- A utiliser seulement si tu gardes un titre hors viewer -->
-    <h1 class="viewer-title">LES BASES</h1>
+      <!-- COLONNE MENU (sticky sous le bandeau) -->
+      <aside id="viewer-menu" class="blog-menu" aria-label="Navigation Bases">
+        <a class="menu-card" href="#" data-viewer="./intro.html" data-date="2025-08-28">
+          <span>Introduction</span>
+        </a>
 
-    <!-- MENU FIXE À GAUCHE -->
-    <nav id="viewer-menu" class="blog-menu" aria-label="Navigation Bases">
-      <a class="menu-card" href="#" data-viewer="./intro.html" data-date="2025-08-28">
-        <span>Introduction</span>
-      </a>
+        <details open>
+          <summary>Fondamentaux</summary>
+          <ul>
+            <li><a href="#" data-viewer="./definition.html" data-date="2025-08-28">Définition</a></li>
+          </ul>
+        </details>
 
-      <details open>
-        <summary>Fondamentaux</summary>
-        <ul>
-          <li><a href="#" data-viewer="./definition.html" data-date="2025-08-28">Définition</a></li>
-        </ul>
-      </details>
+        <details>
+          <summary>Pratiques</summary>
+          <ul>
+            <li><a href="#" data-viewer="./respiration.html">Respiration consciente</a></li>
+          </ul>
+        </details>
 
-      <details>
-        <summary>Pratiques</summary>
-        <ul>
-          <li><a href="#" data-viewer="./respiration.html">Respiration consciente</a></li>
-        </ul>
-      </details>
+        <details>
+          <summary>Outils</summary>
+          <ul>
+            <li><a href="#" data-viewer="./mise-en-forme.html">Mettre en forme une intention</a></li>
+          </ul>
+        </details>
+      </aside>
 
-      <details>
-        <summary>Outils</summary>
-        <ul>
-          <li><a href="#" data-viewer="./mise-en-forme.html">Mettre en forme une intention</a></li>
-        </ul>
-      </details>
-    </nav>
+      <!-- COLONNE ARTICLE (viewer) -->
+      <article id="article-viewer" class="viewer-content" role="region" aria-live="polite">
+        <div class="placeholder">
+          <h2>Bienvenue dans les Bases de la Technique</h2>
+          <p>Cette section présente les fondations de Technique Intention : un chemin simple et vivant, posé dans la douceur et la clarté.</p>
+          <p class="notes-fin">Cliquez à gauche pour afficher l’article souhaité.</p>
+        </div>
+      </article>
 
-    <!-- COLONNE ARTICLE -->
-    <section id="article-viewer" role="region" aria-live="polite">
-      <div class="placeholder">
-        <h2>Bienvenue dans les Bases de la Technique</h2>
-        <p>Cette section présente les fondations de Technique Intention : un chemin simple et vivant, posé dans la douceur et la clarté.</p>
-        <p class="notes-fin">Cliquez à gauche pour afficher l’article souhaité.</p>
-      </div>
-    </section>
-
+    </div>
   </main>
 
-   <!-- PIED DE PAGE -->
-  <div id="footer-placeholder"></div>
+  <!-- 3) PIED DE PAGE (injection du partial footer.html) -->
+  <footer id="footer-placeholder" class="site-footer"></footer>
 
 </body>
 </html>
-
-
