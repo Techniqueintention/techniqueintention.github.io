@@ -61,14 +61,19 @@ footer,
   place-items: center;
 }
 
-/* Titre au-dessus du viewer si tu décides de le garder sur certaines pages */
+/* Titre au-dessus du viewer - CORRIGÉ */
 .viewer-title {
-  grid-column: 4;
-  margin: 0 0 12px 0;
-  padding: .6rem 1rem;
+  text-align: center;
+  margin: 0 auto 24px auto;
+  padding: 1rem 2rem;
   border-radius: 12px;
   background: var(--bloc-bg, rgba(255,255,255,.08));
   border: 1px solid var(--bloc-border, rgba(0,0,0,.1));
+  display: inline-block;
+  width: auto;
+  max-width: 90%;
+  grid-column: 1 / -1; /* Prend toute la largeur de la grille */
+  justify-self: center; /* Centre horizontalement */
 }
 
 /* Correction spécifique pour le viewer-layout */
