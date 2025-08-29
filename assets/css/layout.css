@@ -13,7 +13,7 @@ html, body {
 
 /* Le BODY devient le conteneur flex vertical */
 body {
-  min-height: 100dvh;                 /* couvre toute la hauteur écran (mobile friendly) */
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;             /* header -> main -> footer */
 }
