@@ -39,3 +39,10 @@
 }
 
 .welcome-text p { margin: 0 0 1rem 0; }
+
+/* Centrage réel de la page d’accueil, compatible avec layout.css actuel */
+.home-shell {
+  min-height: calc(100dvh - var(--header-h, 64px));
+  display: grid;
+  place-items: center;
+}
