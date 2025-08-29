@@ -3,7 +3,7 @@
    =============================== */
 
 .blog-menu {
-  position: sticky; /* Changé de sticky à fixed */
+  position: sticky;
   top: calc(var(--header-h) + 20px); /* Position sous le header */
   align-self: start;
   width: 100%;
