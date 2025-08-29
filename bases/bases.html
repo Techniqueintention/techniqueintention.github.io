@@ -8,18 +8,49 @@
   <!-- styles site -->
   <link rel="stylesheet" href="/assets/css/main.css">
   <script type="module" src="/assets/js/main.js"></script>
+  
+  <!-- Style correctif pour le footer -->
+  <style>
+    /* Correction spécifique pour garantir le bon comportement du footer */
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    main {
+      flex: 1 0 auto;
+      width: 100%;
+    }
+    
+    /* S'assurer que le viewer-layout ne perturbe pas le flux */
+    .viewer-layout {
+      min-height: 60vh;
+    }
+    
+    /* Garantir que le footer reste en bas */
+    #footer-placeholder {
+      margin-top: auto;
+      flex-shrink: 0;
+    }
+    
+    /* Style pour le footer injecté */
+    .site-footer, .footer-inner {
+      width: 100%;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
 
-     <!-- EFFET ETOILE SI THEME DARK -->
+  <!-- EFFET ETOILE SI THEME DARK -->
   <canvas id="theme-canvas"></canvas>
 
-<!-- 🧠 Menu injecté dynamiquement -->
-<header id="menu-placeholder"></header>
+  <!-- 🧠 Menu injecté dynamiquement -->
+  <div id="menu-placeholder"></div>
 
   <main class="viewer-layout">
-
-   <!-- A utiliser seulement si tu gardes un titre hors viewer -->
+    <!-- A utiliser seulement si tu gardes un titre hors viewer -->
     <h1 class="viewer-title">LES BASES</h1>
 
     <!-- MENU FIXE À GAUCHE -->
@@ -32,7 +63,7 @@
         <summary>Fondamentaux</summary>
         <ul>
           <li><a href="#" data-viewer="./definition.html" data-date="2025-08-28">Définition</a></li>
-          <li><a href="#" data-viewer="./definition.html"">Tests</a></li>
+          <li><a href="#" data-viewer="./definition.html">Tests</a></li>
         </ul>
       </details>
 
@@ -56,19 +87,13 @@
       <div class="placeholder">
         <h2>Bienvenue dans les Bases de la Technique</h2>
         <p>Cette section présente les fondations de Technique Intention : un chemin simple et vivant, posé dans la douceur et la clarté.</p>
-        <p class="notes-fin">Cliquez à gauche pour afficher l’article souhaité.</p>
+        <p class="notes-fin">Cliquez à gauche pour afficher l'article souhaité.</p>
       </div>
     </section>
-
   </main>
 
-
-
-<!-- PIED DE PAGE -->
-<div id="footer-placeholder"></div>
+  <!-- PIED DE PAGE -->
+  <div id="footer-placeholder"></div>
 
 </body>
 </html>
-
-
-
