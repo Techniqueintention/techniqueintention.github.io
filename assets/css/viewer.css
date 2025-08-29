@@ -43,7 +43,7 @@
   grid-column: 4;
   width: 100%;   /* occupe toute la colonne fluide */
   max-width: none;
-  min-height: 460px;
+  min-height: 400px; /* Réduit de 460px */
   padding: 2rem 2.6rem;
   border-radius: 16px;
   background: var(--bloc-bg, rgba(255,255,255,.08));
