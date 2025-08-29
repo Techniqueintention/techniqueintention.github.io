@@ -35,7 +35,7 @@ footer,
   font-size: 0.85rem;
   line-height: 1.4;
   opacity: 0.85;
-  background: transparent;
+  background: transparent !important;
   color: var(--text-color);
   box-sizing: border-box;
   margin-top: auto;                   /* clé du sticky footer */
