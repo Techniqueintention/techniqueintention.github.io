@@ -1,7 +1,6 @@
 /* Fichier central - main.css */
 
 /* Reset + styles globaux */
-/* Layout générique */
 @import url("/assets/css/layout.css");
 
 /* Bandeau et navigation */
@@ -11,7 +10,7 @@
 @import url("/assets/css/themes/theme-light.css");
 @import url("/assets/css/themes/theme-dark.css");
 
-/* Typographie spécifique */
+/* Pages spécifiques */
 @import url("/assets/css/home.css");
 @import url("/assets/css/notes.css");
 
@@ -19,6 +18,5 @@
 @import url("/assets/css/viewer.css");
 @import url("/assets/css/viewer-menu.css");
 
-
-/* MOBILE RESPONSIVE */
+/* MOBILE RESPONSIVE - Import ici */
 @import url("/assets/css/mobile.css");
