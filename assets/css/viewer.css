@@ -5,18 +5,18 @@
 :root {
   --pad-left: 40px;
   --menu-w: 300px;
-  --article-min: 720px;    /* largeur mini pour la lisibilité */
-  --article-max: 1180px;   /* largeur maxi */
+  --article-min: 720px;
+  --article-max: 1180px;
   --gap-fixed: 40px;
   --header-h: 64px;
 }
 
-/* Container principal */
+/* Container principal - AJUSTÉ */
 .viewer-layout {
   display: grid;
   grid-template-columns: var(--pad-left) var(--menu-w) var(--gap-fixed) minmax(var(--article-min), var(--article-max)) 1fr;
   max-width: none;
-  margin: calc(var(--header-h) + 18px) 0 28px 0;
+  margin: calc(var(--header-h) + 38px) 0 28px 0; /* Marge supérieure augmentée */
   padding: 0;
   align-items: start;
 }
