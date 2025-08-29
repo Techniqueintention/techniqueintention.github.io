@@ -6,6 +6,7 @@
   --header-h: 64px; /* hauteur du header réutilisable ailleurs */
 }
 
+/* BANDEAU FIXE EN HAUT */
 .site-header{
   display:flex;
   align-items:center;
@@ -13,7 +14,7 @@
   padding:.8rem 2rem;
   background: var(--header-bg, rgba(255,255,255,.8));
   box-shadow:0 2px 5px rgba(0,0,0,.08);
-  position:sticky;
+  position:sticky; /* Changement pour sticky */
   top:0;
   z-index:1000; /* élevé pour passer au-dessus */
   backdrop-filter: blur(6px);
