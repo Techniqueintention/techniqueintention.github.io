@@ -212,7 +212,11 @@ html, body {
   }
   .home-shell,
   main {
-    margin-top: 64px;
+    margin-top: 56px;
+    padding-bottom: 80px;
+    min-height: 60vh;
+    overflow-y: auto;
+    box-sizing: border-box;
   }
   #footer-placeholder {
     margin-top: 2rem;
