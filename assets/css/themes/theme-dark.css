@@ -92,45 +92,18 @@
 }
 
 /* Hover du menu */
+[data-theme="dark"] .menu-primary a {
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
 [data-theme="dark"] .menu-primary a:hover {
   background: var(--nav-hover-bg);
-  border-radius: 6px;
 }
 
-/* Transparence préservée pour le contenu */
-[data-theme="dark"] main,
-[data-theme="dark"] .home-shell,
-[data-theme="dark"] .welcome,
-[data-theme="dark"] section {
-  background: transparent !important;
-}
-
-/* Ajouts pour améliorer l'ambiance nuit étoilée */
-[data-theme="dark"] h1, 
-[data-theme="dark"] h2, 
-[data-theme="dark"] h3 {
-  color: var(--accent-color);
-  text-shadow: 0 0 5px rgba(94, 176, 255, 0.3);
-}
-
-[data-theme="dark"] code {
-  background: rgba(15, 30, 50, 0.4);
-  color: var(--accent-color);
-  border: 1px solid rgba(60, 110, 180, 0.3);
-}
-
-[data-theme="dark"] .card, 
-[data-theme="dark"] article {
-  background: var(--card-bg);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(70, 130, 220, 0.15);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-/* ===============================
-   Style du menu principal - Bouton actif
-   =============================== */
-
+/* Style du bouton actif en bleu */
 [data-theme="dark"] .menu-primary a.active,
 [data-theme="dark"] .menu-primary a:active,
 [data-theme="dark"] .menu-primary a[aria-current="page"] {
@@ -161,4 +134,39 @@
 [data-theme="dark"] .menu-primary a.active,
 [data-theme="dark"] .menu-primary a[aria-current="page"] {
   animation: active-pulse 4s infinite ease-in-out;
+}
+
+/* Transparence préservée pour le contenu */
+[data-theme="dark"] main,
+[data-theme="dark"] .home-shell,
+[data-theme="dark"] .welcome,
+[data-theme="dark"] section {
+  background: transparent !important;
+}
+
+/* Ajouts pour améliorer l'ambiance nuit étoilée */
+[data-theme="dark"] h1, 
+[data-theme="dark"] h2, 
+[data-theme="dark"] h3 {
+  color: var(--accent-color);
+  text-shadow: 0 0 5px rgba(94, 176, 255, 0.3);
+}
+
+[data-theme="dark"] code {
+  background: rgba(15, 30, 50, 0.4);
+  color: var(--accent-color);
+  border: 1px solid rgba(60, 110, 180, 0.3);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+}
+
+[data-theme="dark"] .card, 
+[data-theme="dark"] article {
+  background: var(--card-bg);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(70, 130, 220, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
 }
