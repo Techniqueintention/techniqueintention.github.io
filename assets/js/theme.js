@@ -1,46 +1,32 @@
 // Thèmes clair / sombre + étoiles en sombre (autonome)
 import { setupCanvas, initParticles, stopParticles } from "/assets/js/canvas.js";
 
-// Appliquer le thème IMMÉDIATEMENT après le chargement du script
+// Appliquer le thème IMMÉDIATEMENT
 (function() {
   const root = document.documentElement;
   
-  // Récupérer le thème sauvegardé AVANT le rendu
+  // Récupérer le thème sauvegardé
   const savedTheme = localStorage.getItem("site-theme") || "light";
   
-  // Appliquer le thème immédiatement
+  // Appliquer le thème immédiatement (avant DOMContentLoaded)
   root.setAttribute("data-theme", savedTheme);
-  
-  // Masquer le contenu brièvement pour éviter le flash
-  const style = document.createElement('style');
-  style.textContent = `
-    body:not([data-theme]) {
-      opacity: 0;
-      visibility: hidden;
-    }
-    body[data-theme] {
-      opacity: 1;
-      visibility: visible;
-      transition: opacity 0.2s ease;
-    }
-  `;
-  document.head.appendChild(style);
-  
-  // Une fois le DOM chargé, finaliser l'initialisation
-  document.addEventListener("DOMContentLoaded", () => {
+})();
+
+document.addEventListener("DOMContentLoaded", () => {
+  const root = document.documentElement;
+
+  // attendre l'injection du menu et du bouton
+  const check = setInterval(() => {
     const themeBtn = document.getElementById("theme-btn");
     const canvas = document.getElementById("theme-canvas");
-    
-    if (!themeBtn || !canvas) {
-      console.warn("Éléments de thème non trouvés");
-      return;
-    }
+    if (!themeBtn || !canvas) return;
+    clearInterval(check);
 
     // prépare le canvas: au-dessus du fond, sous le contenu
     function prepareCanvas() {
       canvas.style.position = "fixed";
       canvas.style.inset = "0";
-      canvas.style.zIndex = "0";
+      canvas.style.zIndex = "0";          // ⚠️ plus -1
       canvas.style.pointerEvents = "none";
     }
 
@@ -56,7 +42,7 @@ import { setupCanvas, initParticles, stopParticles } from "/assets/js/canvas.js"
       if (theme === "dark") {
         prepareCanvas();
         setupCanvas();
-        initParticles("stars", 140);
+        initParticles("stars", 140); // étoiles
         setCanvasVisible(true);
       } else {
         stopParticles();
@@ -64,11 +50,12 @@ import { setupCanvas, initParticles, stopParticles } from "/assets/js/canvas.js"
       }
     }
 
-    // Mettre à jour l'interface selon le thème déjà appliqué
-    themeBtn.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+    // Initialiser avec le thème déjà appliqué
+    const saved = localStorage.getItem("site-theme") || "light";
+    themeBtn.textContent = saved === "dark" ? "☀️" : "🌙";
     
-    // Initialiser le canvas si on est en mode sombre
-    if (savedTheme === "dark") {
+    // Si le thème est déjà dark, initialiser les particules
+    if (saved === "dark") {
       prepareCanvas();
       setupCanvas();
       initParticles("stars", 140);
@@ -79,9 +66,5 @@ import { setupCanvas, initParticles, stopParticles } from "/assets/js/canvas.js"
       const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
       applyTheme(next);
     });
-    
-    // Rendre le corps visible
-    document.body.style.opacity = "1";
-    document.body.style.visibility = "visible";
-  });
-})();
+  }, 50);
+});
