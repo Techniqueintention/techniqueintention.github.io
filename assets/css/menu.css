@@ -8,17 +8,17 @@
 
 /* BANDEAU FIXE EN HAUT - CORRIGÉ */
 .site-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:.8rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .8rem 2rem;
   background: var(--header-bg, rgba(255,255,255,0.95)); /* Fond plus opaque */
-  box-shadow:0 2px 10px rgba(0,0,0,0.15); /* Ombre plus prononcée */
-  position:fixed; /* Changé de sticky à fixed */
-  top:0;
-  left:0;
-  right:0;
-  z-index:1000; /* élevé pour passer au-dessus */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15); /* Ombre plus prononcée */
+  position: fixed; /* Changé de sticky à fixed */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* élevé pour passer au-dessus */
   backdrop-filter: blur(8px); /* Effet de flou amélioré */
   transition: all 0.3s ease; /* Animation fluide */
 }
@@ -30,30 +30,35 @@ body {
 
 /* Titre à gauche cliquable, sans soulignement */
 .site-title a{
-  font-family:"Cinzel",serif;
-  font-size:1.4rem;
-  font-weight:700;
-  color:var(--text-color,#222);
-  text-decoration:none;
+  font-family: "Cinzel", serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-color, #222);
+  text-decoration: none;
 }
-.site-title a:hover{ opacity:.8; }
+.site-title a:hover{ opacity: .8; }
 
-/* Menu principal */
+/* ===== HARMONISATION DES ESPACEMENTS ENTRE THÈMES ===== */
+
+/* Menu principal - CENTRAGE ET ESPACEMENT HARMONISÉ */
 .menu-primary{ 
-  display:flex; 
-  gap:1.4rem; 
+  display: flex; 
+  gap: 1rem; /* Harmonisation: même espacement light/dark */
+  justify-content: center; /* Centrage du menu */
+  flex-grow: 1; /* Prend l'espace disponible pour centrage */
+  margin: 0 2rem; /* Marge égale des deux côtés */
 }
 
 .menu-primary a{
-  font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-  font-size:1rem; 
-  font-weight:500;
-  text-decoration:none; 
-  color:var(--text-color,#333);
-  padding:.35rem .7rem; 
-  border-radius:8px;
-  transition:background .2s ease, color .2s ease, box-shadow .2s ease, transform .08s ease;
-  outline:none;
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  font-size: 1rem; 
+  font-weight: 500;
+  text-decoration: none; 
+  color: var(--text-color, #333);
+  padding: .35rem .7rem; 
+  border-radius: 8px;
+  transition: background .2s ease, color .2s ease, box-shadow .2s ease, transform .08s ease;
+  outline: none;
   /* Amélioration accessibilité tactile */
   min-height: 44px;
   display: flex;
@@ -67,29 +72,46 @@ body {
   color: var(--accent);
 }
 
-/* État actif du lien */
+/* État actif du lien - STYLES COMMUNS */
 .menu-primary a.active,
 .menu-primary a[aria-current="page"] {
-  color: var(--accent);
-  background: var(--accent-bg);
-  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 38%, transparent) inset;
   font-weight: 600;
   border-radius: 6px;
 }
 
+/* Styles spécifiques pour le thème light */
+[data-theme="light"] .menu-primary a.active,
+[data-theme="light"] .menu-primary a[aria-current="page"] {
+  color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 16%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 38%, transparent) inset;
+}
+
+/* Styles spécifiques pour le thème dark */
+[data-theme="dark"] .menu-primary a.active,
+[data-theme="dark"] .menu-primary a[aria-current="page"] {
+  color: var(--accent-color);
+  background: rgba(30, 90, 180, 0.25);
+  border: 1px solid rgba(94, 176, 255, 0.4);
+  box-shadow: 
+    0 0 12px rgba(94, 176, 255, 0.3),
+    inset 0 0 15px rgba(94, 176, 255, 0.1);
+  text-shadow: 0 0 8px rgba(94, 176, 255, 0.7);
+}
+
 /* Commutateur thème */
 .menu-switch{ 
-  display:flex; 
-  align-items:center; 
+  display: flex; 
+  align-items: center; 
 }
 
 #theme-btn{
-  background:none; 
-  border:none; 
-  font-size:1.3rem; 
-  cursor:pointer;
-  color:var(--text-color,#222); 
-  transition:transform .2s ease;
+  background: none; 
+  border: none; 
+  font-size: 1.3rem; 
+  cursor: pointer;
+  color: var(--text-color, #222); 
+  transition: transform .2s ease;
   /* Amélioration accessibilité tactile */
   min-height: 44px;
   min-width: 44px;
@@ -97,7 +119,7 @@ body {
   align-items: center;
   justify-content: center;
 }
-#theme-btn:hover{ transform:scale(1.2); }
+#theme-btn:hover{ transform: scale(1.2); }
 
 /* Mode sombre */
 :root[data-theme="dark"]{
@@ -108,27 +130,26 @@ body {
 
 @media (max-width: 1024px) {
   .site-header {
-    padding:.6rem 1rem;           /* header plus compact */
-    gap:.6rem;
+    padding: .6rem 1rem;           /* header plus compact */
+    gap: .6rem;
   }
   
   .site-title a {
-    font-size:1.1rem;             /* titre un peu réduit */
+    font-size: 1.1rem;             /* titre un peu réduit */
     white-space: nowrap; 
     overflow: hidden; 
     text-overflow: ellipsis;
     max-width: 65vw;               /* évite le chevauchement en très petit écran */
   }
 
-  /* La barre principale peut passer sur plusieurs lignes si besoin */
+  /* Ajustement responsive pour l'espacement harmonisé */
   .menu-primary {
-    flex-wrap: wrap;               /* << clé responsive */
-    gap: .5rem .8rem;
+    gap: 0.8rem; /* Espacement réduit sur tablette */
   }
   
   .menu-primary a {
-    padding:.5rem .7rem;          /* meilleures zones de tap */
-    border-radius:8px;
+    padding: .5rem .7rem;          /* meilleures zones de tap */
+    border-radius: 8px;
     font-size: 0.95rem;
   }
 }
