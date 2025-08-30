@@ -1,5 +1,5 @@
 /* ===============================
-   Thème sombre — Nuit étoilée (version bleu profond)
+   Thème sombre — Nuit étoilée (version bleu profond) CORRIGÉ
    =============================== */
 
 :root[data-theme="dark"] {
@@ -68,7 +68,7 @@
   border-bottom: none;
 }
 
-/* Liens avec effet lumineux amélioré */
+/* Liens avec effet lumineux amélioré - MODIFIÉ pour correspondre au thème clair */
 [data-theme="dark"] a {
   color: var(--link-color);
   transition: color 0.25s ease, text-shadow 0.25s ease, background 0.25s ease;
@@ -91,8 +91,9 @@
   text-shadow: 0 0 12px rgba(94, 176, 255, 0.8);
 }
 
-/* Hover du menu */
+/* Hover du menu - MODIFIÉ pour correspondre au thème clair */
 [data-theme="dark"] .menu-primary a {
+  /* Ces valeurs doivent correspondre à celles du thème clair */
   padding: 0.5rem 1rem;
   margin: 0 0.5rem;
   border-radius: 6px;
@@ -101,9 +102,11 @@
 
 [data-theme="dark"] .menu-primary a:hover {
   background: var(--nav-hover-bg);
+  /* Pas de transformation qui modifierait l'espacement */
+  transform: none;
 }
 
-/* Style du bouton actif en bleu */
+/* Style du bouton actif en bleu - MODIFIÉ pour éviter les changements de dimension */
 [data-theme="dark"] .menu-primary a.active,
 [data-theme="dark"] .menu-primary a:active,
 [data-theme="dark"] .menu-primary a[aria-current="page"] {
@@ -114,6 +117,8 @@
     0 0 12px rgba(94, 176, 255, 0.3),
     inset 0 0 15px rgba(94, 176, 255, 0.1) !important;
   text-shadow: 0 0 8px rgba(94, 176, 255, 0.7) !important;
+  /* S'assurer que la bordure n'ajoute pas d'espace supplémentaire */
+  box-sizing: border-box;
 }
 
 [data-theme="dark"] .menu-primary a.active:hover,
