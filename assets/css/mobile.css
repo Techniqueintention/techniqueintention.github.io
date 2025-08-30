@@ -189,6 +189,22 @@ html, body {
   padding-top: var(--header-h, 64px);
 }
 
+/* Espacement vertical entre menu, contenu et footer sur mobile */
+@media (max-width: 900px) {
+  #menu-placeholder {
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  main {
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  #footer-placeholder {
+    margin-top: 1.2rem;
+    display: block;
+  }
+}
+
 /* 2) Médias toujours fluides */
 img, video, canvas, svg, iframe { 
   max-width: 100%; 
