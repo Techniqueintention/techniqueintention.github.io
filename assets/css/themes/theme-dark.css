@@ -94,9 +94,7 @@
 /* CORRECTION : Styles de menu unifiés avec le thème clair */
 [data-theme="dark"] .menu-primary a {
   /* Ces valeurs doivent correspondre à celles du thème clair */
-  padding: 0.5rem 1rem;
-  margin: 0 0.5rem;
-  border-radius: 6px;
+  /* padding, margin et border-radius supprimés pour harmonisation avec menu.css */
   transition: all 0.3s ease;
 }
 
