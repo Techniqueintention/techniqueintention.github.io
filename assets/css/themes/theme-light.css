@@ -1,78 +1,188 @@
 /* ===============================
-   Thème clair — style intro lavande étoilé
+   Thème clair — élégant lavande & violet
    =============================== */
 
 :root[data-theme="light"] {
-  --bg-color: radial-gradient(ellipse at 50% 100%, #f4ecfb 0%, #e6d6f4 100%);
-  --text-color: #222;
-  --link-color: #6a4c93;
-  --accent-color: #9d6cff;
-  --header-bg: rgba(255, 255, 255, 0.35); /* translucide */
-  --footer-bg: rgba(255, 255, 255, 0.35);
+  /* Couleurs de base */
+  --bg-color: radial-gradient(ellipse at 50% 100%, #f8f4ff 0%, #e6d6f4 100%);
+  --text-color: #2a2a2a;
+  --link-color: #7b5ab5;
+  --accent-color: #8a6df1;
+  --header-bg: rgba(255, 255, 255, 0.92);
+  --footer-bg: transparent; /* Footer transparent */
+  
+  /* Nouveaux: couleurs pour les blocs */
+  --bloc-bg: rgba(255, 255, 255, 0.75);
+  --bloc-border: rgba(138, 109, 241, 0.15);
+  --bloc-shadow: rgba(138, 109, 241, 0.1);
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-border: rgba(138, 109, 241, 0.2);
+  
+  /* Typographie améliorée */
+  --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Playfair Display', 'Cinzel', serif;
+  --font-accent: 'Poppins', sans-serif;
 }
 
-/* Fond lavande + sécurité overflow */
+/* Application de la typographie */
 [data-theme="light"] body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.6;
   background: var(--bg-color);
   color: var(--text-color);
   overflow-x: hidden;
   min-height: 100%;
 }
 
-/* Halo doux (comme sur intro) */
+/* Titres */
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4,
+[data-theme="light"] h5,
+[data-theme="light"] h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--link-color);
+  margin-bottom: 1rem;
+}
+
+[data-theme="light"] h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+/* Halo doux amélioré */
 [data-theme="light"] body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.2), transparent 70%);
+  background: radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.3), transparent 70%);
   z-index: 0;
 }
 
-/* Canvas étoiles visible en clair aussi */
+/* Canvas étoiles visible en clair */
 [data-theme="light"] #theme-canvas {
   position: fixed;
   inset: 0;
-  z-index: 0;      /* au-dessus du fond, sous le contenu */
-  opacity: 1;      /* étoiles visibles */
+  z-index: 0;
+  opacity: 0.6;
   pointer-events: none;
 }
 
-/* Header & footer translucides */
-[data-theme="light"] header,
-[data-theme="light"] footer {
+/* Header amélioré */
+[data-theme="light"] .site-header {
   background: var(--header-bg);
-  color: var(--text-color);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--bloc-border);
+  box-shadow: 0 2px 20px rgba(138, 109, 241, 0.1);
 }
 
-/* Liens */
+[data-theme="light"] .site-title a {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--link-color);
+  text-shadow: 0 2px 4px rgba(138, 109, 241, 0.2);
+}
+
+[data-theme="light"] .menu-primary a {
+  font-family: var(--font-accent);
+  font-weight: 500;
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+[data-theme="light"] .menu-primary a:hover {
+  color: var(--accent-color);
+  background: rgba(138, 109, 241, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Liens améliorés */
 [data-theme="light"] a {
   color: var(--link-color);
-  transition: color 0.3s ease, text-shadow 0.3s ease;
+  transition: color 0.3s ease, transform 0.2s ease;
+  font-weight: 500;
 }
 
 [data-theme="light"] a:hover {
   color: var(--accent-color);
-  text-shadow: 0 0 6px var(--accent-color);
+  transform: translateY(-1px);
 }
 
-/* Bouton thème */
+/* Bouton thème amélioré */
 [data-theme="light"] #theme-btn {
-  font-size: 1.3rem;
-  transition: transform 0.2s ease, text-shadow 0.3s ease;
+  font-size: 1.4rem;
+  color: var(--link-color);
+  transition: all 0.3s ease;
 }
 
 [data-theme="light"] #theme-btn:hover {
-  transform: scale(1.2);
-  text-shadow: 0 0 6px var(--accent-color);
+  transform: scale(1.2) rotate(12deg);
+  color: var(--accent-color);
+  text-shadow: 0 0 8px rgba(138, 109, 241, 0.3);
 }
 
-/* Contenu transparent */
-[data-theme="light"] main,
-[data-theme="light"] .home-shell,
+/* Blocs de contenu améliorés */
 [data-theme="light"] .welcome,
-[data-theme="light"] section {
+[data-theme="light"] #article-viewer,
+[data-theme="light"] .blog-menu,
+[data-theme="light"] .tab-content,
+[data-theme="light"] .viewer-title {
+  background: var(--bloc-bg) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--bloc-border);
+  box-shadow: 0 8px 32px var(--bloc-shadow);
+  border-radius: 16px;
+}
+
+/* Cartes et éléments interactifs */
+[data-theme="light"] .menu-card,
+[data-theme="light"] .blog-menu details {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+[data-theme="light"] .menu-card:hover,
+[data-theme="light"] .blog-menu details:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(138, 109, 241, 0.15);
+  border-color: var(--accent-color);
+}
+
+/* FOOTER TRANSPARENT - CORRECTION */
+[data-theme="light"] .site-footer,
+[data-theme="light"] .footer-inner,
+[data-theme="light"] #footer-placeholder {
   background: transparent !important;
+  backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: var(--text-color);
+}
+
+/* Texte du footer */
+[data-theme="light"] .footer-inner {
+  opacity: 0.85;
+  text-align: center;
+  padding: 1rem 1.4rem;
+}
+
+/* Effets de survol supplémentaires */
+[data-theme="light"] .btn-share-article,
+[data-theme="light"] .tab-button {
+  transition: all 0.3s ease;
+}
+
+[data-theme="light"] .btn-share-article:hover,
+[data-theme="light"] .tab-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(138, 109, 241, 0.2);
 }
