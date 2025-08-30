@@ -200,4 +200,17 @@
     background: var(--bloc-bg, rgba(255,255,255,0.13));
     box-shadow: 0 2px 8px rgba(157, 108, 255, 0.07);
   }
+
+  /* Fixe le menu en haut et décale le contenu principal */
+  #menu-placeholder {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 1000;
+    margin-bottom: 0;
+  }
+  .home-shell {
+    margin-top: 64px;
+  }
 }
