@@ -33,7 +33,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 5px;
+        z-index: 9999; /* Toujours au-dessus */
     cursor: pointer;
     transition: all 0.3s ease;
   }
@@ -48,6 +48,16 @@
     height: 2px;
     background: currentColor;
     display: block;
+
+      /* Visibilité burger en mode sombre */
+      :root[data-theme="dark"] .mb-burger {
+        background: #222 !important;
+        border-color: #888 !important;
+        color: #fff !important;
+      }
+      :root[data-theme="dark"] .mb-burger span {
+        background: #fff !important;
+      }
     transition: all 0.3s ease;
     transform-origin: center;
   }
@@ -192,16 +202,20 @@ html, body {
 /* Espacement vertical entre menu, contenu et footer sur mobile */
 @media (max-width: 900px) {
   #menu-placeholder {
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
     display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 1000;
   }
+  .home-shell,
   main {
-    margin-bottom: 2.5rem;
-    padding-bottom: 2.5rem;
-    display: block;
+    margin-top: 64px;
   }
   #footer-placeholder {
-    margin-top: 2.5rem;
+    margin-top: 2rem;
     display: block;
   }
 }
