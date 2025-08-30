@@ -1,82 +1,94 @@
 /* ===============================
-   Thème sombre — Nuit étoilée (autonome, style Codex plus lumineux)
+   Thème sombre — Nuit étoilée (version bleu profond)
    =============================== */
 
 :root[data-theme="dark"] {
-  /* bleu-nuit plus clair */
+  /* Bleu nuit profond avec dégradé plus prononcé */
   --bg-color: radial-gradient(
     ellipse at 50% 100%,
-    #13233f 0%,
-    #0f1f37 55%,
-    #0b1a2e 100%
+    #0a1525 0%,
+    #081020 55%,
+    #050a14 100%
   );
 
-  --text-color: #eaf4ff;
-  --muted-color: #c2d6f8;
-  --link-color: #a6c8ff;
-  --accent-color: #7fd1ff;
+  --text-color: #e6f1ff;
+  --muted-color: #a8c6ff;
+  --link-color: #90bfff;
+  --accent-color: #5eb0ff;
+  --star-color: #ffffff;
 
-  --header-bg: rgba(16, 28, 48, 0.52);
-  --footer-bg: rgba(16, 28, 48, 0.52);
+  --header-bg: rgba(10, 20, 35, 0.75);
+  --footer-bg: rgba(10, 20, 35, 0.75);
 
-  --nav-hover-bg: rgba(255, 255, 255, 0.06);
+  --nav-hover-bg: rgba(255, 255, 255, 0.08);
+  --card-bg: rgba(15, 25, 45, 0.4);
 }
 
 [data-theme="dark"] body {
   background: var(--bg-color);
   color: var(--text-color);
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
-/* halo léger pour alléger le haut de l'écran */
+/* Halo étoilé plus prononcé */
 [data-theme="dark"] body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse at 50% 26%, rgba(160, 195, 255, 0.08), transparent 60%);
-  z-index: 0; /* sous le contenu, au-dessus du fond */
+  background: 
+    radial-gradient(ellipse at 30% 20%, rgba(120, 170, 255, 0.15) 0%, transparent 40%),
+    radial-gradient(ellipse at 70% 30%, rgba(100, 150, 255, 0.1) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 80%, rgba(80, 130, 255, 0.08) 0%, transparent 50%);
+  z-index: 0;
 }
 
-/* Canvas étoiles : au-dessus du fond, sous le contenu (z=0) */
+/* Canvas étoiles */
 [data-theme="dark"] #theme-canvas {
   position: fixed;
   inset: 0;
-  z-index: 0;      /* ⚠️ pas -1 */
-  opacity: 1;      /* la visibilité est confirmée dans theme.js */
+  z-index: 0;
+  opacity: 1;
   pointer-events: none;
 }
 
-/* Header & footer translucides */
+/* Header & footer avec bleu plus profond */
 [data-theme="dark"] header,
 [data-theme="dark"] footer {
   background: var(--header-bg);
   color: var(--text-color);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(8px) brightness(0.9);
+  -webkit-backdrop-filter: blur(8px) brightness(0.9);
+  border-bottom: 1px solid rgba(60, 110, 180, 0.2);
 }
 
-/* Liens */
+[data-theme="dark"] footer {
+  border-top: 1px solid rgba(60, 110, 180, 0.2);
+  border-bottom: none;
+}
+
+/* Liens avec effet lumineux amélioré */
 [data-theme="dark"] a {
   color: var(--link-color);
-  transition: color .25s ease, text-shadow .25s ease, background .25s ease;
+  transition: color 0.25s ease, text-shadow 0.25s ease, background 0.25s ease;
 }
 
 [data-theme="dark"] a:hover {
   color: var(--accent-color);
-  text-shadow: 0 0 6px rgba(127, 209, 255, .5);
+  text-shadow: 0 0 10px rgba(94, 176, 255, 0.7);
 }
 
 /* Bouton thème */
 [data-theme="dark"] #theme-btn {
   font-size: 1.3rem;
   color: var(--text-color);
-  transition: transform .2s ease, text-shadow .25s ease;
+  transition: transform 0.2s ease, text-shadow 0.25s ease;
 }
 
 [data-theme="dark"] #theme-btn:hover {
   transform: scale(1.1);
-  text-shadow: 0 0 8px rgba(127, 209, 255, .7);
+  text-shadow: 0 0 12px rgba(94, 176, 255, 0.8);
 }
 
 /* Hover du menu */
@@ -85,10 +97,32 @@
   border-radius: 6px;
 }
 
-/* pas de plaques opaques côté contenu */
+/* Transparence préservée pour le contenu */
 [data-theme="dark"] main,
 [data-theme="dark"] .home-shell,
 [data-theme="dark"] .welcome,
 [data-theme="dark"] section {
   background: transparent !important;
+}
+
+/* Ajouts pour améliorer l'ambiance nuit étoilée */
+[data-theme="dark"] h1, 
+[data-theme="dark"] h2, 
+[data-theme="dark"] h3 {
+  color: var(--accent-color);
+  text-shadow: 0 0 5px rgba(94, 176, 255, 0.3);
+}
+
+[data-theme="dark"] code {
+  background: rgba(15, 30, 50, 0.4);
+  color: var(--accent-color);
+  border: 1px solid rgba(60, 110, 180, 0.3);
+}
+
+[data-theme="dark"] .card, 
+[data-theme="dark"] article {
+  background: var(--card-bg);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(70, 130, 220, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
