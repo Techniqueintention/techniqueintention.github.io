@@ -192,15 +192,16 @@ html, body {
 /* Espacement vertical entre menu, contenu et footer sur mobile */
 @media (max-width: 900px) {
   #menu-placeholder {
-    margin-bottom: 1.2rem;
+    margin-bottom: 2.5rem;
     display: block;
   }
   main {
-    margin-bottom: 1.2rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
     display: block;
   }
   #footer-placeholder {
-    margin-top: 1.2rem;
+    margin-top: 2.5rem;
     display: block;
   }
 }
