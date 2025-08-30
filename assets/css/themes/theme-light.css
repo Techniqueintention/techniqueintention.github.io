@@ -3,6 +3,11 @@
    =============================== */
 
 :root[data-theme="light"] {
+  --tab-active-bg: linear-gradient(90deg, #d1b3ff 0%, #9d6cff 100%);
+  --tab-inactive-bg: #f4ecfb;
+  --tab-hover-bg: #e6d6f4;
+  --tab-active-color: #fff;
+  --tab-inactive-color: #6a4c93;
   --bg-color: radial-gradient(ellipse at 50% 100%, #f4ecfb 0%, #e6d6f4 100%);
   --text-color: #222;
   --link-color: #6a4c93;
