@@ -68,10 +68,10 @@
   border-bottom: none;
 }
 
-/* Liens avec effet lumineux amélioré - MODIFIÉ pour correspondre au thème clair */
+/* Liens avec effet lumineux amélioré */
 [data-theme="dark"] a {
   color: var(--link-color);
-  transition: color 0.25s ease, text-shadow 0.25s ease, background 0.25s ease;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
 }
 
 [data-theme="dark"] a:hover {
@@ -91,7 +91,7 @@
   text-shadow: 0 0 12px rgba(94, 176, 255, 0.8);
 }
 
-/* Hover du menu - MODIFIÉ pour correspondre au thème clair */
+/* CORRECTION : Styles de menu unifiés avec le thème clair */
 [data-theme="dark"] .menu-primary a {
   /* Ces valeurs doivent correspondre à celles du thème clair */
   padding: 0.5rem 1rem;
