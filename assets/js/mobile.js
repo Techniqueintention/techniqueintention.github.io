@@ -1,28 +1,34 @@
-// Mobile JS — burger/clonage menu + helpers (mobile only)
+// Mobile JS — burger/clonage menu + helpers (ré-init possible)
 (() => {
   const isMobile = () => window.matchMedia('(max-width: 900px)').matches;
 
-  // 100vh fix mobiles
   const setVh = () => {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   };
-  setVh(); 
+  setVh();
   window.addEventListener('resize', setVh);
 
-  document.addEventListener('DOMContentLoaded', () => {
-    if (!isMobile()) return; // rien à faire en desktop
+  function initOnce() {
+    if (!isMobile()) return;
 
+    const header = document.querySelector('.site-header');
     const burger = document.getElementById('mb-burger');
     const drawer = document.getElementById('mb-drawer');
     const scrim  = document.getElementById('mb-scrim');
     const list   = drawer?.querySelector('.mb-list');
     const desktopNav = document.querySelector('.menu-primary');
-    
+
+    // déjà câblé ?
+    if (!header || header.dataset.mbInit === '1') return;
+
     if (!burger || !drawer || !scrim || !list || !desktopNav) {
-      console.warn('Éléments du menu mobile non trouvés');
+      // Si le fragment n'est pas encore injecté, on retentera plus tard
       return;
     }
+
+    // Marqueur idempotent
+    header.dataset.mbInit = '1';
 
     // Clone les liens .menu-primary → tiroir mobile (une seule fois)
     if (!list.hasChildNodes()) {
@@ -37,7 +43,6 @@
 
     const html = document.documentElement;
     const isOpen = () => drawer.classList.contains('is-open');
-    
     const openDrawer = (open) => {
       drawer.classList.toggle('is-open', open);
       scrim.classList.toggle('is-open', open);
@@ -47,28 +52,16 @@
       html.classList.toggle('mb-no-scroll', open);
     };
 
-    // Ouvre/ferme au clic burger
-      burger.addEventListener('click', (e) => {
-        console.log('Burger cliqué !');
-        e.stopPropagation();
-        openDrawer(!isOpen());
-      });
-
-    // Ferme au clic sur le voile
-    scrim.addEventListener('click', () => openDrawer(false));
-
-    // Ferme au clic sur un lien
-    drawer.addEventListener('click', (e) => {
-      if (e.target.closest('a')) {
-        openDrawer(false);
-      }
+    burger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openDrawer(!isOpen());
     });
-
-    // Ferme avec la touche Échap
+    scrim.addEventListener('click', () => openDrawer(false));
+    drawer.addEventListener('click', (e) => {
+      if (e.target.closest('a')) openDrawer(false);
+    });
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && isOpen()) {
-        openDrawer(false);
-      }
+      if (e.key === 'Escape' && isOpen()) openDrawer(false);
     });
 
     // Marquage actif (page exacte OU même dossier)
@@ -76,7 +69,6 @@
     const herePath = here.pathname.replace(/\/index\.html$/, '/');
     const getPath  = (href) => new URL(href, here.origin).pathname.replace(/\/index\.html$/, '/');
     const parentDir = (p) => p.endsWith('/') ? p : p.replace(/[^/]+$/, '');
-    
     const markActive = (root) => {
       root.querySelectorAll('a[href]').forEach(a => {
         a.removeAttribute('aria-current');
@@ -86,7 +78,6 @@
         if (exact || sameSection) a.setAttribute('aria-current', 'page');
       });
     };
-    
     markActive(drawer);
     markActive(desktopNav);
 
@@ -95,5 +86,15 @@
     document.querySelectorAll('a, button, [role="button"]').forEach(el => {
       el.style.touchAction = 'manipulation';
     });
+  }
+
+  // 1) on tente à DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', initOnce);
+  // 2) on expose une API pour ré-init après injection
+  window.TI_initMobileMenu = initOnce;
+
+  // 3) si un event custom est émis après inject, on ré-init
+  document.addEventListener('ti:partial-injected', (e) => {
+    if (e.detail?.targetId === 'menu-placeholder') initOnce();
   });
 })();
