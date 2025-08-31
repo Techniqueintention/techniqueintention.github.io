@@ -7,6 +7,27 @@
 
   <link rel="stylesheet" href="/assets/css/main.css">
   <script type="module" src="/assets/js/main.js"></script>
+
+  <style>
+    body{display:flex;flex-direction:column;min-height:100vh;padding-top:var(--header-h,64px)}
+    main{flex:1 0 auto;width:100%}
+    .viewer-container{width:100%}
+    #footer-placeholder{margin-top:auto;flex-shrink:0;width:100%;position:relative;z-index:1}
+    .viewer-layout{min-height:60vh}
+
+    .menu-toggle{display:none}
+    .menu-toggle-btn{display:none}
+    .offcanvas{display:contents}
+    .offcanvas-scrim{display:none}
+
+    @media (min-width:981px){
+      .offcanvas-panel{grid-column:2;position:static;height:auto;width:var(--menu-w,300px)}
+    }
+    @media (max-width:980px){
+      .menu-toggle-btn{display:inline-flex}
+      .offcanvas{display:block}
+    }
+  </style>
 </head>
 <body>
 
@@ -14,28 +35,20 @@
   <div id="menu-placeholder"></div>
 
   <main class="viewer-container">
-    <!-- Topbar : titre + bouton Sections -->
-    <div class="viewer-topbar">
+    <div class="viewer-layout">
       <h1 class="viewer-title">LES BASES</h1>
 
-      <!-- Toggle du drawer -->
       <input type="checkbox" id="menu-toggle" class="menu-toggle" hidden>
       <label for="menu-toggle" class="menu-toggle-btn" aria-controls="viewer-menu">Sections</label>
-    </div>
 
-    <div class="viewer-layout">
-      <!-- Drawer off-canvas -->
       <div class="offcanvas">
         <div class="offcanvas-panel">
-          <label for="menu-toggle" class="offcanvas-close" aria-label="Fermer">✕</label>
-
           <nav id="viewer-menu" class="blog-menu" aria-label="Navigation Bases">
             <a class="menu-card" href="#" data-viewer="./intro.html" data-date="2025-08-28">
               <span>Introduction</span>
-              <span class="badge-new">NEW</span>
             </a>
 
-            <details data-has-new="1">
+            <details>
               <summary>Fondamentaux</summary>
               <ul>
                 <li><a href="#" data-viewer="./definition.html" data-date="2025-08-28">Définition</a></li>
@@ -61,7 +74,6 @@
         <label for="menu-toggle" class="offcanvas-scrim" aria-label="Fermer le menu"></label>
       </div>
 
-      <!-- Bloc article -->
       <section id="article-viewer" role="region" aria-live="polite">
         <div class="placeholder">
           <h2>Bienvenue dans les Bases de la Technique</h2>
@@ -74,23 +86,25 @@
 
   <div id="footer-placeholder"></div>
 
-  <!-- Fermeture auto du drawer au clic (mobile) -->
   <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const toggle = document.getElementById('menu-toggle');
-    const mm = window.matchMedia('(max-width: 980px)');
-    const closeIfMobile = () => { if (mm.matches) toggle.checked = false; };
-
-    document.querySelectorAll('#viewer-menu a, #viewer-menu summary').forEach(el=>{
-      el.addEventListener('click', closeIfMobile);
+    document.addEventListener('DOMContentLoaded',function(){
+      var now=new Date(), seven=7*24*60*60*1000, menu=document.getElementById('viewer-menu');
+      if(menu){
+        menu.querySelectorAll('[data-date]').forEach(function(el){
+          var d=new Date(el.getAttribute('data-date'));
+          if(!isNaN(d)&&(now-d)<=seven){
+            var b=document.createElement('span'); b.className='badge-new'; b.textContent='NEW'; el.appendChild(b);
+            var det=el.closest('details'); if(det) det.setAttribute('data-has-new','1');
+          }
+        });
+      }
+      var toggle=document.getElementById('menu-toggle'), mm=window.matchMedia('(max-width: 980px)');
+      if(menu){
+        menu.querySelectorAll('a, summary').forEach(function(el){
+          el.addEventListener('click',function(){ if(mm.matches) toggle.checked=false; });
+        });
+      }
     });
-
-    // accessibilité : aria-expanded sur le bouton
-    const btn = document.querySelector('.menu-toggle-btn');
-    const syncAria = () => btn && btn.setAttribute('aria-expanded', String(toggle.checked));
-    toggle.addEventListener('change', syncAria);
-    syncAria();
-  });
   </script>
 </body>
 </html>
