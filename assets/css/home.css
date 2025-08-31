@@ -3,11 +3,11 @@
    =============================== */
 
 /* Container principal */
+/* Container principal */
 .home-shell {
-    margin-top: 10px;
-    padding-top: 0rem;
-    padding-bottom: 1rem;
-  }
+  width: 100%;
+  padding: 1rem 1rem;
+}
 
 /* Carte centrale ÉLARGIE */
 .welcome {
