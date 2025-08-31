@@ -5,70 +5,30 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Bases — Technique Intention</title>
 
-  <!-- styles site -->
   <link rel="stylesheet" href="/assets/css/main.css">
   <script type="module" src="/assets/js/main.js"></script>
-  
-  <!-- Style correctif pour le header fixe et footer isolé -->
-  <style>
-    /* Correction structurelle pour header fixe */
-    body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      padding-top: var(--header-h, 64px);
-    }
-    main { flex: 1 0 auto; width: 100%; }
-    .viewer-container { width: 100%; }
-    #footer-placeholder { margin-top: auto; flex-shrink: 0; width: 100%; position: relative; z-index: 1; }
-    .viewer-layout { min-height: 60vh; }
-
-    /* --- Petits compléments pour le drawer sans JS --- */
-    /* Par défaut (desktop), on cache les contrôles off-canvas */
-    .menu-toggle, .menu-toggle-btn, .offcanvas, .offcanvas-scrim { display: none; }
-
-    /* Desktop : on positionne le panneau comme une colonne normale */
-    @media (min-width: 981px) {
-      .offcanvas-panel { /* le panneau contient .blog-menu */
-        grid-column: 2;
-        position: static;
-        height: auto;
-        width: var(--menu-w, 300px);
-      }
-    }
-
-    /* Mobile/Tablet : on active le bouton et le drawer */
-    @media (max-width: 980px) {
-      .menu-toggle-btn { display: inline-flex; }
-      .offcanvas { display: block; }
-    }
-  </style>
 </head>
 <body>
 
-  <!-- EFFET ETOILE SI THEME DARK -->
   <canvas id="theme-canvas"></canvas>
-
-  <!-- Menu principal injecté -->
   <div id="menu-placeholder"></div>
 
-  <!-- MAIN CONTIENT SEULEMENT LE VIEWER -->
   <main class="viewer-container">
-    <div class="viewer-layout">
-      
-      <!-- Titre centré -->
+    <!-- Topbar : titre + bouton Sections -->
+    <div class="viewer-topbar">
       <h1 class="viewer-title">LES BASES</h1>
 
-      <!-- ======== MENU LATERAL : version unique qui sert
-           1) de colonne (desktop)
-           2) de drawer off-canvas (≤980px) sans JS
-      ======== -->
+      <!-- Toggle du drawer -->
       <input type="checkbox" id="menu-toggle" class="menu-toggle" hidden>
-      <label for="menu-toggle" class="menu-toggle-btn" aria-controls="viewer-menu" aria-expanded="false">☰ Sections</label>
+      <label for="menu-toggle" class="menu-toggle-btn" aria-controls="viewer-menu">Sections</label>
+    </div>
 
+    <div class="viewer-layout">
+      <!-- Drawer off-canvas -->
       <div class="offcanvas">
-        <!-- panneau contenant le menu ; devient colonne en desktop via CSS -->
         <div class="offcanvas-panel">
+          <label for="menu-toggle" class="offcanvas-close" aria-label="Fermer">✕</label>
+
           <nav id="viewer-menu" class="blog-menu" aria-label="Navigation Bases">
             <a class="menu-card" href="#" data-viewer="./intro.html" data-date="2025-08-28">
               <span>Introduction</span>
@@ -98,12 +58,10 @@
             </details>
           </nav>
         </div>
-
-        <!-- voile cliquable pour fermer -->
         <label for="menu-toggle" class="offcanvas-scrim" aria-label="Fermer le menu"></label>
       </div>
 
-      <!-- COLONNE ARTICLE -->
+      <!-- Bloc article -->
       <section id="article-viewer" role="region" aria-live="polite">
         <div class="placeholder">
           <h2>Bienvenue dans les Bases de la Technique</h2>
@@ -111,12 +69,28 @@
           <p class="notes-fin">Cliquez à gauche pour afficher l'article souhaité.</p>
         </div>
       </section>
-
     </div>
   </main>
 
-  <!-- PIED DE PAGE -->
   <div id="footer-placeholder"></div>
 
+  <!-- Fermeture auto du drawer au clic (mobile) -->
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.getElementById('menu-toggle');
+    const mm = window.matchMedia('(max-width: 980px)');
+    const closeIfMobile = () => { if (mm.matches) toggle.checked = false; };
+
+    document.querySelectorAll('#viewer-menu a, #viewer-menu summary').forEach(el=>{
+      el.addEventListener('click', closeIfMobile);
+    });
+
+    // accessibilité : aria-expanded sur le bouton
+    const btn = document.querySelector('.menu-toggle-btn');
+    const syncAria = () => btn && btn.setAttribute('aria-expanded', String(toggle.checked));
+    toggle.addEventListener('change', syncAria);
+    syncAria();
+  });
+  </script>
 </body>
 </html>
