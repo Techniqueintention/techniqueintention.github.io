@@ -103,26 +103,35 @@
   <div id="footer-placeholder"></div>
 
   <script>
-    document.addEventListener('DOMContentLoaded',function(){
-      var now=new Date(), seven=7*24*60*60*1000, menu=document.getElementById('viewer-menu');
-      if(menu){
-        menu.querySelectorAll('[data-date]').forEach(function(el){
-          if(el.querySelector('.badge-new')) return;
-          var d=new Date(el.getAttribute('data-date'));
-          if(!isNaN(d)&&(now-d)<=seven){
-            var b=document.createElement('span'); b.className='badge-new'; b.textContent='NEW'; el.appendChild(b);
-            var det=el.closest('details'); if(det && !det.hasAttribute('data-has-new')) det.setAttribute('data-has-new','1');
-          }
-        });
-      }
-      var toggle=document.getElementById('menu-toggle'), mm=window.matchMedia('(max-width: 980px)');
-      if(menu){
-        /* on ferme uniquement sur les liens, pas sur les <summary> */
-        menu.querySelectorAll('a').forEach(function(el){
-          el.addEventListener('click',function(){ if(mm.matches) toggle.checked=false; });
-        });
+document.addEventListener('DOMContentLoaded',function(){
+  var now=new Date(), seven=7*24*60*60*1000, menu=document.getElementById('viewer-menu');
+  if(menu){
+    // Badge NEW auto (anti-doublon)
+    menu.querySelectorAll('[data-date]').forEach(function(el){
+      if(el.querySelector('.badge-new')) return;
+      var d=new Date(el.getAttribute('data-date'));
+      if(!isNaN(d)&&(now-d)<=seven){
+        var b=document.createElement('span'); b.className='badge-new'; b.textContent='NEW'; el.appendChild(b);
+        var det=el.closest('details'); if(det && !det.hasAttribute('data-has-new')) det.setAttribute('data-has-new','1');
       }
     });
-  </script>
+  }
+
+  // Fermer le drawer sur lien (mais pas sur <summary>)
+  var toggle=document.getElementById('menu-toggle');
+  var mm=window.matchMedia('(max-width: 980px)');
+  if(menu){
+    menu.querySelectorAll('a[href]').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(!mm.matches) return;
+        // petit délai pour laisser ton chargeur d'article s'exécuter
+        setTimeout(function(){ toggle.checked=false; }, 220);
+      });
+    });
+  }
+});
+</script>
+
 </body>
 </html>
+
