@@ -48,10 +48,11 @@
     };
 
     // Ouvre/ferme au clic burger
-    burger.addEventListener('click', (e) => {
-      e.stopPropagation();
-      openDrawer(!isOpen());
-    });
+      burger.addEventListener('click', (e) => {
+        console.log('Burger cliqué !');
+        e.stopPropagation();
+        openDrawer(!isOpen());
+      });
 
     // Ferme au clic sur le voile
     scrim.addEventListener('click', () => openDrawer(false));
