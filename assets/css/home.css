@@ -4,9 +4,10 @@
 
 /* Container principal */
 .home-shell {
-  width: 100%;
-  padding: 1rem 1rem;
-}
+    margin-top: 10px;
+    padding-top: 0rem;
+    padding-bottom: 1rem;
+  }
 
 /* Carte centrale ÉLARGIE */
 .welcome {
@@ -211,8 +212,8 @@
     margin-bottom: 0;
   }
   .home-shell {
-    margin-top: 64px;
-    padding-top: 0.5rem;
+    margin-top: 10px;
+    padding-top: 0rem;
     padding-bottom: 1rem;
   }
 }
