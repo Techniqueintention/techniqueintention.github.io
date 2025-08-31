@@ -1,7 +1,8 @@
-// /assets/js/mobile.js — burger + tiroir (robuste)
+// /assets/js/mobile.js — burger + tiroir (robuste, IDs conservés)
 (() => {
   const isMobile = () => matchMedia('(max-width: 900px)').matches;
 
+  // 100vh fiable mobile
   const setVh = () => {
     const vh = innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -16,22 +17,16 @@
     const drawer     = document.getElementById('mb-drawer');
     const scrim      = document.getElementById('mb-scrim');
     const desktopNav = document.querySelector('.menu-primary');
-    let   list       = drawer ? drawer.querySelector('.mb-list') : null; // ← unique
+    const list       = drawer?.querySelector('.mb-list');
 
-    // crée la liste si absente
-    if (!list && drawer) {
-      list = document.createElement('ul');
-      list.className = 'mb-list';
-      drawer.appendChild(list);
-    }
-
+    // Pas prêt ? on retentera via MutationObserver
     if (!header || !burger || !drawer || !scrim || !desktopNav || !list) return false;
 
-    // déjà câblé ?
+    // Déjà câblé ?
     if (header.dataset.mbInit === '1') return true;
     header.dataset.mbInit = '1';
 
-    // clone .menu-primary → .mb-list (une seule fois)
+    // Clone les liens du menu desktop → tiroir mobile (une seule fois)
     if (list.children.length === 0) {
       desktopNav.querySelectorAll('a[href]').forEach(a => {
         const li = document.createElement('li');
@@ -57,7 +52,7 @@
     drawer.addEventListener('click', (e) => { if (e.target.closest('a')) open(false); });
     addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) open(false); });
 
-    // marquage actif
+    // Marquage actif (exact + même section)
     const here = new URL(location.href);
     const herePath = here.pathname.replace(/\/index\.html$/, '/');
     const getPath  = (href) => new URL(href, here.origin).pathname.replace(/\/index\.html$/, '/');
@@ -74,7 +69,7 @@
     markActive(drawer);
     markActive(desktopNav);
 
-    // tactile polish
+    // Tweaks tactiles
     document.body.style.webkitTapHighlightColor = 'transparent';
     document.querySelectorAll('a,button,[role="button"]').forEach(el => { el.style.touchAction = 'manipulation'; });
 
@@ -87,6 +82,7 @@
     obs.observe(document.documentElement, { childList: true, subtree: true });
   }
 
+  // API publique si besoin
   window.TI_initMobileMenu = init;
 
   if (document.readyState === 'loading') {
