@@ -1,9 +1,8 @@
-// mobile.js — init robuste après injection (IDs conservés)
-// IDs/classes attendus : #mb-burger, #mb-drawer, #mb-scrim, .menu-primary, .mb-list
+// /assets/js/mobile.js — burger + tiroir (robuste, IDs conservés)
 (() => {
   const isMobile = () => matchMedia('(max-width: 900px)').matches;
 
-  // Fix 100vh mobiles
+  // 100vh fiable mobile
   const setVh = () => {
     const vh = innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -20,15 +19,15 @@
     const desktopNav = document.querySelector('.menu-primary');
     const list       = drawer?.querySelector('.mb-list');
 
-    // Pas encore injecté ? on retentera
+    // Pas prêt ? on retentera via MutationObserver
     if (!header || !burger || !drawer || !scrim || !desktopNav || !list) return false;
 
     // Déjà câblé ?
     if (header.dataset.mbInit === '1') return true;
     header.dataset.mbInit = '1';
 
-    // Clone une seule fois les liens desktop dans le tiroir mobile
-    if (!list.hasChildNodes()) {
+    // Clone les liens du menu desktop → tiroir mobile (une seule fois)
+    if (list.children.length === 0) {
       desktopNav.querySelectorAll('a[href]').forEach(a => {
         const li = document.createElement('li');
         const clone = a.cloneNode(true);
@@ -38,9 +37,9 @@
       });
     }
 
-    const html = document.documentElement;
+    const html   = document.documentElement;
     const isOpen = () => drawer.classList.contains('is-open');
-    const open = (v) => {
+    const open   = (v) => {
       drawer.classList.toggle('is-open', v);
       scrim.classList.toggle('is-open', v);
       burger.setAttribute('aria-expanded', String(v));
@@ -78,17 +77,14 @@
   }
 
   function init() {
-    // Si tout est prêt, on câble maintenant
     if (bindOnce()) return;
-    // Sinon on observe l’arrivée du fragment (menu injecté) et on câble dès que possible
     const obs = new MutationObserver(() => { if (bindOnce()) obs.disconnect(); });
     obs.observe(document.documentElement, { childList: true, subtree: true });
   }
 
-  // API publique si besoin d’un rappel manuel
+  // API publique si besoin
   window.TI_initMobileMenu = init;
 
-  // DÉMARRER MAINTENANT, même si DOMContentLoaded est déjà passé
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init, { once: true });
   } else {
