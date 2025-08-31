@@ -251,3 +251,97 @@ a, button, [role="button"] {
 /* 13) Correction hauteur viewport mobile */
 html { height: -webkit-fill-available; }
 body { min-height: 100vh; min-height: -webkit-fill-available; }
+
+
+
+/* === HOTFIX MOBILE NAV (override fort) === */
+
+/* Neutralise un ancien fix qui créait un bandeau vide */
+@media (max-width: 900px){
+  #menu-placeholder { position: static !important; margin: 0 !important; width: auto !important; }
+}
+
+/* Drawer au-dessus de tout + police héritée */
+#mb-drawer {
+  z-index: 2000 !important;
+  font: inherit !important;
+  color: var(--text-color, #222) !important;
+  background: var(--drawer-bg, rgba(255,255,255,.98)) !important;
+  backdrop-filter: blur(10px) !important;
+  border-right: 1px solid #0001 !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,.25) !important;
+  transform: translateX(-100%) !important;
+  transition: transform .28s ease !important;
+}
+#mb-drawer.is-open { transform: translateX(0) !important; }
+
+/* Liste du tiroir : grid + espacements */
+#mb-drawer .mb-list {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: calc(var(--header-h,64px) + env(safe-area-inset-top) + 16px) 14px 24px !important;
+  display: grid !important;
+  gap: 8px !important;
+  font: inherit !important;
+}
+#mb-drawer .mb-list li { margin: 0 !important; padding: 0 !important; }
+#mb-drawer .mb-list a {
+  display: block !important;
+  min-height: 44px !important;
+  padding: 12px 14px !important;
+  border-radius: 12px !important;
+  text-decoration: none !important;
+  color: var(--text-color, #222) !important;
+  background: color-mix(in oklab, white 88%, var(--primary, #6e57e0) 0%) !important;
+  border: 1px solid transparent !important;
+  font-weight: 600 !important;
+  outline-offset: 2px !important;
+}
+#mb-drawer .mb-list a:hover {
+  background: color-mix(in oklab, var(--primary, #6e57e0) 12%, white 88%) !important;
+}
+#mb-drawer .mb-list a[aria-current="page"] {
+  background: color-mix(in oklab, var(--primary, #6e57e0) 88%, white 12%) !important;
+  color: #fff !important;
+  border-color: color-mix(in oklab, var(--primary, #6e57e0) 100%, white 0%) !important;
+}
+
+/* Voile : cliquable + au-dessous du drawer */
+#mb-scrim {
+  z-index: 1990 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  background: rgba(0,0,0,.5) !important;
+  transition: opacity .25s ease !important;
+  backdrop-filter: blur(2px) !important;
+}
+#mb-scrim.is-open { opacity: 1 !important; pointer-events: auto !important; }
+
+/* Cache le menu desktop sur mobile, coûte que coûte */
+@media (max-width: 900px){
+  .site-header .menu-primary { display: none !important; }
+}
+
+/* Bouton burger (priorité haute) */
+@media (max-width: 900px){
+  #mb-burger {
+    position: absolute !important; top: 50% !important; right: 12px !important; transform: translateY(-50%) !important;
+    width: 44px !important; height: 44px !important;
+    display: flex !important; align-items: center !important; justify-content: center !important;
+    border-radius: 8px !important; border: 1px solid rgba(0,0,0,.1) !important;
+    background: var(--header-bg, rgba(255,255,255,.9)) !important;
+    z-index: 2100 !important;
+  }
+  #mb-burger span { width: 22px !important; height: 2px !important; background: currentColor !important; display: block !important; }
+  #mb-burger[aria-expanded="true"] span:nth-child(1){ transform: translateY(7px) rotate(45deg) !important; }
+  #mb-burger[aria-expanded="true"] span:nth-child(2){ opacity: 0 !important; }
+  #mb-burger[aria-expanded="true"] span:nth-child(3){ transform: translateY(-7px) rotate(-45deg) !important; }
+
+  :root[data-theme="dark"] #mb-burger{ background:#222 !important; border-color:#888 !important; color:#fff !important; }
+  :root[data-theme="dark"] #mb-drawer{ background: rgba(20,20,30,.98) !important; color:#fff !important; }
+  :root[data-theme="dark"] #mb-drawer .mb-list a{ color:#fff !important; }
+}
+
+/* Empêche le scroll de fond */
+html.mb-no-scroll, body.mb-no-scroll { overflow: hidden !important; height: 100dvh !important; }
+
