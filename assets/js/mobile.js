@@ -19,6 +19,14 @@
     const desktopNav = document.querySelector('.menu-primary');
     const list       = drawer?.querySelector('.mb-list');
 
+   let list = drawer?.querySelector('.mb-list');
+   // crée la liste si absente (selon ta version de menu.html)
+   if (!list && drawer) {
+    list = document.createElement('ul');
+    list.className = 'mb-list';
+    drawer.appendChild(list);
+   }
+    
     // Pas prêt ? on retentera via MutationObserver
     if (!header || !burger || !drawer || !scrim || !desktopNav || !list) return false;
 
