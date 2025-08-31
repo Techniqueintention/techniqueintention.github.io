@@ -3,7 +3,6 @@
    =============================== */
 
 /* Container principal */
-/* Container principal */
 .home-shell {
   width: 100%;
   padding: 1rem 1rem;
@@ -119,7 +118,9 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Responsive */
+/* ===============================
+   Responsive (≤ 768px) — 2 colonnes
+   =============================== */
 @media (max-width: 768px) {
   .welcome {
     padding: 2rem 1.5rem;
@@ -135,57 +136,28 @@
     font-size: 1rem;
     text-align: left;
   }
-  
-  .tabs-header {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .tab-button {
-    border-radius: 8px;
-    width: 100%;
-    text-align: center;
-  }
-  
-  .tab-content {
-    padding: 1.5rem;
-    border-radius: 0 0 12px 12px;
-  }
-}
 
-/* Mode sombre */
-:root[data-theme="dark"] .welcome {
-  background: rgba(10, 15, 30, 0.85);
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-:root[data-theme="dark"] .tab-content {
-  background: rgba(10, 15, 30, 0.8);
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-/* Onglets en colonne verticale sur mobile uniquement (max-width: 600px) */
-@media (max-width: 600px) {
+  /* Mise en page : colonne onglets (gauche) + contenu (droite) */
   .tabs-container {
     display: flex;
     gap: 0.5rem;
     align-items: flex-start;
   }
 
-  /* Colonne de gauche plus étroite */
+  /* Colonne de gauche plus étroite et stable */
   .tabs-header {
-    flex: 0 0 clamp(70px, 24vw, 100px); /* ← largeur fixe mais responsive */
+    flex: 0 0 clamp(70px, 24vw, 110px);
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
-    margin-bottom: 0;
+    margin-bottom: 0; /* on supprime l'espace sous la colonne */
   }
 
-  /* Boutons plus compacts */
+  /* Boutons compacts pour libérer de la place au contenu */
   .tab-button {
-    width: 100%;              /* garde toute la largeur de la colonne */
-    font-size: 0.9rem;        /* ↓ texte */
-    padding: 0.5rem 0.6rem;   /* ↓ hauteur/largeur visuelle */
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.6rem;
     text-align: left;
     border-radius: 8px;
     margin-bottom: 0.15rem;
@@ -194,20 +166,20 @@
 
   .tab-button.active {
     box-shadow: 0 2px 10px rgba(157,108,255,0.12);
-    transform: none;          /* évite d’élargir la colonne au focus */
+    transform: none; /* évite d'élargir la colonne au focus */
   }
 
-  /* Le contenu prend tout l’espace restant */
+  /* Le contenu prend tout l'espace restant */
   .tab-content {
     flex: 1;
     min-width: 0;
-    padding: 1.1rem;
+    padding: 1.2rem;
     border-radius: 12px;
     background: var(--bloc-bg, rgba(255,255,255,0.13));
     box-shadow: 0 2px 8px rgba(157,108,255,0.07);
   }
 
-  /* (inchangé) menu fixé si tu en as besoin */
+  /* (optionnel) si ton menu global est fixé en haut */
   #menu-placeholder {
     position: fixed;
     top: 0; left: 0;
@@ -220,4 +192,15 @@
     padding-top: 0rem;
     padding-bottom: 1rem;
   }
+}
+
+/* Mode sombre */
+:root[data-theme="dark"] .welcome {
+  background: rgba(10, 15, 30, 0.85);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+:root[data-theme="dark"] .tab-content {
+  background: rgba(10, 15, 30, 0.8);
+  border: 1px solid rgba(255,255,255,0.08);
 }
