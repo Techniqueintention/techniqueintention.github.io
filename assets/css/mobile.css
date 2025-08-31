@@ -251,3 +251,139 @@ a, button, [role="button"] {
 /* 13) Correction hauteur viewport mobile */
 html { height: -webkit-fill-available; }
 body { min-height: 100vh; min-height: -webkit-fill-available; }
+
+/* =========================================================
+   DRAWER ONLY — thèmes light/dark via tokens
+   (ne touche ni .site-header ni le layout)
+   ========================================================= */
+
+/* Tokens (héritent de tes variables si présentes) */
+:root{
+  --ti-primary: var(--primary, #6e57e0);
+  --ti-bg:      var(--bg, #ffffff);
+  --ti-fg:      var(--text-color, #222);
+
+  --ti-drawer-bg:            color-mix(in oklab, var(--ti-bg) 92%, var(--ti-primary) 8%);
+  --ti-drawer-fg:            var(--ti-fg);
+  --ti-drawer-border:        #00000014;
+  --ti-scrim:                rgba(0,0,0,.45);
+
+  --ti-link-bg:              color-mix(in oklab, var(--ti-bg) 90%, var(--ti-primary) 0%);
+  --ti-link-hover-bg:        color-mix(in oklab, var(--ti-primary) 14%, var(--ti-bg) 86%);
+  --ti-link-active-bg:       color-mix(in oklab, var(--ti-primary) 88%, var(--ti-bg) 12%);
+  --ti-link-active-fg:       #fff;
+  --ti-link-border-active:   color-mix(in oklab, var(--ti-primary) 100%, var(--ti-bg) 0%);
+}
+
+/* Overrides sombres (tu peux ajuster les bases si besoin) */
+:root[data-theme="dark"]{
+  --ti-bg: #1a1b22;
+  --ti-fg: #ffffff;
+
+  --ti-drawer-bg:          color-mix(in oklab, #16171d 88%, var(--ti-primary) 12%);
+  --ti-drawer-fg:          #fff;
+  --ti-drawer-border:      #ffffff14;
+  --ti-scrim:              rgba(0,0,0,.6);
+
+  --ti-link-bg:            color-mix(in oklab, #1e1f2a 85%, var(--ti-primary) 15%);
+  --ti-link-hover-bg:      color-mix(in oklab, var(--ti-primary) 26%, #1e1f2a 74%);
+  --ti-link-active-bg:     color-mix(in oklab, var(--ti-primary) 86%, #111318 14%);
+  --ti-link-active-fg:     #fff;
+  --ti-link-border-active: color-mix(in oklab, var(--ti-primary) 100%, #000 0%);
+}
+
+/* Voile */
+#mb-scrim{
+  position: fixed; inset: 0;
+  background: var(--ti-scrim);
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s ease;
+  z-index: 1990;
+  backdrop-filter: blur(2px);
+}
+#mb-scrim.is-open{ opacity: 1; pointer-events: auto; }
+
+/* Tiroir */
+#mb-drawer{
+  position: fixed; inset: 0 auto 0 0;
+  width: min(86vw, 340px);
+  height: 100dvh;
+  transform: translateX(-100%);
+  transition: transform .28s ease;
+  z-index: 2000;
+
+  background: var(--ti-drawer-bg);
+  color: var(--ti-drawer-fg);
+  border-right: 1px solid var(--ti-drawer-border);
+  box-shadow: 0 10px 40px rgba(0,0,0,.24);
+  font: inherit;
+  overscroll-behavior: contain;
+}
+#mb-drawer.is-open{ transform: translateX(0); }
+
+/* Liste (passe sous le header sticky) */
+#mb-drawer .mb-list{
+  list-style: none; margin: 0;
+  padding: calc(var(--header-h, 64px) + env(safe-area-inset-top) + 16px) 16px 24px;
+  display: grid; gap: 10px;
+  font: inherit;
+}
+#mb-drawer .mb-list li{ margin:0; padding:0; }
+
+/* Liens “pill” + chevron */
+#mb-drawer .mb-list a{
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px;
+  min-height: 44px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--ti-drawer-fg);
+  background: var(--ti-link-bg);
+  border: 1px solid transparent;
+  outline-offset: 3px;
+  font-weight: 600;
+  transition: background .15s ease, border-color .15s ease, transform .06s ease, box-shadow .15s ease;
+}
+#mb-drawer .mb-list a::after{
+  content: '›';
+  font-weight: 700;
+  opacity: .45;
+  transform: translateX(0);
+  transition: transform .15s ease, opacity .15s ease;
+}
+#mb-drawer .mb-list a:hover{
+  background: var(--ti-link-hover-bg);
+}
+#mb-drawer .mb-list a:hover::after{
+  opacity: .8; transform: translateX(2px);
+}
+#mb-drawer .mb-list a:active{ transform: scale(.985); }
+
+/* Actif (page courante) */
+#mb-drawer .mb-list a[aria-current="page"]{
+  background: var(--ti-link-active-bg);
+  color: var(--ti-link-active-fg);
+  border-color: var(--ti-link-border-active);
+  box-shadow: 0 0 0 1px var(--ti-link-border-active) inset;
+}
+#mb-drawer .mb-list a[aria-current="page"]::before{
+  content: '';
+  width: 4px; height: 60%;
+  border-radius: 3px;
+  background: var(--ti-link-active-fg);
+  opacity: .9;
+  justify-self: start;
+  margin-right: 6px;
+}
+
+/* Focus clavier visible */
+#mb-drawer .mb-list a:focus-visible{
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ti-primary) 35%, var(--ti-bg) 65%);
+  outline: none;
+}
+
+/* Motion-safe */
+@media (prefers-reduced-motion: reduce){
+  #mb-scrim, #mb-drawer, #mb-drawer .mb-list a{ transition: none !important; }
+}
+
