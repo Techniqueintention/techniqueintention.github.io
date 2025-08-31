@@ -204,3 +204,31 @@
   background: rgba(10, 15, 30, 0.8);
   border: 1px solid rgba(255,255,255,0.08);
 }
+
+/* Améliorations de l’aération et de la lisibilité */
+.tab-content h2 {
+  font-family: "Poppins", sans-serif; /* harmonisé avec les boutons */
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem; /* espace sous le titre */
+  color: var(--text-color);
+}
+
+.tab-content p {
+  margin: 1rem 0 1.5rem 0; /* espace entre paragraphes */
+  line-height: 1.7;        /* plus aéré */
+  font-family: "Poppins", sans-serif;
+  font-size: 1.05rem;
+}
+
+.tab-content ul {
+  margin: 1rem 0 1.8rem 2rem;
+  line-height: 1.7;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.05rem;
+}
+
+.tab-content li {
+  margin-bottom: 0.6rem; /* espace entre puces */
+}
+
