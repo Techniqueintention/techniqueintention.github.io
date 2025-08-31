@@ -232,3 +232,20 @@ img, video, canvas, svg, iframe {
 @media (prefers-reduced-motion: reduce){
   #mb-scrim, #mb-drawer, #mb-drawer .mb-list a{ transition: none !important; }
 }
+
+/* ===== Fix bandeau (mobile only) — anti-chevauchement propre ===== */
+@media (max-width: 900px){
+  /* Le placeholder n'est PAS fixé, sinon bandeau fantôme */
+  #menu-placeholder { position: static !important; margin: 0 !important; width: auto !important; }
+
+  /* Une seule compensation du header : sur <body>, jamais sur <html> */
+  html { padding-top: 0 !important; }
+  body { padding-top: var(--header-h, 64px) !important; }
+
+  /* Évite le décalage quand le drawer ouvre/ferme */
+  html.mb-no-scroll { overflow: hidden !important; height: 100dvh !important; }
+  body.mb-no-scroll { position: static !important; width: auto !important; }
+
+  /* Rien d’autre ne doit remonter le contenu */
+  main, .home-shell { margin-top: 0 !important; }
+}
