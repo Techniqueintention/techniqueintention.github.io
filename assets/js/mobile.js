@@ -17,24 +17,22 @@
     const drawer     = document.getElementById('mb-drawer');
     const scrim      = document.getElementById('mb-scrim');
     const desktopNav = document.querySelector('.menu-primary');
-    const list       = drawer?.querySelector('.mb-list');
+    let   list       = drawer ? drawer.querySelector('.mb-list') : null; // ← unique (let)
 
-   let list = drawer?.querySelector('.mb-list');
-   // crée la liste si absente (selon ta version de menu.html)
-   if (!list && drawer) {
-    list = document.createElement('ul');
-    list.className = 'mb-list';
-    drawer.appendChild(list);
-   }
-    
-    // Pas prêt ? on retentera via MutationObserver
+    // crée la liste si absente
+    if (!list && drawer) {
+      list = document.createElement('ul');
+      list.className = 'mb-list';
+      drawer.appendChild(list);
+    }
+
     if (!header || !burger || !drawer || !scrim || !desktopNav || !list) return false;
 
-    // Déjà câblé ?
+    // déjà câblé ?
     if (header.dataset.mbInit === '1') return true;
     header.dataset.mbInit = '1';
 
-    // Clone les liens du menu desktop → tiroir mobile (une seule fois)
+    // clone .menu-primary → .mb-list (une seule fois)
     if (list.children.length === 0) {
       desktopNav.querySelectorAll('a[href]').forEach(a => {
         const li = document.createElement('li');
@@ -60,7 +58,7 @@
     drawer.addEventListener('click', (e) => { if (e.target.closest('a')) open(false); });
     addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) open(false); });
 
-    // Marquage actif (exact + même section)
+    // marquage actif
     const here = new URL(location.href);
     const herePath = here.pathname.replace(/\/index\.html$/, '/');
     const getPath  = (href) => new URL(href, here.origin).pathname.replace(/\/index\.html$/, '/');
@@ -77,7 +75,7 @@
     markActive(drawer);
     markActive(desktopNav);
 
-    // Tweaks tactiles
+    // tweaks tactiles
     document.body.style.webkitTapHighlightColor = 'transparent';
     document.querySelectorAll('a,button,[role="button"]').forEach(el => { el.style.touchAction = 'manipulation'; });
 
@@ -90,7 +88,6 @@
     obs.observe(document.documentElement, { childList: true, subtree: true });
   }
 
-  // API publique si besoin
   window.TI_initMobileMenu = init;
 
   if (document.readyState === 'loading') {
