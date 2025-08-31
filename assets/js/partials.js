@@ -9,25 +9,29 @@
  * @returns {Promise<void>}
  */
 export async function injectPartial(targetId, url) {
+  // Cherche l'élément cible dans le DOM
   const container = document.getElementById(targetId);
   if (!container) {
     console.warn(`❌ injectPartial: cible introuvable (#${targetId})`);
-    return;
+    // On résout la Promise même si la cible est absente
+    return Promise.resolve();
   }
 
   try {
+    // Récupère le fragment HTML
     const res = await fetch(url, { cache: "no-cache" });
     if (!res.ok) {
       console.error(`❌ injectPartial: échec ${url} → ${res.status}`);
-      return;
+      // On résout la Promise même en cas d'échec du fetch
+      return Promise.resolve();
     }
 
     const html = await res.text();
-    // Remplace le contenu (comme sur Codex)
+    // Injecte le contenu HTML dans la cible
     container.innerHTML = html;
 
-    // (Optionnel) Exécuter d’éventuels <script> présents dans le fragment
-    // — Utile si un partial contient un petit script inline.
+    // (Optionnel) Exécute les <script> présents dans le fragment injecté
+    // Utile si le partial contient un script inline
     const scripts = container.querySelectorAll("script");
     scripts.forEach(old => {
       const s = document.createElement("script");
@@ -38,7 +42,11 @@ export async function injectPartial(targetId, url) {
       s.textContent = old.textContent;
       old.replaceWith(s);
     });
+    // On résout la Promise après injection et exécution des scripts
+    return Promise.resolve();
   } catch (err) {
     console.error(`❌ injectPartial: erreur pendant le fetch de ${url}`, err);
+    // On résout la Promise même en cas d'erreur
+    return Promise.resolve();
   }
 }
