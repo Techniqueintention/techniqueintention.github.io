@@ -20,12 +20,24 @@
     .offcanvas{display:contents}
     .offcanvas-scrim{display:none}
 
+    /* Bouton fermer (dans le drawer) */
+    .offcanvas-close{
+      position: sticky; top: 0;
+      display:inline-flex; align-items:center; justify-content:center;
+      width:2rem; height:2rem; margin:.2rem 0 .4rem auto;
+      border-radius:8px; cursor:pointer; z-index:1;
+      background:rgba(0,0,0,.08);
+      border:1px solid rgba(0,0,0,.12);
+      font-weight:700;
+    }
+
     @media (min-width:981px){
       .offcanvas-panel{grid-column:2;position:static;height:auto;width:var(--menu-w,300px)}
     }
     @media (max-width:980px){
       .menu-toggle-btn{display:inline-flex}
       .offcanvas{display:block}
+      .offcanvas-scrim{display:block} /* voile cliquable visible en mobile */
     }
   </style>
 </head>
@@ -43,6 +55,9 @@
 
       <div class="offcanvas">
         <div class="offcanvas-panel">
+          <!-- bouton de fermeture dans le slider -->
+          <label for="menu-toggle" class="offcanvas-close" aria-label="Fermer">✕</label>
+
           <nav id="viewer-menu" class="blog-menu" aria-label="Navigation Bases">
             <a class="menu-card" href="#" data-viewer="./intro.html" data-date="2025-08-28">
               <span>Introduction</span>
@@ -71,6 +86,7 @@
             </details>
           </nav>
         </div>
+        <!-- clic en dehors du panneau = fermeture -->
         <label for="menu-toggle" class="offcanvas-scrim" aria-label="Fermer le menu"></label>
       </div>
 
@@ -91,16 +107,18 @@
       var now=new Date(), seven=7*24*60*60*1000, menu=document.getElementById('viewer-menu');
       if(menu){
         menu.querySelectorAll('[data-date]').forEach(function(el){
+          if(el.querySelector('.badge-new')) return;
           var d=new Date(el.getAttribute('data-date'));
           if(!isNaN(d)&&(now-d)<=seven){
             var b=document.createElement('span'); b.className='badge-new'; b.textContent='NEW'; el.appendChild(b);
-            var det=el.closest('details'); if(det) det.setAttribute('data-has-new','1');
+            var det=el.closest('details'); if(det && !det.hasAttribute('data-has-new')) det.setAttribute('data-has-new','1');
           }
         });
       }
       var toggle=document.getElementById('menu-toggle'), mm=window.matchMedia('(max-width: 980px)');
       if(menu){
-        menu.querySelectorAll('a, summary').forEach(function(el){
+        /* on ferme uniquement sur les liens, pas sur les <summary> */
+        menu.querySelectorAll('a').forEach(function(el){
           el.addEventListener('click',function(){ if(mm.matches) toggle.checked=false; });
         });
       }
