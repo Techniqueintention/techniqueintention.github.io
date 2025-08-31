@@ -270,3 +270,39 @@ img, video, canvas, svg, iframe {
   html{ padding-top: 0 !important; }
   body{ padding-top: var(--header-h, 64px) !important; }
 }
+
+/* =========================================
+   Fix footer & scroll — MOBILE ONLY
+   (n'impacte pas le desktop)
+   ========================================= */
+@media (max-width: 900px) {
+  /* Page en colonne: header | contenu | footer */
+  html, body { height: 100%; min-height: 100dvh; }
+  body {
+    display: flex;
+    flex-direction: column;
+    /* si header sticky : compense sa hauteur une seule fois ici */
+    padding-top: var(--header-h, 64px);
+  }
+
+  /* Le contenu occupe l'espace, pousse le footer */
+  main, .home-shell {
+    flex: 1;
+    min-height: 0; /* évite les débordements internes */
+  }
+
+  /* Le footer n'est jamais fixed/absolute sur mobile */
+  footer {
+    position: static !important;
+    margin-top: auto !important;
+    z-index: 0; /* au cas où des ombres le feraient "passer devant" */
+  }
+
+  /* Confort: évite l'impression que le footer chevauche le texte */
+  .tab-content {
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Si un placeholder/menu était en fixed dans d'autres CSS, on neutralise */
+  #menu-placeholder { position: static !important; top: auto !important; }
+}
