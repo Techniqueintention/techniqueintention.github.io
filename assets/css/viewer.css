@@ -112,39 +112,81 @@
 }
 
 /* ===============================
-   Responsive (≤ 980px)
+   Responsive (≤ 980px) — Drawer
    =============================== */
 @media (max-width: 980px) {
   .viewer-layout {
-    display: grid;
-    grid-template-columns: 200px 1fr;   /* colonne gauche = menu, droite = article */
-    grid-template-areas: "menu article";
-    gap: 1rem;
+    display: block;
     margin: 1rem;
   }
 
-  .blog-menu {
-    grid-area: menu;
-    position: static;
-    width: 100%;
-    max-width: 200px;  /* largeur menu réduite */
-    height: auto;
+  /* Bouton ouverture menu */
+  .menu-toggle-btn {
+    position: sticky;
+    top: calc(var(--header-h) + 8px);
+    z-index: 1100;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem .8rem;
+    border-radius: 10px;
+    background: var(--menu-card-bg, rgba(255,255,255,.12));
+    border: 1px solid var(--menu-border, rgba(0,0,0,.12));
+    backdrop-filter: blur(6px);
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 6px 18px rgba(0,0,0,.08);
   }
 
+  /* Container off-canvas */
+  .offcanvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1200;
+    display: block;
+  }
+
+  /* Panneau latéral */
+  .offcanvas-panel {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    height: calc(100dvh - var(--header-h));
+    width: min(86vw, 360px);
+    transform: translateX(-100%);
+    transition: transform .3s ease;
+    pointer-events: auto;
+    overflow-y: auto;
+    padding: .75rem;
+    background: color-mix(in oklab, var(--menu-card-bg, rgba(255,255,255,.10)) 80%, transparent);
+    border-right: 1px solid var(--menu-border, rgba(0,0,0,.12));
+    backdrop-filter: blur(8px);
+  }
+
+  /* Voile */
+  .offcanvas-scrim {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.35);
+    opacity: 0;
+    transition: opacity .3s ease;
+    pointer-events: none;
+  }
+
+  /* Toggle */
+  .menu-toggle:checked ~ .offcanvas .offcanvas-panel {
+    transform: translateX(0);
+  }
+  .menu-toggle:checked ~ .offcanvas .offcanvas-scrim {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Viewer plein écran */
   #article-viewer {
-    grid-area: article;
     width: 100%;
     padding: 1rem;
-  }
-
-  /* Ajoute le titre principal au-dessus du menu */
-  .blog-menu::before {
-    content: "Les Bases"; /* tu peux remplacer dynamiquement via JS si besoin */
-    display: block;
-    font-family: "Cinzel", serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--link-color);
-    margin: 0 0 .8rem 0;
+    margin-top: .8rem;
   }
 }
