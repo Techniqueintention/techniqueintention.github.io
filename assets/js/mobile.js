@@ -1,8 +1,7 @@
-// /assets/js/mobile.js — burger + tiroir (robuste, IDs conservés)
+// /assets/js/mobile.js — burger + tiroir (robuste)
 (() => {
   const isMobile = () => matchMedia('(max-width: 900px)').matches;
 
-  // 100vh fiable mobile
   const setVh = () => {
     const vh = innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -17,7 +16,7 @@
     const drawer     = document.getElementById('mb-drawer');
     const scrim      = document.getElementById('mb-scrim');
     const desktopNav = document.querySelector('.menu-primary');
-    let   list       = drawer ? drawer.querySelector('.mb-list') : null; // ← unique (let)
+    let   list       = drawer ? drawer.querySelector('.mb-list') : null; // ← unique
 
     // crée la liste si absente
     if (!list && drawer) {
@@ -75,7 +74,7 @@
     markActive(drawer);
     markActive(desktopNav);
 
-    // tweaks tactiles
+    // tactile polish
     document.body.style.webkitTapHighlightColor = 'transparent';
     document.querySelectorAll('a,button,[role="button"]').forEach(el => { el.style.touchAction = 'manipulation'; });
 
