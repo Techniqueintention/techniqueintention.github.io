@@ -249,3 +249,24 @@ img, video, canvas, svg, iframe {
   /* Rien d’autre ne doit remonter le contenu */
   main, .home-shell { margin-top: 0 !important; }
 }
+
+/* Mobile : header fixe, une seule compensation, pas de placeholder fixé */
+@media (max-width: 900px){
+  .site-header{
+    position: fixed !important;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding-right: 60px; /* garde ton espace pour le burger */
+  }
+
+  /* si une ancienne règle l’avait mis en fixed → on annule */
+  #menu-placeholder{
+    position: static !important;
+    top: auto !important; left: auto !important;
+    width: auto !important; margin: 0 !important;
+  }
+
+  /* une seule compensation: sur <body> (pas sur <html>) */
+  html{ padding-top: 0 !important; }
+  body{ padding-top: var(--header-h, 64px) !important; }
+}
