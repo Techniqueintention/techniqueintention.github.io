@@ -1,100 +1,93 @@
-// Mobile JS — burger/clonage menu + helpers (ré-init possible)
+// mobile.js — init robuste après injection (garde tes IDs/classes)
 (() => {
-  const isMobile = () => window.matchMedia('(max-width: 900px)').matches;
+  const isMobile = () => matchMedia('(max-width: 900px)').matches;
 
+  // Fix 100vh mobiles
   const setVh = () => {
-    const vh = window.innerHeight * 0.01;
+    const vh = innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   };
-  setVh();
-  window.addEventListener('resize', setVh);
+  setVh(); addEventListener('resize', setVh);
 
-  function initOnce() {
-    if (!isMobile()) return;
+  function bindOnce() {
+    if (!isMobile()) return false;
 
-    const header = document.querySelector('.site-header');
-    const burger = document.getElementById('mb-burger');
-    const drawer = document.getElementById('mb-drawer');
-    const scrim  = document.getElementById('mb-scrim');
-    const list   = drawer?.querySelector('.mb-list');
+    const header     = document.querySelector('.site-header');
+    const burger     = document.getElementById('mb-burger');
+    const drawer     = document.getElementById('mb-drawer');
+    const scrim      = document.getElementById('mb-scrim');
     const desktopNav = document.querySelector('.menu-primary');
+    const list       = drawer?.querySelector('.mb-list');
 
-    // déjà câblé ?
-    if (!header || header.dataset.mbInit === '1') return;
+    if (!header || !burger || !drawer || !scrim || !desktopNav || !list) return false;
+    if (header.dataset.mbInit === '1') return true; // déjà câblé
 
-    if (!burger || !drawer || !scrim || !list || !desktopNav) {
-      // Si le fragment n'est pas encore injecté, on retentera plus tard
-      return;
-    }
-
-    // Marqueur idempotent
     header.dataset.mbInit = '1';
 
-    // Clone les liens .menu-primary → tiroir mobile (une seule fois)
+    // Clone les liens du menu desktop vers la liste mobile (une seule fois)
     if (!list.hasChildNodes()) {
       desktopNav.querySelectorAll('a[href]').forEach(a => {
         const li = document.createElement('li');
-        const clone = a.cloneNode(true);
-        clone.removeAttribute('style');
-        li.appendChild(clone);
+        li.appendChild(a.cloneNode(true));
         list.appendChild(li);
       });
     }
 
-    const html = document.documentElement;
+    const html   = document.documentElement;
     const isOpen = () => drawer.classList.contains('is-open');
-    const openDrawer = (open) => {
-      drawer.classList.toggle('is-open', open);
-      scrim.classList.toggle('is-open', open);
-      burger.setAttribute('aria-expanded', String(open));
-      drawer.hidden = !open;
-      scrim.hidden = !open;
-      html.classList.toggle('mb-no-scroll', open);
+    const open   = (v) => {
+      drawer.classList.toggle('is-open', v);
+      scrim.classList.toggle('is-open', v);
+      burger.setAttribute('aria-expanded', String(v));
+      drawer.hidden = !v; scrim.hidden = !v;
+      html.classList.toggle('mb-no-scroll', v);
     };
 
-    burger.addEventListener('click', (e) => {
-      e.stopPropagation();
-      openDrawer(!isOpen());
-    });
-    scrim.addEventListener('click', () => openDrawer(false));
-    drawer.addEventListener('click', (e) => {
-      if (e.target.closest('a')) openDrawer(false);
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && isOpen()) openDrawer(false);
-    });
+    burger.addEventListener('click', (e) => { e.stopPropagation(); open(!isOpen()); });
+    scrim.addEventListener('click', () => open(false));
+    drawer.addEventListener('click', (e) => { if (e.target.closest('a')) open(false); });
+    addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) open(false); });
 
-    // Marquage actif (page exacte OU même dossier)
+    // Marquage actif (exact + même section)
     const here = new URL(location.href);
     const herePath = here.pathname.replace(/\/index\.html$/, '/');
     const getPath  = (href) => new URL(href, here.origin).pathname.replace(/\/index\.html$/, '/');
-    const parentDir = (p) => p.endsWith('/') ? p : p.replace(/[^/]+$/, '');
+    const parent   = (p) => p.endsWith('/') ? p : p.replace(/[^/]+$/, '');
     const markActive = (root) => {
       root.querySelectorAll('a[href]').forEach(a => {
         a.removeAttribute('aria-current');
         const t = getPath(a.getAttribute('href'));
         const exact = (t === herePath);
-        const sameSection = parentDir(herePath).startsWith(parentDir(t)) && parentDir(t) !== '/';
+        const sameSection = parent(herePath).startsWith(parent(t)) && parent(t) !== '/';
         if (exact || sameSection) a.setAttribute('aria-current', 'page');
       });
     };
-    markActive(drawer);
-    markActive(desktopNav);
+    markActive(document);
 
     // Tweaks tactiles
     document.body.style.webkitTapHighlightColor = 'transparent';
-    document.querySelectorAll('a, button, [role="button"]').forEach(el => {
-      el.style.touchAction = 'manipulation';
-    });
+    document.querySelectorAll('a,button,[role="button"]').forEach(el => { el.style.touchAction = 'manipulation'; });
+
+    return true;
   }
 
-  // 1) on tente à DOMContentLoaded
-  document.addEventListener('DOMContentLoaded', initOnce);
-  // 2) on expose une API pour ré-init après injection
-  window.TI_initMobileMenu = initOnce;
+  function init() {
+    // Si tout est déjà là, on câble maintenant
+    if (bindOnce()) return;
+    // Sinon on observe l'arrivée des fragments injectés puis on câble dès que possible
+    const obs = new MutationObserver(() => {
+      if (bindOnce()) obs.disconnect();
+    });
+    obs.observe(document.documentElement, { childList: true, subtree: true });
+  }
 
-  // 3) si un event custom est émis après inject, on ré-init
-  document.addEventListener('ti:partial-injected', (e) => {
-    if (e.detail?.targetId === 'menu-placeholder') initOnce();
-  });
+  // API publique si tu veux relancer manuellement
+  window.TI_initMobileMenu = init;
+
+  // Lance tout de suite (même si DOMContentLoaded est déjà passé)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
 })();
