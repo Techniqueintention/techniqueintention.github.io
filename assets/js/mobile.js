@@ -1,4 +1,5 @@
-// mobile.js — init robuste après injection (garde tes IDs/classes)
+// mobile.js — init robuste après injection (IDs conservés)
+// IDs/classes attendus : #mb-burger, #mb-drawer, #mb-scrim, .menu-primary, .mb-list
 (() => {
   const isMobile = () => matchMedia('(max-width: 900px)').matches;
 
@@ -19,23 +20,27 @@
     const desktopNav = document.querySelector('.menu-primary');
     const list       = drawer?.querySelector('.mb-list');
 
+    // Pas encore injecté ? on retentera
     if (!header || !burger || !drawer || !scrim || !desktopNav || !list) return false;
-    if (header.dataset.mbInit === '1') return true; // déjà câblé
 
+    // Déjà câblé ?
+    if (header.dataset.mbInit === '1') return true;
     header.dataset.mbInit = '1';
 
-    // Clone les liens du menu desktop vers la liste mobile (une seule fois)
+    // Clone une seule fois les liens desktop dans le tiroir mobile
     if (!list.hasChildNodes()) {
       desktopNav.querySelectorAll('a[href]').forEach(a => {
         const li = document.createElement('li');
-        li.appendChild(a.cloneNode(true));
+        const clone = a.cloneNode(true);
+        clone.removeAttribute('style');
+        li.appendChild(clone);
         list.appendChild(li);
       });
     }
 
-    const html   = document.documentElement;
+    const html = document.documentElement;
     const isOpen = () => drawer.classList.contains('is-open');
-    const open   = (v) => {
+    const open = (v) => {
       drawer.classList.toggle('is-open', v);
       scrim.classList.toggle('is-open', v);
       burger.setAttribute('aria-expanded', String(v));
@@ -62,7 +67,8 @@
         if (exact || sameSection) a.setAttribute('aria-current', 'page');
       });
     };
-    markActive(document);
+    markActive(drawer);
+    markActive(desktopNav);
 
     // Tweaks tactiles
     document.body.style.webkitTapHighlightColor = 'transparent';
@@ -72,19 +78,17 @@
   }
 
   function init() {
-    // Si tout est déjà là, on câble maintenant
+    // Si tout est prêt, on câble maintenant
     if (bindOnce()) return;
-    // Sinon on observe l'arrivée des fragments injectés puis on câble dès que possible
-    const obs = new MutationObserver(() => {
-      if (bindOnce()) obs.disconnect();
-    });
+    // Sinon on observe l’arrivée du fragment (menu injecté) et on câble dès que possible
+    const obs = new MutationObserver(() => { if (bindOnce()) obs.disconnect(); });
     obs.observe(document.documentElement, { childList: true, subtree: true });
   }
 
-  // API publique si tu veux relancer manuellement
+  // API publique si besoin d’un rappel manuel
   window.TI_initMobileMenu = init;
 
-  // Lance tout de suite (même si DOMContentLoaded est déjà passé)
+  // DÉMARRER MAINTENANT, même si DOMContentLoaded est déjà passé
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init, { once: true });
   } else {
