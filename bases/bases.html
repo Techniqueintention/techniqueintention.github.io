@@ -16,31 +16,31 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      padding-top: var(--header-h, 64px); /* Compensation pour header fixe */
+      padding-top: var(--header-h, 64px);
     }
-    
-    main {
-      flex: 1 0 auto;
-      width: 100%;
+    main { flex: 1 0 auto; width: 100%; }
+    .viewer-container { width: 100%; }
+    #footer-placeholder { margin-top: auto; flex-shrink: 0; width: 100%; position: relative; z-index: 1; }
+    .viewer-layout { min-height: 60vh; }
+
+    /* --- Petits compléments pour le drawer sans JS --- */
+    /* Par défaut (desktop), on cache les contrôles off-canvas */
+    .menu-toggle, .menu-toggle-btn, .offcanvas, .offcanvas-scrim { display: none; }
+
+    /* Desktop : on positionne le panneau comme une colonne normale */
+    @media (min-width: 981px) {
+      .offcanvas-panel { /* le panneau contient .blog-menu */
+        grid-column: 2;
+        position: static;
+        height: auto;
+        width: var(--menu-w, 300px);
+      }
     }
-    
-    /* Container principal qui contient SEULEMENT le viewer */
-    .viewer-container {
-      width: 100%;
-    }
-    
-    /* S'assurer que le footer reste BIEN EN DEHORS du viewer */
-    #footer-placeholder {
-      margin-top: auto;
-      flex-shrink: 0;
-      width: 100%;
-      position: relative;
-      z-index: 1;
-    }
-    
-    /* Viewer layout bien isolé */
-    .viewer-layout {
-      min-height: 60vh;
+
+    /* Mobile/Tablet : on active le bouton et le drawer */
+    @media (max-width: 980px) {
+      .menu-toggle-btn { display: inline-flex; }
+      .offcanvas { display: block; }
     }
   </style>
 </head>
@@ -49,7 +49,7 @@
   <!-- EFFET ETOILE SI THEME DARK -->
   <canvas id="theme-canvas"></canvas>
 
-  <!-- 🧠 Menu injecté dynamiquement -->
+  <!-- Menu principal injecté -->
   <div id="menu-placeholder"></div>
 
   <!-- MAIN CONTIENT SEULEMENT LE VIEWER -->
@@ -59,34 +59,49 @@
       <!-- Titre centré -->
       <h1 class="viewer-title">LES BASES</h1>
 
-      <!-- MENU FIXE À GAUCHE -->
-      <nav id="viewer-menu" class="blog-menu" aria-label="Navigation Bases">
-        <a class="menu-card" href="#" data-viewer="./intro.html" data-date="2025-08-28">
-          <span>Introduction</span>
-        </a>
+      <!-- ======== MENU LATERAL : version unique qui sert
+           1) de colonne (desktop)
+           2) de drawer off-canvas (≤980px) sans JS
+      ======== -->
+      <input type="checkbox" id="menu-toggle" class="menu-toggle" hidden>
+      <label for="menu-toggle" class="menu-toggle-btn" aria-controls="viewer-menu" aria-expanded="false">☰ Sections</label>
 
-        <details>
-          <summary>Fondamentaux</summary>
-          <ul>
-            <li><a href="#" data-viewer="./definition.html" data-date="2025-08-28">Définition</a></li>
-            <li><a href="#" data-viewer="./test.html">Tests</a></li>
-          </ul>
-        </details>
+      <div class="offcanvas">
+        <!-- panneau contenant le menu ; devient colonne en desktop via CSS -->
+        <div class="offcanvas-panel">
+          <nav id="viewer-menu" class="blog-menu" aria-label="Navigation Bases">
+            <a class="menu-card" href="#" data-viewer="./intro.html" data-date="2025-08-28">
+              <span>Introduction</span>
+              <span class="badge-new">NEW</span>
+            </a>
 
-        <details>
-          <summary>Pratiques</summary>
-          <ul>
-            <li><a href="#" data-viewer="./respiration.html">Respiration consciente</a></li>
-          </ul>
-        </details>
+            <details data-has-new="1">
+              <summary>Fondamentaux</summary>
+              <ul>
+                <li><a href="#" data-viewer="./definition.html" data-date="2025-08-28">Définition</a></li>
+                <li><a href="#" data-viewer="./test.html">Tests</a></li>
+              </ul>
+            </details>
 
-        <details>
-          <summary>Outils</summary>
-          <ul>
-            <li><a href="#" data-viewer="./mise-en-forme.html">Mettre en forme une intention</a></li>
-          </ul>
-        </details>
-      </nav>
+            <details>
+              <summary>Pratiques</summary>
+              <ul>
+                <li><a href="#" data-viewer="./respiration.html">Respiration consciente</a></li>
+              </ul>
+            </details>
+
+            <details>
+              <summary>Outils</summary>
+              <ul>
+                <li><a href="#" data-viewer="./mise-en-forme.html">Mettre en forme une intention</a></li>
+              </ul>
+            </details>
+          </nav>
+        </div>
+
+        <!-- voile cliquable pour fermer -->
+        <label for="menu-toggle" class="offcanvas-scrim" aria-label="Fermer le menu"></label>
+      </div>
 
       <!-- COLONNE ARTICLE -->
       <section id="article-viewer" role="region" aria-live="polite">
@@ -96,13 +111,12 @@
           <p class="notes-fin">Cliquez à gauche pour afficher l'article souhaité.</p>
         </div>
       </section>
-      
+
     </div>
   </main>
 
-  <!-- PIED DE PAGE - BIEN EN DEHORS DU MAIN ET DU VIEWER -->
+  <!-- PIED DE PAGE -->
   <div id="footer-placeholder"></div>
 
 </body>
 </html>
-
