@@ -1,186 +1,38 @@
 /* =========================================================
-   MOBILE NAV / BURGER — Technique Intention
-   - Garde tes IDs/classes (#mb-*, .mb-*)
-   - Supprime les doublons et le placeholder fixé
-   - Z-index cohérents, fonts héritées, 100dvh, safe-area
+   Technique Intention — MOBILE.CSS (complet, corrigé)
+   - Pas de position:fixed sur #menu-placeholder
+   - Une seule compensation du header (padding-top sur body)
+   - Drawer compact, semi-opaque, light/dark
+   - Zéro chevauchement avec le bandeau
    ========================================================= */
 
-/* ===== Burger mobile (corrections) ===== */
-
-/* Desktop : le système burger est caché */
-@media (min-width: 901px) {
-  #mb-burger, #mb-drawer, #mb-scrim,
-  .mb-burger, .mb-drawer, .mb-scrim { display: none !important; }
+/* ---------- Sécurité globale ---------- */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
-/* Mobile : on masque la barre desktop, on montre le burger */
-@media (max-width: 900px) {
-  /* On garde le titre (.site-title) et le switch thème (.menu-switch) visibles */
-  .menu-primary { display: none !important; }
-
-  /* Header sticky + espace pour le burger */
-  .site-header { 
-    position: sticky; top: 0; z-index: 1000;
-    padding-right: 60px; /* Espace pour le burger */
-  }
-
-  /* Burger */
-  #mb-burger, .mb-burger {
-    position: absolute;
-    top: 50%;
-    right: 12px;
-    transform: translateY(-50%);
-    width: 44px; height: 44px;
-    border-radius: 8px;
-    border: 1px solid rgba(0,0,0,0.1);
-    background: var(--header-bg, rgba(255,255,255,0.9));
-    padding: 0;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    cursor: pointer; transition: all 0.3s ease;
-    z-index: 1100;
-  }
-  #mb-burger:hover, .mb-burger:hover {
-    background: var(--accent-bg);
-    border-color: var(--accent);
-  }
-  #mb-burger span, .mb-burger span {
-    width: 22px; height: 2px; background: currentColor; display: block;
-    transition: all 0.3s ease; transform-origin: center;
-  }
-  /* Animation burger -> croix */
-  #mb-burger[aria-expanded="true"] span:nth-child(1),
-  .mb-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  #mb-burger[aria-expanded="true"] span:nth-child(2),
-  .mb-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-  #mb-burger[aria-expanded="true"] span:nth-child(3),
-  .mb-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-  /* Ajustements pour le titre et le bouton thème */
-  .site-title a { 
-    max-width: calc(100% - 100px);
-    padding-right: 10px;
-  }
-  .menu-switch { 
-    position: absolute; right: 65px; top: 50%; transform: translateY(-50%);
-    margin-right: 0;
-  }
-
-  /* Drawer */
-  #mb-drawer, .mb-drawer {
-    position: fixed; top: 0; left: 0; bottom: 0;
-    width: min(85vw, 320px);
-    transform: translateX(-100%); transition: transform 0.3s ease;
-    background: var(--drawer-bg, rgba(255, 255, 255, 0.98));
-    backdrop-filter: blur(10px);
-    color: var(--text-color, #333);
-    z-index: 1099;
-    padding: 70px 1rem 1rem 1rem;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.15);
-    font: inherit;
-  }
-  #mb-drawer.is-open, .mb-drawer.is-open { transform: translateX(0); }
-
-  /* L'attribut hidden ne doit pas casser l'anim */
-  #mb-drawer[hidden], .mb-drawer[hidden] { display: block !important; }
-
-  /* Liste du drawer */
-  #mb-drawer .mb-list, .mb-drawer .mb-list { 
-    list-style: none; margin: 0; padding: 0;
-    display: flex; flex-direction: column; gap: 0.5rem;
-    font: inherit;
-  }
-  #mb-drawer .mb-list a, .mb-drawer .mb-list a {
-    display: flex; align-items: center;
-    min-height: 44px;
-    padding: 1rem 1rem;
-    border-radius: 10px;
-    text-decoration: none;
-    color: var(--text-color);
-    font-weight: 500;
-    transition: all 0.2s ease;
-    border: 1px solid transparent;
-  }
-  #mb-drawer .mb-list a:hover, .mb-drawer .mb-list a:hover {
-    background: var(--accent-bg);
-    color: var(--accent);
-  }
-  #mb-drawer .mb-list a[aria-current="page"], .mb-drawer .mb-list a[aria-current="page"] {
-    background: var(--accent-bg);
-    color: var(--accent);
-    border-color: var(--accent);
-    font-weight: 600;
-  }
-
-  /* Voile */
-  #mb-scrim, .mb-scrim {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.5);
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.3s ease;
-    z-index: 1090;
-    backdrop-filter: blur(2px);
-  }
-  #mb-scrim.is-open, .mb-scrim.is-open { 
-    opacity: 1; pointer-events: auto; 
-  }
-
-  /* Bloquer le scroll de fond quand le tiroir est ouvert */
-  html.mb-no-scroll, body.mb-no-scroll { 
-    overflow: hidden; position: fixed; width: 100%;
-  }
-}
-
-/* Mode sombre pour le burger + drawer */
-@media (max-width: 900px) {
-  :root[data-theme="dark"] #mb-burger,
-  :root[data-theme="dark"] .mb-burger {
-    background: #222; border-color: #888; color: #fff;
-  }
-  :root[data-theme="dark"] #mb-burger span,
-  :root[data-theme="dark"] .mb-burger span { background: #fff; }
-
-  :root[data-theme="dark"] #mb-drawer,
-  :root[data-theme="dark"] .mb-drawer {
-    background: rgba(20, 20, 30, 0.98);
-    color: #fff;
-  }
-  :root[data-theme="dark"] #mb-drawer .mb-list a,
-  :root[data-theme="dark"] .mb-drawer .mb-list a { color: #fff; }
-}
-
-/* ===== Responsive général ===== */
-
-/* 1) Sécurité globale */
-html, body { 
-  max-width: 100%; 
-  overflow-x: hidden; 
+html { height: -webkit-fill-available; }
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
   /* Compensation pour header sticky */
   padding-top: var(--header-h, 64px);
 }
 
-/* ⚠️ Supprimé : #menu-placeholder en position:fixed (créait un bandeau vide) */
+/* Empêche le zoom iOS sur focus */
+input, select, textarea { font-size: 16px; }
 
-/* Espacement vertical entre menu, contenu et footer sur mobile */
-@media (max-width: 900px) {
-  /* plus de position:fixed ici */
-  .home-shell,
-  main {
-    margin-top: 56px;
-    padding-bottom: 80px;
-    min-height: 60vh;
-    overflow-y: auto;
-    box-sizing: border-box;
-  }
-  #footer-placeholder { margin-top: 2rem; display: block; }
+/* Médias fluides */
+img, video, canvas, svg, iframe {
+  max-width: 100%;
+  height: auto;
 }
 
-/* 2) Médias toujours fluides */
-img, video, canvas, svg, iframe { 
-  max-width: 100%; 
-  height: auto; 
-}
+/* Ancrage lisible avec header sticky */
+:target { scroll-margin-top: 80px; }
 
-/* 3) Header/menu : respirer et s'adapter */
+/* ---------- Layout responsive générique ---------- */
 @media (max-width: 1024px) {
   .site-header { padding: .6rem 1rem; gap: .6rem; }
   .site-title a {
@@ -190,25 +42,13 @@ img, video, canvas, svg, iframe {
   }
 }
 
-/* 4) Footer : toujours en bas */
-@media (max-width: 1024px) {
-  footer, .site-footer, #footer-placeholder { 
-    padding: .9rem 1rem; font-size: .92rem; 
-  }
-}
-
-/* 5) Grilles/colonnes génériques → empilement simple */
 @media (max-width: 980px) {
   .grid-2, .two-col,
   .grid-3, .three-col,
   .grid-4, .four-col {
     display: grid; gap: 1rem; grid-template-columns: 1fr;
   }
-}
-
-/* 6) Blog viewer : espacements en mobile */
-@media (max-width: 980px) {
-  .viewer-layout { 
+  .viewer-layout {
     margin: 28px 0 20px 0; /* compense le header */
     grid-template-columns: 1fr;
     gap: 1rem; padding: 0 1rem;
@@ -218,84 +58,102 @@ img, video, canvas, svg, iframe {
   .viewer-title { margin: 0 0 1rem 0; padding: 0.8rem 1.2rem; font-size: 1.4rem; }
 }
 
-/* 7) Accueil : carte plus souple en mobile */
 @media (max-width: 768px) {
   .welcome { margin: 1rem; padding: 1.2rem 1.4rem; }
   .welcome h1 { font-size: 1.7rem; }
   .welcome-text { font-size: 1rem; line-height: 1.65; }
 }
 
-/* 8) Ancrage lisible avec header sticky */
-:target { scroll-margin-top: 80px; }
-
-/* 9) Optimisation spécifique tablette */
+/* Tablet fine-tuning */
 @media (max-width: 900px) and (min-width: 600px) {
   .site-title a { font-size: 1.2rem; }
-  #mb-drawer, .mb-drawer { width: min(75vw, 300px); }
 }
 
-/* 10) Préférence utilisateur (réduction mouvement) */
+/* Préférence réduction de mouvement */
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
-  #mb-drawer, .mb-drawer { transition: none !important; }
 }
 
-/* 11) Empêche le zoom sur focus iOS */
-input, select, textarea { font-size: 16px; }
-
-/* 12) Accessibilité tactile (touch target) */
-a, button, [role="button"] {
-  min-height: 44px; display: flex; align-items: center; justify-content: center;
+/* ---------- Système burger : visibilité (sans styliser le bandeau) ---------- */
+/* Cacher le système mobile sur desktop */
+@media (min-width: 901px) {
+  #mb-burger, #mb-drawer, #mb-scrim { display: none !important; }
 }
 
-/* 13) Correction hauteur viewport mobile */
-html { height: -webkit-fill-available; }
-body { min-height: 100vh; min-height: -webkit-fill-available; }
+/* Cacher le menu desktop en mobile (le bandeau reste inchangé) */
+@media (max-width: 900px) {
+  .site-header .menu-primary { display: none !important; }
+}
+
+/* Fix éventuels décalages du bandeau en mobile (causés par d'autres feuilles) */
+@media (max-width: 900px) {
+  #menu-placeholder { position: static !important; margin: 0 !important; width: auto !important; }
+  html { padding-top: 0 !important; } /* si une autre feuille posait du padding sur <html> */
+  body { padding-top: var(--header-h, 64px) !important; }
+}
+
+/* ---------- (Optionnel) Burger bouton minimal — ne décale rien ---------- */
+@media (max-width: 900px) {
+  #mb-burger{
+    position: absolute; top: 50%; right: 12px; transform: translateY(-50%);
+    width: 44px; height: 44px; border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: var(--header-bg, rgba(255,255,255,0.9));
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    cursor: pointer; transition: background .2s ease, border-color .2s ease;
+    z-index: 1100;
+  }
+  #mb-burger span{
+    width: 22px; height: 2px; background: currentColor; display: block;
+    transition: transform .25s ease, opacity .2s ease;
+  }
+  #mb-burger[aria-expanded="true"] span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+  #mb-burger[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
+  #mb-burger[aria-expanded="true"] span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+  :root[data-theme="dark"] #mb-burger{
+    background: #222; border-color: #888; color: #fff;
+  }
+  :root[data-theme="dark"] #mb-burger span{ background: #fff; }
+}
 
 /* =========================================================
-   DRAWER ONLY — thèmes light/dark via tokens
-   (ne touche ni .site-header ni le layout)
+   DRAWER — compact, semi-opaque, light/dark
+   (aucune règle sur .site-header)
    ========================================================= */
 
-/* Tokens (héritent de tes variables si présentes) */
+/* Tokens */
 :root{
-  --ti-primary: var(--primary, #6e57e0);
-  --ti-bg:      var(--bg, #ffffff);
-  --ti-fg:      var(--text-color, #222);
+  --drawer-width: 280px; /* largeur compacte */
+  --drawer-offset: calc(var(--header-h, 64px) + env(safe-area-inset-top) + 8px); /* liste plus haut */
+  --drawer-font: var(--ui-font, "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif);
 
-  --ti-drawer-bg:            color-mix(in oklab, var(--ti-bg) 92%, var(--ti-primary) 8%);
-  --ti-drawer-fg:            var(--ti-fg);
-  --ti-drawer-border:        #00000014;
-  --ti-scrim:                rgba(0,0,0,.45);
-
-  --ti-link-bg:              color-mix(in oklab, var(--ti-bg) 90%, var(--ti-primary) 0%);
-  --ti-link-hover-bg:        color-mix(in oklab, var(--ti-primary) 14%, var(--ti-bg) 86%);
-  --ti-link-active-bg:       color-mix(in oklab, var(--ti-primary) 88%, var(--ti-bg) 12%);
-  --ti-link-active-fg:       #fff;
-  --ti-link-border-active:   color-mix(in oklab, var(--ti-primary) 100%, var(--ti-bg) 0%);
+  /* Light */
+  --drawer-bg: rgba(255,255,255,.88);
+  --drawer-fg: var(--text-color, #222);
+  --drawer-item-bg: rgba(255,255,255,.65);
+  --drawer-item-hover-bg: rgba(255,255,255,.82);
+  --drawer-active-bg: var(--primary, #6e57e0);
+  --drawer-active-fg: #fff;
+  --drawer-border: #00000014;
+  --drawer-scrim: rgba(0,0,0,.45);
 }
-
-/* Overrides sombres (tu peux ajuster les bases si besoin) */
+/* Dark */
 :root[data-theme="dark"]{
-  --ti-bg: #1a1b22;
-  --ti-fg: #ffffff;
-
-  --ti-drawer-bg:          color-mix(in oklab, #16171d 88%, var(--ti-primary) 12%);
-  --ti-drawer-fg:          #fff;
-  --ti-drawer-border:      #ffffff14;
-  --ti-scrim:              rgba(0,0,0,.6);
-
-  --ti-link-bg:            color-mix(in oklab, #1e1f2a 85%, var(--ti-primary) 15%);
-  --ti-link-hover-bg:      color-mix(in oklab, var(--ti-primary) 26%, #1e1f2a 74%);
-  --ti-link-active-bg:     color-mix(in oklab, var(--ti-primary) 86%, #111318 14%);
-  --ti-link-active-fg:     #fff;
-  --ti-link-border-active: color-mix(in oklab, var(--ti-primary) 100%, #000 0%);
+  --drawer-bg: rgba(20,20,30,.90);
+  --drawer-fg: #fff;
+  --drawer-item-bg: rgba(255,255,255,.08);
+  --drawer-item-hover-bg: rgba(255,255,255,.14);
+  --drawer-active-bg: color-mix(in oklab, var(--primary, #6e57e0) 86%, #111 14%);
+  --drawer-active-fg: #fff;
+  --drawer-border: #ffffff1a;
+  --drawer-scrim: rgba(0,0,0,.60);
 }
 
 /* Voile */
 #mb-scrim{
   position: fixed; inset: 0;
-  background: var(--ti-scrim);
+  background: var(--drawer-scrim);
   opacity: 0; pointer-events: none;
   transition: opacity .25s ease;
   z-index: 1990;
@@ -306,39 +164,40 @@ body { min-height: 100vh; min-height: -webkit-fill-available; }
 /* Tiroir */
 #mb-drawer{
   position: fixed; inset: 0 auto 0 0;
-  width: min(86vw, 340px);
+  width: min(78vw, var(--drawer-width));
   height: 100dvh;
   transform: translateX(-100%);
   transition: transform .28s ease;
   z-index: 2000;
 
-  background: var(--ti-drawer-bg);
-  color: var(--ti-drawer-fg);
-  border-right: 1px solid var(--ti-drawer-border);
+  background: var(--drawer-bg);
+  color: var(--drawer-fg);
+  border-right: 1px solid var(--drawer-border);
   box-shadow: 0 10px 40px rgba(0,0,0,.24);
-  font: inherit;
+  backdrop-filter: blur(8px);
+  font-family: var(--drawer-font);
   overscroll-behavior: contain;
 }
 #mb-drawer.is-open{ transform: translateX(0); }
 
-/* Liste (passe sous le header sticky) */
+/* Liste (juste sous le header sticky) */
 #mb-drawer .mb-list{
   list-style: none; margin: 0;
-  padding: calc(var(--header-h, 64px) + env(safe-area-inset-top) + 16px) 16px 24px;
-  display: grid; gap: 10px;
-  font: inherit;
+  padding: var(--drawer-offset) 16px 24px;
+  display: grid; gap: 8px;
+  font-family: var(--drawer-font);
 }
-#mb-drawer .mb-list li{ margin:0; padding:0; }
+#mb-drawer .mb-list li{ margin: 0; padding: 0; }
 
-/* Liens “pill” + chevron */
+/* Items “pill” compacts + chevron */
 #mb-drawer .mb-list a{
-  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px;
+  display: flex; align-items: center; justify-content: space-between;
   min-height: 44px;
   padding: 12px 14px;
   border-radius: 12px;
   text-decoration: none;
-  color: var(--ti-drawer-fg);
-  background: var(--ti-link-bg);
+  color: inherit;
+  background: var(--drawer-item-bg);
   border: 1px solid transparent;
   outline-offset: 3px;
   font-weight: 600;
@@ -351,34 +210,21 @@ body { min-height: 100vh; min-height: -webkit-fill-available; }
   transform: translateX(0);
   transition: transform .15s ease, opacity .15s ease;
 }
-#mb-drawer .mb-list a:hover{
-  background: var(--ti-link-hover-bg);
-}
-#mb-drawer .mb-list a:hover::after{
-  opacity: .8; transform: translateX(2px);
-}
+#mb-drawer .mb-list a:hover{ background: var(--drawer-item-hover-bg); }
+#mb-drawer .mb-list a:hover::after{ opacity: .8; transform: translateX(2px); }
 #mb-drawer .mb-list a:active{ transform: scale(.985); }
 
 /* Actif (page courante) */
 #mb-drawer .mb-list a[aria-current="page"]{
-  background: var(--ti-link-active-bg);
-  color: var(--ti-link-active-fg);
-  border-color: var(--ti-link-border-active);
-  box-shadow: 0 0 0 1px var(--ti-link-border-active) inset;
-}
-#mb-drawer .mb-list a[aria-current="page"]::before{
-  content: '';
-  width: 4px; height: 60%;
-  border-radius: 3px;
-  background: var(--ti-link-active-fg);
-  opacity: .9;
-  justify-self: start;
-  margin-right: 6px;
+  background: var(--drawer-active-bg);
+  color: var(--drawer-active-fg);
+  border-color: var(--drawer-active-bg);
+  box-shadow: 0 0 0 1px var(--drawer-active-bg) inset;
 }
 
 /* Focus clavier visible */
 #mb-drawer .mb-list a:focus-visible{
-  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ti-primary) 35%, var(--ti-bg) 65%);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary, #6e57e0) 35%, var(--drawer-bg) 65%);
   outline: none;
 }
 
@@ -386,4 +232,3 @@ body { min-height: 100vh; min-height: -webkit-fill-available; }
 @media (prefers-reduced-motion: reduce){
   #mb-scrim, #mb-drawer, #mb-drawer .mb-list a{ transition: none !important; }
 }
-
