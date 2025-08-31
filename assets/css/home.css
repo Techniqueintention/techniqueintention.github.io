@@ -212,5 +212,7 @@
   }
   .home-shell {
     margin-top: 64px;
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
   }
 }
