@@ -345,3 +345,72 @@ body { min-height: 100vh; min-height: -webkit-fill-available; }
 /* Empêche le scroll de fond */
 html.mb-no-scroll, body.mb-no-scroll { overflow: hidden !important; height: 100dvh !important; }
 
+/* ==== DRAWER ONLY (pas de styles bandeau) ==== */
+
+/* Voile */
+#mb-scrim{
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.45);
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s ease;
+  z-index: 1990;
+  backdrop-filter: blur(2px);
+}
+#mb-scrim.is-open{ opacity: 1; pointer-events: auto; }
+
+/* Tiroir */
+#mb-drawer{
+  position: fixed; inset: 0 auto 0 0;
+  width: min(86vw, 340px);
+  height: 100dvh;
+  transform: translateX(-100%);
+  transition: transform .28s ease;
+  z-index: 2000;
+  /* style verre doux */
+  --drawer-bg: color-mix(in oklab, white 92%, var(--primary, #6e57e0) 8%);
+  background: var(--drawer-bg);
+  border-right: 1px solid #00000014;
+  box-shadow: 0 10px 40px rgba(0,0,0,.24);
+  font: inherit; color: var(--text-color, #222);
+  overscroll-behavior: contain;
+}
+#mb-drawer.is-open{ transform: translateX(0); }
+
+/* Liste */
+#mb-drawer .mb-list{
+  list-style: none; margin: 0;
+  padding: calc(var(--header-h, 64px) + env(safe-area-inset-top) + 16px) 16px 24px;
+  display: grid; gap: 10px;
+  font: inherit;
+}
+#mb-drawer .mb-list li{ margin:0; padding:0; }
+
+#mb-drawer .mb-list a{
+  display: flex; align-items: center; gap: 10px;
+  min-height: 44px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text-color, #222);
+  font-weight: 600;
+  background: color-mix(in oklab, white 90%, var(--primary, #6e57e0) 0%);
+  border: 1px solid transparent;
+  outline-offset: 2px;
+  transition: background .15s ease, border-color .15s ease, transform .06s ease;
+}
+#mb-drawer .mb-list a:hover{
+  background: color-mix(in oklab, var(--primary, #6e57e0) 14%, white 86%);
+}
+#mb-drawer .mb-list a:active{ transform: scale(.98); }
+#mb-drawer .mb-list a[aria-current="page"]{
+  background: color-mix(in oklab, var(--primary, #6e57e0) 88%, white 12%);
+  color: #fff;
+  border-color: color-mix(in oklab, var(--primary, #6e57e0) 100%, white 0%);
+}
+
+/* Mode sombre (tiroir uniquement) */
+:root[data-theme="dark"] #mb-drawer{
+  background: rgba(20,20,30,.95);
+  color: #fff;
+}
+:root[data-theme="dark"] #mb-drawer .mb-list a{ color: #fff; }
