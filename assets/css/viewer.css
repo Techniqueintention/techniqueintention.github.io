@@ -11,7 +11,7 @@
   --header-h: 64px;
 }
 
-/* Container principal - AJUSTÉ */
+/* Container principal - DESKTOP */
 .viewer-layout {
   display: grid;
   grid-template-columns: var(--pad-left) var(--menu-w) var(--gap-fixed) minmax(var(--article-min), var(--article-max)) 1fr;
@@ -111,21 +111,40 @@
   box-shadow: 0 0 20px rgba(0,0,0,.4);
 }
 
-/* Responsive */
+/* ===============================
+   Responsive (≤ 980px)
+   =============================== */
 @media (max-width: 980px) {
   .viewer-layout {
-    grid-template-columns: 16px 1fr 16px;
-    gap: 0;
+    display: grid;
+    grid-template-columns: 200px 1fr;   /* colonne gauche = menu, droite = article */
+    grid-template-areas: "menu article";
+    gap: 1rem;
+    margin: 1rem;
   }
+
   .blog-menu {
-    grid-column: 2;
+    grid-area: menu;
     position: static;
     width: 100%;
+    max-width: 200px;  /* largeur menu réduite */
     height: auto;
   }
+
   #article-viewer {
-    grid-column: 2;
+    grid-area: article;
     width: 100%;
-    padding: 1.2rem;
+    padding: 1rem;
+  }
+
+  /* Ajoute le titre principal au-dessus du menu */
+  .blog-menu::before {
+    content: "Les Bases"; /* tu peux remplacer dynamiquement via JS si besoin */
+    display: block;
+    font-family: "Cinzel", serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--link-color);
+    margin: 0 0 .8rem 0;
   }
 }
