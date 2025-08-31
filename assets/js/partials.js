@@ -30,6 +30,14 @@ export async function injectPartial(targetId, url) {
     // Injecte le contenu HTML dans la cible
     container.innerHTML = html;
 
+    // ... après container.innerHTML = html; et l’exécution des <script> ...
+
+// Émet un événement custom pour signaler que ce partial est prêt
+document.dispatchEvent(new CustomEvent('ti:partial-injected', {
+  detail: { targetId }
+}));
+
+
     // (Optionnel) Exécute les <script> présents dans le fragment injecté
     // Utile si le partial contient un script inline
     const scripts = container.querySelectorAll("script");
