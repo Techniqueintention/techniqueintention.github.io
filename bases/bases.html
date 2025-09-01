@@ -101,60 +101,70 @@
   <div id="footer-placeholder"></div>
 
   <script>
-document.addEventListener('DOMContentLoaded',function(){
-  var menu=document.getElementById('viewer-menu');
-  var toggle=document.getElementById('menu-toggle');
-  var viewer=document.getElementById('article-viewer');
-  var mm=window.matchMedia('(max-width: 980px)');
+document.addEventListener('DOMContentLoaded', function () {
+  var menu   = document.getElementById('viewer-menu');
+  var toggle = document.getElementById('menu-toggle');
+  var viewer = document.getElementById('article-viewer');
+  var mm     = window.matchMedia('(max-width: 980px)');
 
-  // Badge NEW auto (anti-doublon)
+  if (!menu || !viewer) return;
+
+  // --- Badge NEW auto (anti-doublon) ---
   (function(){
-    if(!menu) return;
-    var now=new Date(), seven=7*24*60*60*1000;
+    var now = new Date(), seven = 7*24*60*60*1000;
     menu.querySelectorAll('[data-date]').forEach(function(el){
-      if(el.querySelector('.badge-new')) return;
-      var d=new Date(el.getAttribute('data-date'));
-      if(!isNaN(d)&&(now-d)<=seven){
-        var b=document.createElement('span'); b.className='badge-new'; b.textContent='NEW'; el.appendChild(b);
-        var det=el.closest('details'); if(det && !det.hasAttribute('data-has-new')) det.setAttribute('data-has-new','1');
+      if (el.querySelector('.badge-new')) return;
+      var d = new Date(el.getAttribute('data-date'));
+      if (!isNaN(d) && (now - d) <= seven) {
+        var b = document.createElement('span');
+        b.className = 'badge-new';
+        b.textContent = 'NEW';
+        el.appendChild(b);
+        var det = el.closest('details');
+        if (det && !det.hasAttribute('data-has-new')) det.setAttribute('data-has-new','1');
       }
     });
   })();
 
-  // Injecte le bouton ✕ uniquement en mobile
-  (function(){
-    if(!mm.matches) return;
-    var panel=document.querySelector('.offcanvas-panel');
-    if(panel && !panel.querySelector('.drawer-close')){
-      var btn=document.createElement('button');
-      btn.type='button'; btn.className='drawer-close'; btn.setAttribute('aria-label','Fermer'); btn.textContent='✕';
-      panel.prepend(btn);
-      btn.addEventListener('click',function(){ toggle.checked=false; });
-    }
-  })();
+  // --- Loader d'article fiable (data-viewer) ---
+  function loadIntoViewer(url){
+    if (!url) return Promise.resolve();
+    viewer.classList.add('is-loading');
+    return fetch(url, { cache: 'no-store' })
+      .then(function(r){ return r.text(); })
+      .then(function(html){
+        viewer.innerHTML = html;
+      })
+      .catch(function(err){
+        viewer.innerHTML = '<div class="placeholder"><p>Impossible de charger cet article pour le moment.</p></div>';
+        console.error(err);
+      })
+      .finally(function(){
+        viewer.classList.remove('is-loading');
+      });
+  }
 
-  // Fermer le drawer APRÈS que l'article soit injecté
-  if(menu && viewer){
-    menu.querySelectorAll('a[href]').forEach(function(a){
-      a.addEventListener('click',function(){
-        if(!mm.matches) return;
-        var closed=false;
-        // Observe le changement de contenu du viewer
-        var obs=new MutationObserver(function(){
-          if(closed) return;
-          closed=true; obs.disconnect(); toggle.checked=false;
-        });
-        obs.observe(viewer,{childList:true,subtree:true,characterData:true});
-        // Fallback au cas où (si l’injection est ultra rapide ou bloquée)
-        setTimeout(function(){ if(!closed){ try{obs.disconnect();}catch(e){} toggle.checked=false; } }, 700);
+  // Déclencheur : clic sur lien (pas sur <summary>)
+  menu.querySelectorAll('a[data-viewer]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();                      // on gère nous-mêmes le chargement
+      var url = a.getAttribute('data-viewer');
+      loadIntoViewer(url).then(function(){
+        if (mm.matches) toggle.checked = false; // fermer le drawer APRÈS l'injection
       });
     });
-  }
+  });
+
+  // Fermer via croix (si présente) et via clic hors panneau (déjà géré par le <label> voile)
+  var closeBtn = document.querySelector('.drawer-close, .offcanvas-close');
+  if (closeBtn) closeBtn.addEventListener('click', function(){ toggle.checked = false; });
 });
 </script>
 
+
 </body>
 </html>
+
 
 
 
