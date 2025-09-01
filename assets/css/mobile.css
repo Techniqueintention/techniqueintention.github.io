@@ -1,5 +1,5 @@
 /* =========================================================
-   Technique Intention — MOBILE.CSS (complet, corrigé)
+   Technique Intention – MOBILE.CSS (complet, corrigé)
    - Pas de position:fixed sur #menu-placeholder
    - Une seule compensation du header (padding-top sur body)
    - Drawer compact, semi-opaque, light/dark
@@ -92,7 +92,7 @@ img, video, canvas, svg, iframe {
   body { padding-top: var(--header-h, 64px) !important; }
 }
 
-/* ---------- (Optionnel) Burger bouton minimal — ne décale rien ---------- */
+/* ---------- (Optionnel) Burger bouton minimal – ne décale rien ---------- */
 @media (max-width: 900px) {
   #mb-burger{
     position: absolute; top: 50%; right: 12px; transform: translateY(-50%);
@@ -101,7 +101,7 @@ img, video, canvas, svg, iframe {
     background: var(--header-bg, rgba(255,255,255,0.9));
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     cursor: pointer; transition: background .2s ease, border-color .2s ease;
-    z-index: 1100;
+    z-index: 1100 !important; /* Bouton burger au-dessus du header */
   }
   #mb-burger span{
     width: 22px; height: 2px; background: currentColor; display: block;
@@ -118,7 +118,7 @@ img, video, canvas, svg, iframe {
 }
 
 /* =========================================================
-   DRAWER — compact, semi-opaque, light/dark
+   DRAWER – compact, semi-opaque, light/dark
    (aucune règle sur .site-header)
    ========================================================= */
 
@@ -156,7 +156,7 @@ img, video, canvas, svg, iframe {
   background: var(--drawer-scrim);
   opacity: 0; pointer-events: none;
   transition: opacity .25s ease;
-  z-index: 1990;
+  z-index: 2990 !important; /* Voile du menu principal */
   backdrop-filter: blur(2px);
 }
 #mb-scrim.is-open{ opacity: 1; pointer-events: auto; }
@@ -168,7 +168,7 @@ img, video, canvas, svg, iframe {
   height: 100dvh;
   transform: translateX(-100%);
   transition: transform .28s ease;
-  z-index: 2000;
+  z-index: 3000 !important; /* Menu principal au-dessus de tout */
 
   background: var(--drawer-bg);
   color: var(--drawer-fg);
@@ -189,7 +189,7 @@ img, video, canvas, svg, iframe {
 }
 #mb-drawer .mb-list li{ margin: 0; padding: 0; }
 
-/* Items “pill” compacts + chevron */
+/* Items "pill" compacts + chevron */
 #mb-drawer .mb-list a{
   display: flex; align-items: center; justify-content: space-between;
   min-height: 44px;
@@ -233,7 +233,7 @@ img, video, canvas, svg, iframe {
   #mb-scrim, #mb-drawer, #mb-drawer .mb-list a{ transition: none !important; }
 }
 
-/* ===== Fix bandeau (mobile only) — anti-chevauchement propre ===== */
+/* ===== Fix bandeau (mobile only) – anti-chevauchement propre ===== */
 @media (max-width: 900px){
   /* Le placeholder n'est PAS fixé, sinon bandeau fantôme */
   #menu-placeholder { position: static !important; margin: 0 !important; width: auto !important; }
@@ -246,7 +246,7 @@ img, video, canvas, svg, iframe {
   html.mb-no-scroll { overflow: hidden !important; height: 100dvh !important; }
   body.mb-no-scroll { position: static !important; width: auto !important; }
 
-  /* Rien d’autre ne doit remonter le contenu */
+  /* Rien d'autre ne doit remonter le contenu */
   main, .home-shell { margin-top: 0 !important; }
 }
 
@@ -255,11 +255,11 @@ img, video, canvas, svg, iframe {
   .site-header{
     position: fixed !important;
     top: 0; left: 0; right: 0;
-    z-index: 1000;
+    z-index: 1000 !important; /* Header en base */
     padding-right: 60px; /* garde ton espace pour le burger */
   }
 
-  /* si une ancienne règle l’avait mis en fixed → on annule */
+  /* si une ancienne règle l'avait mis en fixed → on annule */
   #menu-placeholder{
     position: static !important;
     top: auto !important; left: auto !important;
@@ -272,7 +272,7 @@ img, video, canvas, svg, iframe {
 }
 
 /* =========================================
-   Fix scroll avant footer — MOBILE ONLY
+   Fix scroll avant footer – MOBILE ONLY
    ========================================= */
 @media (max-width: 900px) {
   /* La page en colonne: header | contenu | footer */
@@ -310,32 +310,18 @@ img, video, canvas, svg, iframe {
   #menu-placeholder { position: static !important; top: auto !important; }
 }
 
-/* === Z-INDEX MAP — couche mobile (FORCE l'ordre) === */
-@media (max-width: 900px) {
-  /* 1. MENU BURGER PRINCIPAL (le plus haut) */
-  .mb-drawer, #mb-drawer { 
-    z-index: 3000 !important; 
-  }
-  .mb-scrim, #mb-scrim { 
-    z-index: 2990 !important; 
-  }
-
-    /* 2. HEADER ET BOUTONS */
-  .site-header { 
-    z-index: 1000 !important; 
-  }
-  #mb-burger, .mb-burger { 
-    z-index: 1100 !important; 
-  }
+/* ===== Z-INDEX HIÉRARCHIE MOBILE CORRIGÉE ===== */
+@media (max-width: 900px){
+  /* NIVEAU 1 : Header et boutons */
+  .site-header { z-index: 1000 !important; }
+  #mb-burger { z-index: 1100 !important; }
+  .menu-toggle-btn { z-index: 1050 !important; }
   
-  /* 3. MENU SECTIONS (sous le burger principal) */
-  .offcanvas-panel { 
-    z-index: 2500 !important; 
-  }
-  .offcanvas-scrim { 
-    z-index: 2490 !important; 
-  }
-  .menu-toggle-btn { 
-    z-index: 1050 !important; 
-  }
+  /* NIVEAU 2 : Menu Sections */
+  .offcanvas-panel { z-index: 2500 !important; }
+  .offcanvas-scrim { z-index: 2490 !important; }
+  
+  /* NIVEAU 3 : Menu burger principal (le plus haut) */
+  #mb-drawer { z-index: 3000 !important; }
+  #mb-scrim { z-index: 2990 !important; }
 }
