@@ -147,4 +147,78 @@
 
     /* --- Clic sur liens d’articles (ignorons <summary>) --- */
     menu.querySelectorAll('a[data-viewer]').forEach(a => {
-      a.addEven
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const url = a.getAttribute('data-viewer');
+        loadIntoViewer(url).then(() => {
+          if (mm.matches) toggle.checked = false;   // fermer APRÈS injection
+          root.classList.toggle('sections-open', toggle.checked);
+          const label = document.querySelector('label[for="menu-toggle"]');
+          if (label) label.setAttribute('aria-expanded', String(toggle.checked));
+        });
+      });
+    });
+
+    /* --- Close button mobile-only (injecté/supprimé selon viewport) --- */
+    function ensureCloseButton() {
+      const panel = document.querySelector('.offcanvas-panel');
+      if (!panel) return;
+      let btn = panel.querySelector('.offcanvas-close');
+      if (mm.matches) {
+        if (!btn) {
+          btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'offcanvas-close only-mobile';
+          btn.setAttribute('aria-label', 'Fermer le menu Sections');
+          btn.textContent = '✕';
+          btn.addEventListener('click', () => {
+            toggle.checked = false;
+            root.classList.remove('sections-open');
+            const label = document.querySelector('label[for="menu-toggle"]');
+            if (label) label.setAttribute('aria-expanded', 'false');
+          });
+          panel.prepend(btn);
+        }
+      } else {
+        if (btn) btn.remove(); // desktop : pas de croix
+      }
+    }
+    ensureCloseButton();
+    mm.addEventListener('change', ensureCloseButton);
+
+    /* --- Met à jour la classe globale + aria-expanded quand on ouvre/ferme --- */
+    toggle.addEventListener('change', () => {
+      root.classList.toggle('sections-open', toggle.checked);
+      const label = document.querySelector('label[for="menu-toggle"]');
+      if (label) label.setAttribute('aria-expanded', String(toggle.checked));
+    });
+
+    /* --- MUTUAL EXCLUSION avec le burger principal (#mb-drawer) --- */
+    const mbDrawer = document.getElementById('mb-drawer');
+    const mbScrim  = document.getElementById('mb-scrim');
+
+    // Si "Sections" s'ouvre, fermer le burger mobile s'il est ouvert
+    toggle.addEventListener('change', () => {
+      if (toggle.checked && mbDrawer && mbDrawer.classList.contains('is-open')) {
+        if (mbScrim) mbScrim.click(); else mbDrawer.classList.remove('is-open');
+      }
+    });
+
+    // Si le burger s'ouvre, fermer "Sections"
+    if (mbDrawer) {
+      const mo = new MutationObserver(() => {
+        if (mbDrawer.classList.contains('is-open') && toggle.checked) {
+          toggle.checked = false;
+          root.classList.remove('sections-open');
+          const label = document.querySelector('label[for="menu-toggle"]');
+          if (label) label.setAttribute('aria-expanded', 'false');
+        }
+      });
+      mo.observe(mbDrawer, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    // (le clic hors panneau peut déjà être géré via CSS selon ta structure)
+  });
+  </script>
+</body>
+</html>
