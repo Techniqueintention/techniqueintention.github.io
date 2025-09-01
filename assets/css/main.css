@@ -1,7 +1,5 @@
 /* Fichier central - main.css */
-main.home-shell {
-  flex: 1; /* 👈 Cela pousse le footer vers le bas si le contenu est court */
-}
+
 /* Reset + styles globaux */
 @import url("/assets/css/layout.css");
 
