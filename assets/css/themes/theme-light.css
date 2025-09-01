@@ -15,7 +15,7 @@
   --header-bg: rgba(255, 255, 255, 0.35); /* translucide */
   --footer-bg: rgba(255, 255, 255, 0.35);
   /* image adaptée au thème clair */
-  --home-hero: url("/assets/img/home/hero-light.png");
+  --home-hero: url("/img/hero-light.png");
 }
 }
 
