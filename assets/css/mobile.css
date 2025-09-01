@@ -325,3 +325,86 @@ img, video, canvas, svg, iframe {
   #mb-drawer { z-index: 3000 !important; }
   #mb-scrim { z-index: 2990 !important; }
 }
+
+/* =============================================
+   CORRECTION D'URGENCE Z-INDEX
+   À ajouter à la fin de mobile.css ou dans bases.html
+   ============================================= */
+
+/* Force la création de nouveaux contextes d'empilement */
+@media (max-width: 900px) {
+  
+  /* RESET complet - on annule tous les z-index existants */
+  .offcanvas,
+  .offcanvas-panel,
+  .offcanvas-scrim,
+  #mb-drawer,
+  #mb-scrim,
+  .mb-drawer,
+  .mb-scrim {
+    z-index: auto !important;
+  }
+  
+  /* PUIS on force la hiérarchie avec de nouveaux contextes */
+  
+  /* 1. Menu burger principal - NOUVEAU CONTEXTE */
+  #mb-drawer,
+  .mb-drawer {
+    z-index: 9999 !important;
+    position: fixed !important;
+    isolation: isolate; /* Force un nouveau contexte d'empilement */
+  }
+  
+  #mb-scrim,
+  .mb-scrim {
+    z-index: 9998 !important;
+    position: fixed !important;
+    isolation: isolate;
+  }
+  
+  /* 2. Menu Sections - CONTEXTE INFÉRIEUR */
+  .offcanvas {
+    z-index: 5000 !important;
+    isolation: isolate; /* Force un nouveau contexte d'empilement */
+  }
+  
+  .offcanvas-panel {
+    z-index: 5001 !important; /* relatif à son parent .offcanvas */
+    position: fixed !important;
+  }
+  
+  .offcanvas-scrim {
+    z-index: 4999 !important;
+    position: fixed !important;
+  }
+  
+  /* 3. Header et boutons */
+  .site-header {
+    z-index: 1000 !important;
+    isolation: isolate;
+  }
+  
+  #mb-burger {
+    z-index: 1100 !important;
+  }
+  
+  .menu-toggle-btn {
+    z-index: 1050 !important;
+  }
+}
+
+/* Alternative si ça ne marche toujours pas : 
+   Cacher complètement le menu Sections quand le burger est ouvert */
+@media (max-width: 900px) {
+  /* Quand le menu burger principal est ouvert, cacher le menu Sections */
+  body:has(#mb-drawer.is-open) .offcanvas,
+  body:has(.mb-drawer.is-open) .offcanvas {
+    display: none !important;
+  }
+  
+  /* Alternative pour les navigateurs qui ne supportent pas :has() */
+  .mb-drawer.is-open ~ * .offcanvas,
+  #mb-drawer.is-open ~ * .offcanvas {
+    display: none !important;
+  }
+}
