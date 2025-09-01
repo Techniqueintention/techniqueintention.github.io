@@ -50,6 +50,9 @@ footer,
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  margin-top: 80px; /* 👈 Ajoute de l'espace au-dessus du footer */
+}
+
 }
 
 /* --------- Utilitaires (optionnels) --------- */
