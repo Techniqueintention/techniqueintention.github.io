@@ -232,3 +232,22 @@
   margin-bottom: 0.6rem; /* espace entre puces */
 }
 
+.home-illustration {
+  /* l'image sera injectée via var(--home-hero) */
+  background: var(--home-hero) center / cover no-repeat;
+  border-radius: 18px;
+  min-height: 420px;
+  border: 1px solid var(--bloc-border, rgba(0,0,0,.1));
+  box-shadow: 0 15px 40px rgba(0,0,0,.12);
+  position: sticky;
+  top: calc(var(--header-h, 64px) + 16px);
+}
+
+/* mobile: une seule colonne, l'image passe au-dessus */
+@media (max-width: 980px) {
+  .home-illustration {
+    position: static;
+    min-height: 260px;
+    order: -1;
+  }
+}
