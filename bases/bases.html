@@ -31,6 +31,10 @@
       font-weight:700;
     }
 
+    /* ✅ AJOUT 1 : priorité d'empilement du drawer (passe devant le header/burger) */
+    .offcanvas-panel { z-index: 2200; }
+    .offcanvas-scrim { z-index: 2190; }
+
     @media (min-width:981px){
       .offcanvas-panel{grid-column:2;position:static;height:auto;width:var(--menu-w,300px)}
     }
@@ -38,6 +42,9 @@
       .menu-toggle-btn{display:inline-flex}
       .offcanvas{display:block}
       .offcanvas-scrim{display:block} /* voile cliquable visible en mobile */
+
+      /* ✅ AJOUT 2 : option – quand le drawer est ouvert, cacher le bouton “Sections” */
+      #menu-toggle:checked + .menu-toggle-btn{visibility:hidden}
     }
   </style>
 </head>
@@ -180,7 +187,6 @@ document.addEventListener('DOMContentLoaded', function () {
   // 1) Si "Sections" s'ouvre, fermer le burger mobile s'il est ouvert
   toggle.addEventListener('change', () => {
     if (toggle.checked && mbDrawer && mbDrawer.classList.contains('is-open')) {
-      // simule un clic hors du tiroir mobile principal
       if (mbScrim) mbScrim.click(); else mbDrawer.classList.remove('is-open');
     }
   });
@@ -199,10 +205,5 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-
 </body>
 </html>
-
-
-
-
