@@ -309,3 +309,15 @@ img, video, canvas, svg, iframe {
   /* Neutralise tout élément fixé qui volerait la place du flux */
   #menu-placeholder { position: static !important; top: auto !important; }
 }
+
+/* === Z-INDEX MAP — couche mobile (FORCE l'ordre) === */
+@media (max-width: 900px){
+  /* 1) Drawer principal (tout devant) */
+  #mb-drawer { z-index: 3000 !important; }
+  #mb-scrim  { z-index: 2990 !important; }
+
+  /* 2) Header & bouton burger / bouton Sections */
+  .site-header     { z-index: 1000 !important; }
+  #mb-burger,
+  .menu-toggle-btn { z-index: 1100 !important; }
+}
