@@ -403,3 +403,48 @@ img, video, canvas, svg, iframe {
     transition: opacity 0.1s ease, visibility 0.1s ease;
   }
 }
+
+/* À ajouter dans mobile.css - SOLUTION RADICALE */
+
+@media (max-width: 900px) {
+  
+  /* Quand le menu burger principal est ouvert, CACHER complètement le menu Sections */
+  #mb-drawer.is-open ~ main .offcanvas,
+  .mb-drawer.is-open ~ main .offcanvas,
+  #mb-drawer.is-open ~ * .offcanvas,
+  .mb-drawer.is-open ~ * .offcanvas {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    z-index: -999 !important;
+  }
+  
+  /* Cache aussi le bouton "Sections" quand le burger principal est ouvert */
+  #mb-drawer.is-open ~ main .menu-toggle-btn,
+  .mb-drawer.is-open ~ main .menu-toggle-btn,
+  #mb-drawer.is-open ~ * .menu-toggle-btn,  
+  .mb-drawer.is-open ~ * .menu-toggle-btn {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  
+  /* Alternative avec sélecteur body si les sélecteurs ci-dessus ne fonctionnent pas */
+  body:has(#mb-drawer.is-open) .offcanvas,
+  body:has(.mb-drawer.is-open) .offcanvas {
+    display: none !important;
+  }
+  
+  body:has(#mb-drawer.is-open) .menu-toggle-btn,
+  body:has(.mb-drawer.is-open) .menu-toggle-btn {
+    display: none !important;
+  }
+  
+  /* Force la checkbox à se décocher quand le burger s'ouvre */
+  #mb-drawer.is-open ~ main #menu-toggle,
+  .mb-drawer.is-open ~ main #menu-toggle {
+    /* Cette partie sera gérée par JavaScript */
+  }
+}
+
+/* SOLUTION JAVASCRIPT COMPLÉMENTAIRE pour forcer la déco */
