@@ -102,9 +102,15 @@
 
   <script>
 document.addEventListener('DOMContentLoaded',function(){
-  var now=new Date(), seven=7*24*60*60*1000, menu=document.getElementById('viewer-menu');
-  if(menu){
-    // Badge NEW auto (anti-doublon)
+  var menu=document.getElementById('viewer-menu');
+  var toggle=document.getElementById('menu-toggle');
+  var viewer=document.getElementById('article-viewer');
+  var mm=window.matchMedia('(max-width: 980px)');
+
+  // Badge NEW auto (anti-doublon)
+  (function(){
+    if(!menu) return;
+    var now=new Date(), seven=7*24*60*60*1000;
     menu.querySelectorAll('[data-date]').forEach(function(el){
       if(el.querySelector('.badge-new')) return;
       var d=new Date(el.getAttribute('data-date'));
@@ -113,17 +119,34 @@ document.addEventListener('DOMContentLoaded',function(){
         var det=el.closest('details'); if(det && !det.hasAttribute('data-has-new')) det.setAttribute('data-has-new','1');
       }
     });
-  }
+  })();
 
-  // Fermer le drawer sur lien (mais pas sur <summary>)
-  var toggle=document.getElementById('menu-toggle');
-  var mm=window.matchMedia('(max-width: 980px)');
-  if(menu){
+  // Injecte le bouton ✕ uniquement en mobile
+  (function(){
+    if(!mm.matches) return;
+    var panel=document.querySelector('.offcanvas-panel');
+    if(panel && !panel.querySelector('.drawer-close')){
+      var btn=document.createElement('button');
+      btn.type='button'; btn.className='drawer-close'; btn.setAttribute('aria-label','Fermer'); btn.textContent='✕';
+      panel.prepend(btn);
+      btn.addEventListener('click',function(){ toggle.checked=false; });
+    }
+  })();
+
+  // Fermer le drawer APRÈS que l'article soit injecté
+  if(menu && viewer){
     menu.querySelectorAll('a[href]').forEach(function(a){
       a.addEventListener('click',function(){
         if(!mm.matches) return;
-        // petit délai pour laisser ton chargeur d'article s'exécuter
-        setTimeout(function(){ toggle.checked=false; }, 220);
+        var closed=false;
+        // Observe le changement de contenu du viewer
+        var obs=new MutationObserver(function(){
+          if(closed) return;
+          closed=true; obs.disconnect(); toggle.checked=false;
+        });
+        obs.observe(viewer,{childList:true,subtree:true,characterData:true});
+        // Fallback au cas où (si l’injection est ultra rapide ou bloquée)
+        setTimeout(function(){ if(!closed){ try{obs.disconnect();}catch(e){} toggle.checked=false; } }, 700);
       });
     });
   }
@@ -132,5 +155,6 @@ document.addEventListener('DOMContentLoaded',function(){
 
 </body>
 </html>
+
 
 
