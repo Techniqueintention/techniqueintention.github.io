@@ -73,6 +73,61 @@
   <div id="footer-placeholder"></div>
 
   <script>
+
+    // À ajouter DANS bases.html - dans la balise <script> existante
+// Juste AVANT la ligne "document.addEventListener('DOMContentLoaded', function () {"
+
+// ==============================================
+// FIX EXCLUSION MUTUELLE BURGER ↔ SECTIONS
+// ==============================================
+
+// Détecter quand le menu burger principal s'ouvre/ferme
+const observeBurgerMenu = () => {
+  const mbDrawer = document.querySelector('#mb-drawer, .mb-drawer');
+  const sectionsToggle = document.getElementById('menu-toggle');
+  
+  if (!mbDrawer || !sectionsToggle) return;
+  
+  // Observer les changements de classe sur le menu burger
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+        const isBurgerOpen = mbDrawer.classList.contains('is-open');
+        
+        if (isBurgerOpen) {
+          // Menu burger ouvert → fermer le menu Sections
+          sectionsToggle.checked = false;
+          console.log('🍔 Menu burger ouvert → Sections fermé');
+        }
+      }
+    });
+  });
+  
+  observer.observe(mbDrawer, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+  
+  // Écouter l'ouverture du menu Sections pour fermer le burger si besoin
+  sectionsToggle.addEventListener('change', (e) => {
+    if (e.target.checked && mbDrawer.classList.contains('is-open')) {
+      // Si Sections s'ouvre alors que burger est ouvert, fermer le burger
+      const mbScrim = document.querySelector('#mb-scrim, .mb-scrim');
+      if (mbScrim) {
+        mbScrim.click(); // Ferme le burger via le scrim
+      } else {
+        mbDrawer.classList.remove('is-open');
+      }
+      console.log('📋 Sections ouvert → Burger fermé');
+    }
+  });
+};
+
+// Initialiser après un petit délai pour être sûr que tout est chargé
+setTimeout(observeBurgerMenu, 100);
+    
+
+      // --- SCRIPT BASES.HTML ---
 document.addEventListener('DOMContentLoaded', function () {
   const menu   = document.getElementById('viewer-menu');
   const toggle = document.getElementById('menu-toggle');
@@ -173,4 +228,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
