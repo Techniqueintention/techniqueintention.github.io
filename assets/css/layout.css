@@ -90,7 +90,6 @@ footer,
   width: 100%;
 }
 
-
 /* Ancrages lisibles si header sticky */
 :target { scroll-margin-top: 72px; }
 
