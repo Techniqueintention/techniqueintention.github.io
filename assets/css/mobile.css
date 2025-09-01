@@ -327,61 +327,58 @@ img, video, canvas, svg, iframe {
 }
 
 /* =============================================
-   CORRECTION D'URGENCE Z-INDEX
-   À ajouter à la fin de mobile.css ou dans bases.html
+   SOLUTION DÉFINITIVE Z-INDEX
+   À ajouter dans mobile.css (remplace la section z-index existante)
    ============================================= */
 
-/* Force la création de nouveaux contextes d'empilement */
 @media (max-width: 900px) {
+  /* CRÉATION DE CONTEXTES D'EMPILEMENT SÉPARÉS */
   
-  /* RESET complet - on annule tous les z-index existants */
-  .offcanvas,
-  .offcanvas-panel,
-  .offcanvas-scrim,
-  #mb-drawer,
-  #mb-scrim,
-  .mb-drawer,
-  .mb-scrim {
-    z-index: auto !important;
-  }
-  
-  /* PUIS on force la hiérarchie avec de nouveaux contextes */
-  
-  /* 1. Menu burger principal - NOUVEAU CONTEXTE */
+  /* 1. Menu burger principal - CONTEXTE PARENT ÉLEVÉ */
   #mb-drawer,
   .mb-drawer {
-    z-index: 9999 !important;
+    z-index: 10000 !important; /* Beaucoup plus élevé */
     position: fixed !important;
-    isolation: isolate; /* Force un nouveau contexte d'empilement */
+    /* Force la création d'un nouveau contexte d'empilement */
+    transform: translateX(-100%) translateZ(0); 
+    will-change: transform;
+  }
+  
+  #mb-drawer.is-open,
+  .mb-drawer.is-open {
+    transform: translateX(0) translateZ(0);
   }
   
   #mb-scrim,
   .mb-scrim {
-    z-index: 9998 !important;
+    z-index: 9999 !important;
     position: fixed !important;
-    isolation: isolate;
+    transform: translateZ(0); /* Force contexte 3D */
   }
   
-  /* 2. Menu Sections - CONTEXTE INFÉRIEUR */
+  /* 2. Menu Sections - CONTEXTE INFÉRIEUR MAIS ISOLÉ */
   .offcanvas {
+    /* Crée un nouveau contexte d'empilement pour ses enfants */
+    position: relative;
     z-index: 5000 !important;
-    isolation: isolate; /* Force un nouveau contexte d'empilement */
+    transform: translateZ(0); /* Force contexte 3D */
   }
   
   .offcanvas-panel {
-    z-index: 5001 !important; /* relatif à son parent .offcanvas */
+    z-index: 1 !important; /* Relatif à .offcanvas (5000) */
     position: fixed !important;
   }
   
   .offcanvas-scrim {
-    z-index: 4999 !important;
+    z-index: 0 !important; /* Relatif à .offcanvas (5000) */
     position: fixed !important;
   }
   
-  /* 3. Header et boutons */
+  /* 3. Header et boutons - CONTEXTE DE BASE */
   .site-header {
     z-index: 1000 !important;
-    isolation: isolate;
+    position: fixed !important;
+    transform: translateZ(0); /* Force contexte 3D */
   }
   
   #mb-burger {
@@ -393,18 +390,16 @@ img, video, canvas, svg, iframe {
   }
 }
 
-/* Alternative si ça ne marche toujours pas : 
-   Cacher complètement le menu Sections quand le burger est ouvert */
+/* SOLUTION ALTERNATIVE SI ÇA NE MARCHE TOUJOURS PAS */
 @media (max-width: 900px) {
-  /* Quand le menu burger principal est ouvert, cacher le menu Sections */
-  body:has(#mb-drawer.is-open) .offcanvas,
-  body:has(.mb-drawer.is-open) .offcanvas {
-    display: none !important;
-  }
-  
-  /* Alternative pour les navigateurs qui ne supportent pas :has() */
-  .mb-drawer.is-open ~ * .offcanvas,
-  #mb-drawer.is-open ~ * .offcanvas {
-    display: none !important;
+  /* Quand le menu burger s'ouvre, on cache temporairement le menu Sections */
+  .mb-drawer.is-open ~ .viewer-container .offcanvas,
+  #mb-drawer.is-open ~ .viewer-container .offcanvas,
+  body:has(.mb-drawer.is-open) .offcanvas,
+  body:has(#mb-drawer.is-open) .offcanvas {
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 0.1s ease, visibility 0.1s ease;
   }
 }
