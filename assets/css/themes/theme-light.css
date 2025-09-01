@@ -14,6 +14,9 @@
   --accent-color: #9d6cff;
   --header-bg: rgba(255, 255, 255, 0.35); /* translucide */
   --footer-bg: rgba(255, 255, 255, 0.35);
+  /* image adaptée au thème clair */
+  --home-hero: url("/assets/img/home/hero-light.png");
+}
 }
 
 /* Fond lavande + sécurité overflow */
@@ -81,3 +84,6 @@
 [data-theme="light"] section {
   background: transparent !important;
 }
+
+
+
