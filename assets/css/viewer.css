@@ -139,6 +139,13 @@
   #article-viewer { width: 100%; padding: 1rem; margin-top: .8rem; }
 }
 
+/* TYPOGRAPHY POPPINS ALL VIEWER */
+.viewer-layout,
+#article-viewer {
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+
 /* SUPPRIMÉ : les règles z-index en conflit qui étaient ici
    Elles sont maintenant centralisées dans mobile.css
 */
