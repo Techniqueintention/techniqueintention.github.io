@@ -251,3 +251,21 @@
     order: -1;
   }
 }
+
+/* === Layout desktop : 2 colonnes (image à gauche, contenu à droite) === */
+@media (min-width: 981px) {
+  .home-shell {
+    /* on complète ta règle existante pour passer en grille sur grands écrans */
+    display: grid;
+    grid-template-columns: 340px minmax(0, 1fr);
+    gap: 2rem;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  /* le contenu à droite ne doit plus être centré/contraint */
+  .home-shell .welcome { margin: 0; max-width: none; }
+  .home-shell .tabs-container { max-width: none; }
+}
+
+
