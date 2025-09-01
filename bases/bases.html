@@ -20,7 +20,7 @@
     .offcanvas{display:contents}
     .offcanvas-scrim{display:none}
 
-    /* Bouton fermer (dans le drawer) – injecté en mobile */
+    /* Bouton fermer (dans le drawer) */
     .offcanvas-close{
       position: sticky; top: 0;
       display:inline-flex; align-items:center; justify-content:center;
@@ -31,20 +31,13 @@
       font-weight:700;
     }
 
-    /* IMPORTANT : le drawer doit passer devant le header/burger */
-    .offcanvas-panel { z-index: 2200; }
-    .offcanvas-scrim { z-index: 2190; }
-
     @media (min-width:981px){
       .offcanvas-panel{grid-column:2;position:static;height:auto;width:var(--menu-w,300px)}
     }
     @media (max-width:980px){
-      .menu-toggle-btn{display:inline-flex;align-items:center;gap:.35rem}
+      .menu-toggle-btn{display:inline-flex}
       .offcanvas{display:block}
       .offcanvas-scrim{display:block} /* voile cliquable visible en mobile */
-
-      /* Quand le drawer est ouvert, on masque le déclencheur "Sections" */
-      #menu-toggle:checked + .menu-toggle-btn{visibility:hidden}
     }
   </style>
 </head>
@@ -187,6 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // 1) Si "Sections" s'ouvre, fermer le burger mobile s'il est ouvert
   toggle.addEventListener('change', () => {
     if (toggle.checked && mbDrawer && mbDrawer.classList.contains('is-open')) {
+      // simule un clic hors du tiroir mobile principal
       if (mbScrim) mbScrim.click(); else mbDrawer.classList.remove('is-open');
     }
   });
@@ -205,5 +199,10 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
+
 </body>
 </html>
+
+
+
+
