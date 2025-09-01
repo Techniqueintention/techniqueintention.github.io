@@ -102,25 +102,25 @@
 
   <script>
 document.addEventListener('DOMContentLoaded', function () {
-  var menu   = document.getElementById('viewer-menu');
-  var toggle = document.getElementById('menu-toggle');
-  var viewer = document.getElementById('article-viewer');
-  var mm     = window.matchMedia('(max-width: 980px)');
+  const menu   = document.getElementById('viewer-menu');
+  const toggle = document.getElementById('menu-toggle');
+  const viewer = document.getElementById('article-viewer');
+  const mm     = window.matchMedia('(max-width: 980px)');
 
-  if (!menu || !viewer) return;
+  if (!menu || !viewer || !toggle) return;
 
-  // --- Badge NEW auto (anti-doublon) ---
+  // --- Badge NEW auto (inchangé)
   (function(){
-    var now = new Date(), seven = 7*24*60*60*1000;
-    menu.querySelectorAll('[data-date]').forEach(function(el){
+    const now = new Date(), seven = 7*24*60*60*1000;
+    menu.querySelectorAll('[data-date]').forEach(el=>{
       if (el.querySelector('.badge-new')) return;
-      var d = new Date(el.getAttribute('data-date'));
+      const d = new Date(el.getAttribute('data-date'));
       if (!isNaN(d) && (now - d) <= seven) {
-        var b = document.createElement('span');
+        const b = document.createElement('span');
         b.className = 'badge-new';
         b.textContent = 'NEW';
         el.appendChild(b);
-        var det = el.closest('details');
+        const det = el.closest('details');
         if (det && !det.hasAttribute('data-has-new')) det.setAttribute('data-has-new','1');
       }
     });
@@ -131,39 +131,78 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!url) return Promise.resolve();
     viewer.classList.add('is-loading');
     return fetch(url, { cache: 'no-store' })
-      .then(function(r){ return r.text(); })
-      .then(function(html){
-        viewer.innerHTML = html;
-      })
-      .catch(function(err){
-        viewer.innerHTML = '<div class="placeholder"><p>Impossible de charger cet article pour le moment.</p></div>';
+      .then(r => r.text())
+      .then(html => { viewer.innerHTML = html; })
+      .catch(err => {
         console.error(err);
+        viewer.innerHTML = '<div class="placeholder"><p>Impossible de charger cet article pour le moment.</p></div>';
       })
-      .finally(function(){
-        viewer.classList.remove('is-loading');
-      });
+      .finally(() => viewer.classList.remove('is-loading'));
   }
 
-  // Déclencheur : clic sur lien (pas sur <summary>)
-  menu.querySelectorAll('a[data-viewer]').forEach(function(a){
-    a.addEventListener('click', function(e){
-      e.preventDefault();                      // on gère nous-mêmes le chargement
-      var url = a.getAttribute('data-viewer');
-      loadIntoViewer(url).then(function(){
-        if (mm.matches) toggle.checked = false; // fermer le drawer APRÈS l'injection
+  // --- Clic sur liens d'articles (pas sur <summary>) ---
+  menu.querySelectorAll('a[data-viewer]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const url = a.getAttribute('data-viewer');
+      loadIntoViewer(url).then(() => {
+        if (mm.matches) toggle.checked = false; // fermer APRÈS injection
       });
     });
   });
 
-  // Fermer via croix (si présente) et via clic hors panneau (déjà géré par le <label> voile)
-  var closeBtn = document.querySelector('.drawer-close, .offcanvas-close');
-  if (closeBtn) closeBtn.addEventListener('click', function(){ toggle.checked = false; });
+  // --- CROIX ✕ mobile seulement : injection/désinjection ---
+  function ensureCloseButton() {
+    const panel = document.querySelector('.offcanvas-panel');
+    if (!panel) return;
+    let btn = panel.querySelector('.offcanvas-close');
+    if (mm.matches) {
+      if (!btn) {
+        btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'offcanvas-close';
+        btn.setAttribute('aria-label','Fermer le menu Sections');
+        btn.textContent = '✕';
+        btn.addEventListener('click', () => { toggle.checked = false; });
+        panel.prepend(btn);
+      }
+    } else {
+      if (btn) btn.remove(); // desktop : pas de croix
+    }
+  }
+  ensureCloseButton();
+  mm.addEventListener('change', ensureCloseButton);
+
+  // --- MUTUAL EXCLUSION avec le burger principal ---
+  const mbDrawer = document.getElementById('mb-drawer');
+  const mbScrim  = document.getElementById('mb-scrim');
+
+  // 1) Si "Sections" s'ouvre, fermer le burger mobile s'il est ouvert
+  toggle.addEventListener('change', () => {
+    if (toggle.checked && mbDrawer && mbDrawer.classList.contains('is-open')) {
+      // simule un clic hors du tiroir mobile principal
+      if (mbScrim) mbScrim.click(); else mbDrawer.classList.remove('is-open');
+    }
+  });
+
+  // 2) Si le burger mobile s'ouvre, fermer "Sections"
+  if (mbDrawer) {
+    const mo = new MutationObserver(() => {
+      if (mbDrawer.classList.contains('is-open') && toggle.checked) {
+        toggle.checked = false;
+      }
+    });
+    mo.observe(mbDrawer, { attributes: true, attributeFilter: ['class'] });
+  }
+
+  // --- Clic hors panneau déjà géré par le <label> .offcanvas-scrim ---
 });
 </script>
 
 
 </body>
 </html>
+
 
 
 
