@@ -228,12 +228,6 @@ img, video, canvas, svg, iframe {
   outline: none;
 }
 
-/* (Optionnel) Si un déclencheur "Sections" se retrouvait DANS le burger, on le masque */
-#mb-drawer [for="menu-toggle"],
-#mb-drawer .sections-trigger {
-  display: none !important;
-}
-
 /* Motion-safe */
 @media (prefers-reduced-motion: reduce){
   #mb-scrim, #mb-drawer, #mb-drawer .mb-list a{ transition: none !important; }
