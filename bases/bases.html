@@ -35,8 +35,9 @@
     }
 
     /* ✅ AJOUT 1 : priorité d'empilement du drawer (passe devant le header/burger) */
-    .offcanvas-panel { z-index: 2200; }
-    .offcanvas-scrim { z-index: 2190; }
+   /* ✅ CORRECTION : hiérarchie z-index mobile */
+  .offcanvas-panel { z-index: 2500; }  /* était 2200 */
+  .offcanvas-scrim { z-index: 2490; }  /* était 2190 */
 
     @media (min-width:981px){
       .offcanvas-panel{grid-column:2;position:static;height:auto;width:var(--menu-w,300px)}
@@ -212,5 +213,6 @@ const mbScrim  = document.querySelector('#mb-scrim, .mb-scrim');
 
 </body>
 </html>
+
 
 
