@@ -140,11 +140,8 @@
 
 /* === Z-INDEX — SECTIONS DERRIÈRE LE BURGER === */
 @media (max-width: 980px){
-  .offcanvas-panel { z-index: 2200 !important; } /* menu Sections */
-  .offcanvas-scrim { z-index: 2190 !important; } /* voile Sections */
   .menu-toggle-btn { z-index: 1100 !important; } /* bouton "Sections" */
 }
-
 
 /* style bouton inecté - mobile */
 @media (max-width: 980px){
