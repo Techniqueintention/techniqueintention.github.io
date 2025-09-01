@@ -22,6 +22,11 @@
 
   --nav-hover-bg: rgba(255, 255, 255, 0.08);
   --card-bg: rgba(15, 25, 45, 0.4);
+
+  /* image adaptée au thème sombre */
+  --home-hero: url("/img/hero-dark.png");
+}
+
 }
 
 [data-theme="dark"] body {
