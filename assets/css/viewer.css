@@ -138,6 +138,14 @@
   #article-viewer { width: 100%; padding: 1rem; margin-top: .8rem; }
 }
 
+/* === Z-INDEX MAP — drawer "Sections" (derrière le principal) === */
+@media (max-width: 980px){
+  .offcanvas       { z-index: 2180 !important; } /* wrapper, si besoin */
+  .offcanvas-scrim { z-index: 2190 !important; }
+  .offcanvas-panel { z-index: 2200 !important; } /* < #mb-drawer (3000) */
+}
+
+
 /* style bouton inecté - mobile */
 @media (max-width: 980px){
   .drawer-close{
