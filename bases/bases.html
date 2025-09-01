@@ -3,13 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Bases — Technique Intention</title>
+  <title>Bases – Technique Intention</title>
 
   <link rel="stylesheet" href="/assets/css/main.css">
   <script type="module" src="/assets/js/main.js"></script>
 
-    <link rel="icon" type="image/png" href="/assets/favicon.png">
-
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
 
   <style>
     body{display:flex;flex-direction:column;min-height:100vh;padding-top:var(--header-h,64px)}
@@ -34,10 +33,9 @@
       font-weight:700;
     }
 
-    /* ✅ AJOUT 1 : priorité d'empilement du drawer (passe devant le header/burger) */
-   /* ✅ CORRECTION : hiérarchie z-index mobile */
-  .offcanvas-panel { z-index: 2500; }  /* était 2200 */
-  .offcanvas-scrim { z-index: 2490; }  /* était 2190 */
+    /* ✅ CORRECTION : Z-INDEX HARMONISÉ AVEC MOBILE.CSS */
+    .offcanvas-panel { z-index: 2500; }  /* Menu Sections sous le burger principal */
+    .offcanvas-scrim { z-index: 2490; }  /* Voile du menu Sections */
 
     @media (min-width:981px){
       .offcanvas-panel{grid-column:2;position:static;height:auto;width:var(--menu-w,300px)}
@@ -47,7 +45,7 @@
       .offcanvas{display:block}
       .offcanvas-scrim{display:block} /* voile cliquable visible en mobile */
 
-      /* ✅ AJOUT 2 : option – quand le drawer est ouvert, cacher le bouton “Sections” */
+      /* ✅ CORRECTION : quand le drawer est ouvert, cacher le bouton "Sections" */
       #menu-toggle:checked + .menu-toggle-btn{visibility:hidden}
     }
   </style>
@@ -185,10 +183,9 @@ document.addEventListener('DOMContentLoaded', function () {
   mm.addEventListener('change', ensureCloseButton);
 
   // --- MUTUAL EXCLUSION avec le burger principal ---
-  // APRÈS — supporte id OU classe
-const mbDrawer = document.querySelector('#mb-drawer, .mb-drawer');
-const mbScrim  = document.querySelector('#mb-scrim, .mb-scrim');
-
+  // APRÈS – supporte id OU classe
+  const mbDrawer = document.querySelector('#mb-drawer, .mb-drawer');
+  const mbScrim  = document.querySelector('#mb-scrim, .mb-scrim');
 
   // 1) Si "Sections" s'ouvre, fermer le burger mobile s'il est ouvert
   toggle.addEventListener('change', () => {
@@ -213,6 +210,3 @@ const mbScrim  = document.querySelector('#mb-scrim, .mb-scrim');
 
 </body>
 </html>
-
-
-
