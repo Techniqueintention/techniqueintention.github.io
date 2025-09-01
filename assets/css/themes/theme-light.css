@@ -17,7 +17,7 @@
   /* image adaptée au thème clair */
   --home-hero: url("/img/hero-light.png");
 }
-}
+
 
 /* Fond lavande + sécurité overflow */
 [data-theme="light"] body {
