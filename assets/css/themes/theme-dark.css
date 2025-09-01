@@ -27,8 +27,6 @@
   --home-hero: url("/img/hero-dark.png");
 }
 
-}
-
 [data-theme="dark"] body {
   background: var(--bg-color);
   color: var(--text-color);
