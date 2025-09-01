@@ -311,16 +311,31 @@ img, video, canvas, svg, iframe {
 }
 
 /* === Z-INDEX MAP — couche mobile (FORCE l'ordre) === */
-/* === Z-INDEX FINAL — BURGER DEVANT TOUT === */
-@media (max-width: 900px){
-  /* 1) Drawer principal (tout devant) */
-  .mb-drawer, #mb-drawer { z-index: 3000 !important; }
-  .mb-scrim,  #mb-scrim  { z-index: 2990 !important; }
-}
+@media (max-width: 900px) {
+  /* 1. MENU BURGER PRINCIPAL (le plus haut) */
+  .mb-drawer, #mb-drawer { 
+    z-index: 3000 !important; 
+  }
+  .mb-scrim, #mb-scrim { 
+    z-index: 2990 !important; 
+  }
 
-
-  /* 2) Header & bouton burger / bouton Sections */
-  .site-header     { z-index: 1000 !important; }
-  #mb-burger,
-  .menu-toggle-btn { z-index: 1100 !important; }
+    /* 2. HEADER ET BOUTONS */
+  .site-header { 
+    z-index: 1000 !important; 
+  }
+  #mb-burger, .mb-burger { 
+    z-index: 1100 !important; 
+  }
+  
+  /* 3. MENU SECTIONS (sous le burger principal) */
+  .offcanvas-panel { 
+    z-index: 2500 !important; 
+  }
+  .offcanvas-scrim { 
+    z-index: 2490 !important; 
+  }
+  .menu-toggle-btn { 
+    z-index: 1050 !important; 
+  }
 }
