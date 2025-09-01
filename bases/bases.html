@@ -5,22 +5,26 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Bases — Technique Intention</title>
 
+  <!-- CSS/JS globaux du site -->
   <link rel="stylesheet" href="/assets/css/main.css">
   <script type="module" src="/assets/js/main.js"></script>
 
+  <!-- Ajustements locaux (OK de rester inline) -->
   <style>
+    /* ---- Layout page ---- */
     body{display:flex;flex-direction:column;min-height:100vh;padding-top:var(--header-h,64px)}
     main{flex:1 0 auto;width:100%}
     .viewer-container{width:100%}
     #footer-placeholder{margin-top:auto;flex-shrink:0;width:100%;position:relative;z-index:1}
     .viewer-layout{min-height:60vh}
 
+    /* ---- Toggler + offcanvas (état par défaut) ---- */
     .menu-toggle{display:none}
     .menu-toggle-btn{display:none}
     .offcanvas{display:contents}
     .offcanvas-scrim{display:none}
 
-    /* Bouton fermer (dans le drawer) */
+    /* Bouton fermer (sera injecté en mobile) */
     .offcanvas-close{
       position: sticky; top: 0;
       display:inline-flex; align-items:center; justify-content:center;
@@ -31,179 +35,116 @@
       font-weight:700;
     }
 
+    /* --- Z-INDEX pour s’assurer que le drawer couvre le bandeau/boutons --- */
+    .offcanvas-panel { z-index: 2200; }  /* panneau tout devant */
+    .offcanvas-scrim { z-index: 2190; }  /* voile juste derrière */
+
+    /* Footer mobile du drawer (image/texte) */
+    .only-mobile{display:none}
+
     @media (min-width:981px){
       .offcanvas-panel{grid-column:2;position:static;height:auto;width:var(--menu-w,300px)}
     }
+
     @media (max-width:980px){
-      .menu-toggle-btn{display:inline-flex}
+      .menu-toggle-btn{display:inline-flex;align-items:center;gap:.35rem}
       .offcanvas{display:block}
       .offcanvas-scrim{display:block} /* voile cliquable visible en mobile */
+
+      /* Quand le drawer est ouvert, on masque le bouton "Sections" */
+      #menu-toggle:checked + .menu-toggle-btn{visibility:hidden}
+
+      .only-mobile{display:block}
+      .offcanvas-footer{
+        position: sticky; bottom: 0;
+        padding:.75rem; margin-top:1rem;
+        background: color-mix(in oklab, var(--bloc-bg, rgba(255,255,255,.10)) 80%, transparent);
+        backdrop-filter: blur(6px);
+        border-top:1px solid var(--menu-border, rgba(0,0,0,.12));
+        border-bottom-right-radius:12px;
+      }
+      .offcanvas-footer img{
+        width:100%; height:auto; display:block; border-radius:10px;
+        aspect-ratio:16/9; object-fit:cover; margin-bottom:.5rem;
+      }
+      .offcanvas-footnote{font-size:.9rem;line-height:1.3;opacity:.85}
     }
   </style>
 </head>
 <body>
 
-  <canvas id="theme-canvas"></canvas>
-  <div id="menu-placeholder"></div>
+  <!-- Toggler du drawer Sections (spécifique à cette page) -->
+  <input type="checkbox" id="menu-toggle" class="menu-toggle" aria-hidden="true">
+  <label for="menu-toggle"
+         class="menu-toggle-btn sections-trigger"
+         aria-controls="viewer-menu"
+         aria-expanded="false">Sections</label>
 
-  <main class="viewer-container">
-    <div class="viewer-layout">
-      <h1 class="viewer-title">LES BASES</h1>
+  <main class="viewer-layout">
+    <div class="viewer-container">
 
-      <input type="checkbox" id="menu-toggle" class="menu-toggle" hidden>
-      <label for="menu-toggle" class="menu-toggle-btn" aria-controls="viewer-menu">Sections</label>
+      <!-- Drawer / menu de sections -->
+      <div class="offcanvas" aria-hidden="true">
+        <!-- Voile (souvent cliquable via CSS ou <label> dans d’autres implémentations) -->
+        <div class="offcanvas-scrim" id="sections-scrim"></div>
 
-      <div class="offcanvas">
-        <div class="offcanvas-panel">
-      
-          <nav id="viewer-menu" class="blog-menu" aria-label="Navigation Bases">
-            <a class="menu-card" href="#" data-viewer="./intro.html" data-date="2025-08-28">
-              <span>Introduction</span>
-            </a>
-
-            <details>
-              <summary>Fondamentaux</summary>
+        <!-- Panneau -->
+        <aside class="offcanvas-panel" id="viewer-menu" aria-label="Menu des sections">
+          <!--
+            ⤵️ Mets ici ton contenu existant (details/summary + liens <a data-viewer="/chemin/article.html">…</a>)
+            Exemples:
+            <details open>
+              <summary>Bases</summary>
               <ul>
-                <li><a href="#" data-viewer="./definition.html" data-date="2025-08-28">Définition</a></li>
-                <li><a href="#" data-viewer="./test.html">Tests</a></li>
+                <li><a href="/articles/definition.html" data-viewer="/articles/definition.html">Définition</a></li>
+                ...
               </ul>
             </details>
+          -->
 
-            <details>
-              <summary>Pratiques</summary>
-              <ul>
-                <li><a href="#" data-viewer="./respiration.html">Respiration consciente</a></li>
-              </ul>
-            </details>
-
-            <details>
-              <summary>Outils</summary>
-              <ul>
-                <li><a href="#" data-viewer="./mise-en-forme.html">Mettre en forme une intention</a></li>
-              </ul>
-            </details>
-          </nav>
-        </div>
-        <!-- clic en dehors du panneau = fermeture -->
-        <label for="menu-toggle" class="offcanvas-scrim" aria-label="Fermer le menu"></label>
+          <!-- Footer image/texte (mobile uniquement) -->
+          <div class="offcanvas-footer only-mobile">
+            <img src="/assets/img/sections-footer.jpg" alt="Technique Intention — illustration" loading="lazy" decoding="async">
+            <p class="offcanvas-footnote">Respire, déroule une section… puis plonge dans l’article 🌿</p>
+          </div>
+        </aside>
       </div>
 
-      <section id="article-viewer" role="region" aria-live="polite">
-        <div class="placeholder">
-          <h2>Bienvenue dans les Bases de la Technique</h2>
-          <p>Cette section présente les fondations de Technique Intention : un chemin simple et vivant, posé dans la douceur et la clarté.</p>
-          <p class="notes-fin">Cliquez à gauche pour afficher l'article souhaité.</p>
-        </div>
-      </section>
+      <!-- Zone d’affichage des articles -->
+      <article id="article-viewer" aria-live="polite">
+        <!-- Le contenu d’article chargé par fetch() apparaîtra ici -->
+      </article>
+
     </div>
   </main>
 
   <div id="footer-placeholder"></div>
 
+  <!-- Logique locale (loader + mutual-exclusion + close mobile-only) -->
   <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const menu   = document.getElementById('viewer-menu');
-  const toggle = document.getElementById('menu-toggle');
-  const viewer = document.getElementById('article-viewer');
-  const mm     = window.matchMedia('(max-width: 980px)');
+  document.addEventListener('DOMContentLoaded', function () {
+    const root   = document.documentElement;
+    const menu   = document.getElementById('viewer-menu');
+    const toggle = document.getElementById('menu-toggle');
+    const viewer = document.getElementById('article-viewer');
+    const mm     = window.matchMedia('(max-width: 980px)');
 
-  if (!menu || !viewer || !toggle) return;
+    if (!menu || !viewer || !toggle) return;
 
-  // --- Badge NEW auto (inchangé)
-  (function(){
-    const now = new Date(), seven = 7*24*60*60*1000;
-    menu.querySelectorAll('[data-date]').forEach(el=>{
-      if (el.querySelector('.badge-new')) return;
-      const d = new Date(el.getAttribute('data-date'));
-      if (!isNaN(d) && (now - d) <= seven) {
-        const b = document.createElement('span');
-        b.className = 'badge-new';
-        b.textContent = 'NEW';
-        el.appendChild(b);
-        const det = el.closest('details');
-        if (det && !det.hasAttribute('data-has-new')) det.setAttribute('data-has-new','1');
-      }
-    });
-  })();
-
-  // --- Loader d'article fiable (data-viewer) ---
-  function loadIntoViewer(url){
-    if (!url) return Promise.resolve();
-    viewer.classList.add('is-loading');
-    return fetch(url, { cache: 'no-store' })
-      .then(r => r.text())
-      .then(html => { viewer.innerHTML = html; })
-      .catch(err => {
-        console.error(err);
-        viewer.innerHTML = '<div class="placeholder"><p>Impossible de charger cet article pour le moment.</p></div>';
-      })
-      .finally(() => viewer.classList.remove('is-loading'));
-  }
-
-  // --- Clic sur liens d'articles (pas sur <summary>) ---
-  menu.querySelectorAll('a[data-viewer]').forEach(a => {
-    a.addEventListener('click', (e) => {
-      e.preventDefault();
-      const url = a.getAttribute('data-viewer');
-      loadIntoViewer(url).then(() => {
-        if (mm.matches) toggle.checked = false; // fermer APRÈS injection
-      });
-    });
-  });
-
-  // --- CROIX ✕ mobile seulement : injection/désinjection ---
-  function ensureCloseButton() {
-    const panel = document.querySelector('.offcanvas-panel');
-    if (!panel) return;
-    let btn = panel.querySelector('.offcanvas-close');
-    if (mm.matches) {
-      if (!btn) {
-        btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'offcanvas-close';
-        btn.setAttribute('aria-label','Fermer le menu Sections');
-        btn.textContent = '✕';
-        btn.addEventListener('click', () => { toggle.checked = false; });
-        panel.prepend(btn);
-      }
-    } else {
-      if (btn) btn.remove(); // desktop : pas de croix
+    /* --- Chargement fiable d’un article dans #article-viewer --- */
+    function loadIntoViewer(url){
+      if (!url) return Promise.resolve();
+      viewer.classList.add('is-loading');
+      return fetch(url, { cache: 'no-store' })
+        .then(r => r.text())
+        .then(html => { viewer.innerHTML = html; })
+        .catch(err => {
+          console.error(err);
+          viewer.innerHTML = '<div class="placeholder"><p>Impossible de charger cet article pour le moment.</p></div>';
+        })
+        .finally(() => viewer.classList.remove('is-loading'));
     }
-  }
-  ensureCloseButton();
-  mm.addEventListener('change', ensureCloseButton);
 
-  // --- MUTUAL EXCLUSION avec le burger principal ---
-  const mbDrawer = document.getElementById('mb-drawer');
-  const mbScrim  = document.getElementById('mb-scrim');
-
-  // 1) Si "Sections" s'ouvre, fermer le burger mobile s'il est ouvert
-  toggle.addEventListener('change', () => {
-    if (toggle.checked && mbDrawer && mbDrawer.classList.contains('is-open')) {
-      // simule un clic hors du tiroir mobile principal
-      if (mbScrim) mbScrim.click(); else mbDrawer.classList.remove('is-open');
-    }
-  });
-
-  // 2) Si le burger mobile s'ouvre, fermer "Sections"
-  if (mbDrawer) {
-    const mo = new MutationObserver(() => {
-      if (mbDrawer.classList.contains('is-open') && toggle.checked) {
-        toggle.checked = false;
-      }
-    });
-    mo.observe(mbDrawer, { attributes: true, attributeFilter: ['class'] });
-  }
-
-  // --- Clic hors panneau déjà géré par le <label> .offcanvas-scrim ---
-});
-</script>
-
-
-</body>
-</html>
-
-
-
-
-
+    /* --- Clic sur liens d’articles (ignorons <summary>) --- */
+    menu.querySelectorAll('a[data-viewer]').forEach(a => {
+      a.addEven
