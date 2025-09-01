@@ -184,8 +184,10 @@ document.addEventListener('DOMContentLoaded', function () {
   mm.addEventListener('change', ensureCloseButton);
 
   // --- MUTUAL EXCLUSION avec le burger principal ---
-  const mbDrawer = document.getElementById('mb-drawer');
-  const mbScrim  = document.getElementById('mb-scrim');
+  // APRÈS — supporte id OU classe
+const mbDrawer = document.querySelector('#mb-drawer, .mb-drawer');
+const mbScrim  = document.querySelector('#mb-scrim, .mb-scrim');
+
 
   // 1) Si "Sections" s'ouvre, fermer le burger mobile s'il est ouvert
   toggle.addEventListener('change', () => {
@@ -210,4 +212,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
