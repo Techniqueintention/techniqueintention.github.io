@@ -75,7 +75,11 @@ body, html {
 #intro-subtitle {
   font-family: 'Great Vibes', cursive;
   font-size: 1.8rem;
-  color: #ffffff;
+  color: #7E56E8; /* mauve soutenu */
+  /* petit halo pour meilleure lisibilité sans durcir le style */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.35),
+    0 8px 22px rgba(126,86,232,.28);
   opacity: 0;
   margin-bottom: 40px;
   animation: fadeIn 2s ease forwards 1.5s; /* 2s = durée, 1.5s = délai */
