@@ -159,3 +159,46 @@ details[data-has-new] > summary::after {
   padding: 2rem;
   color: var(--text-muted, #666);
 }
+
+/* Bouton Sections amélioré - Mobile */
+@media (max-width: 980px) {
+  .menu-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--link-color); /* s'adapte déjà clair/sombre */
+    background: var(--menu-card-bg, rgba(255,255,255,.15));
+    border: 1px solid var(--menu-border, rgba(0,0,0,.2));
+    border-radius: 999px;
+    padding: 0.6rem 1rem;
+    margin: 0.8rem 0 1rem 0;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,.1);
+    transition: background 0.2s, transform 0.2s, color 0.2s;
+  }
+
+  /* Icône avant le texte */
+  .menu-toggle-btn::before {
+    content: "☰"; /* peut être remplacé par SVG inline */
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+
+  /* Effet hover clair/sombre */
+  .menu-toggle-btn:hover {
+    background: rgba(255,255,255,0.25);
+    transform: translateY(-1px);
+  }
+
+  /* Adaptation theme sombre */
+  :root[data-theme="dark"] .menu-toggle-btn {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.15);
+    color: #fff;
+  }
+  :root[data-theme="dark"] .menu-toggle-btn:hover {
+    background: rgba(255,255,255,0.16);
+  }
+}
