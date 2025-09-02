@@ -182,3 +182,69 @@ details[data-has-new] > summary::after{
     visibility: hidden; pointer-events: none;
   }
 }
+
+/* MOBILE — barre sticky, bouton aligné à droite, pas de "drift" */
+@media (max-width: 980px){
+
+  /* La barre colle sous le bandeau et remonte légèrement */
+  .viewer-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    position: sticky;
+    top: calc(var(--header-h) + 2px); /* juste sous le header */
+    transform: translateY(-18px);     /* remonte UNIQUEMENT la barre */
+    will-change: transform;
+    z-index: 1050;
+    margin: 0 0 1rem 0;
+    padding-right: .25rem;
+  }
+
+  /* Le bouton n'est PAS sticky tout seul (override ancien code) */
+  .menu-toggle-btn{
+    position: static !important;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font: 600 1rem/1 var(--ui-font, "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif);
+    color: var(--link-color);
+    background: var(--menu-card-bg, rgba(255,255,255,.15));
+    border: 1px solid var(--menu-border, rgba(0,0,0,.2));
+    border-radius: 999px;
+    padding: .55rem .9rem;
+    margin: 0;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,.10);
+    transition: background .2s, transform .2s, color .2s;
+  }
+  .menu-toggle-btn::before{ content:"☰"; font-size:1.05rem; line-height:1; }
+  .menu-toggle-btn:hover{ background: rgba(255,255,255,.25); transform: translateY(-1px); }
+  :root[data-theme="dark"] .menu-toggle-btn{
+    background: rgba(255,255,255,.08);
+    border-color: rgba(255,255,255,.15);
+    color:#fff;
+  }
+  :root[data-theme="dark"] .menu-toggle-btn:hover{ background: rgba(255,255,255,.16); }
+
+  /* Fermer le tiroir = plus de petit trait */
+  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-panel{
+    transform: translateX(calc(-100% - 28px));
+    border-right: 0; box-shadow: none;
+    border-top-right-radius: 0; border-bottom-right-radius: 0;
+  }
+  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-scrim{
+    opacity: 0; pointer-events: none;
+  }
+
+  /* Quand SECTIONS est ouvert → on masque la barre pour éviter les recouvrements */
+  #menu-toggle:checked ~ .viewer-header{ visibility: hidden; pointer-events: none; }
+  #mb-drawer.is-open ~ main .viewer-header,
+  .mb-drawer.is-open ~ main .viewer-header{ visibility: hidden; pointer-events: none; }
+}
+
+/* DESKTOP — aucune sticky sur le bouton, pas d’effet de bord */
+@media (min-width: 981px){
+  .menu-toggle-btn{ display: none; } /* menu latéral natif */
+  .viewer-header{ position: static; transform: none; margin: 0 0 .8rem 0; }
+}
