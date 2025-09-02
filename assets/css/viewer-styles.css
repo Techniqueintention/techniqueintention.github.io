@@ -201,4 +201,74 @@ details[data-has-new] > summary::after {
   :root[data-theme="dark"] .menu-toggle-btn:hover {
     background: rgba(255,255,255,0.16);
   }
+
+/* Barre titre + bouton */
+.viewer-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  margin: 0 0 .6rem 0;
+}
+
+/* MOBILE */
+@media (max-width: 980px){
+
+  /* Bouton Sections */
+  .menu-toggle-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font: 600 1rem/1 var(--ui-font, "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif);
+    color: var(--link-color);
+    background: var(--menu-card-bg, rgba(255,255,255,.15));
+    border: 1px solid var(--menu-border, rgba(0,0,0,.2));
+    border-radius: 999px;
+    padding: .55rem .9rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,.10);
+    transition: background .2s, transform .2s, color .2s;
+  }
+  .menu-toggle-btn::before{
+    content:"☰";
+    font-size: 1.05rem;
+    line-height: 1;
+  }
+  .menu-toggle-btn:hover{
+    background: rgba(255,255,255,.25);
+    transform: translateY(-1px);
+  }
+
+  /* Sticky du couple Titre + Bouton sous le bandeau */
+  .viewer-header{
+    position: sticky;
+    top: calc(var(--header-h) + 8px);
+    z-index: 1050;
+    padding-right: .25rem;
+  }
+
+  /* Quand le drawer Sections est ouvert → cacher le bouton
+     (utilise ~ car .viewer-header n'est pas adjacent à l'input) */
+  #menu-toggle:checked ~ .viewer-header .menu-toggle-btn{
+    visibility: hidden;
+  }
+
+  /* Thème sombre */
+  :root[data-theme="dark"] .menu-toggle-btn{
+    background: rgba(255,255,255,.08);
+    border-color: rgba(255,255,255,.15);
+    color:#fff;
+  }
+  :root[data-theme="dark"] .menu-toggle-btn:hover{
+    background: rgba(255,255,255,.16);
+  }
+
+  /* Offcanvas visible en mobile */
+  .offcanvas{ display:block; }
+  .offcanvas-scrim{ display:block; }
+}
+
+/* DESKTOP : menu latéral natif → bouton inutile */
+@media (min-width: 981px){
+  .menu-toggle-btn{ display:none; }
 }
