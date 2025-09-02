@@ -460,3 +460,6 @@ img, video, canvas, svg, iframe {
   }
 }
 
+@media (max-width: 980px){
+  .viewer-layout { margin: 28px 0 20px 0; /* ← crée l’espace au-dessus */ }
+}
