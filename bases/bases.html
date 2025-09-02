@@ -18,12 +18,17 @@
   <canvas id="theme-canvas"></canvas>
   <div id="menu-placeholder"></div>
 
-  <main class="viewer-container">
-    <div class="viewer-layout">
-      <h1 class="viewer-title">LES BASES</h1>
+<main class="viewer-container">
+  <div class="viewer-layout">
 
-      <input type="checkbox" id="menu-toggle" class="menu-toggle" hidden>
+    <!-- NEW: barre titre + bouton -->
+    <div class="viewer-header">
+      <h1 class="viewer-title">LES BASES</h1>
       <label for="menu-toggle" class="menu-toggle-btn" aria-controls="viewer-menu">Sections</label>
+    </div>
+
+    <!-- la checkbox peut rester où elle est -->
+    <input type="checkbox" id="menu-toggle" class="menu-toggle" hidden>
 
       <div class="offcanvas">
         <div class="offcanvas-panel">
@@ -240,6 +245,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
