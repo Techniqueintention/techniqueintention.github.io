@@ -5,16 +5,16 @@
 /* Container principal */
 .home-shell {
   width: 100%;
-  padding: 1rem 1rem;
+  padding: 1rem;
 }
 
-/* Carte centrale ÉLARGIE */
+/* Carte centrale */
 .welcome {
-  max-width: 920px; /* Élargi de 820px à 920px */
+  max-width: 920px;
   margin: 0 auto;
   padding: 2.5rem 3rem;
   border-radius: 20px;
-  background: var(--bloc-bg, rgba(255, 255, 255, 0.12));
+  background: var(--bloc-bg, rgba(255,255,255,0.12));
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 15px 40px rgba(0,0,0,0.15);
@@ -25,13 +25,13 @@
 .welcome h1 {
   font-family: "Cinzel", serif;
   font-size: 2.4rem;
-  margin: 0 0 2rem 0;
+  margin: 0 0 2rem;
   text-align: center;
   color: var(--link-color);
   text-shadow: 0 2px 15px rgba(0,0,0,0.15);
 }
 
-/* Texte justifié */
+/* Texte */
 .welcome-text {
   text-align: justify;
   font-family: "Poppins", sans-serif;
@@ -39,24 +39,19 @@
   line-height: 1.8;
   color: var(--text-color);
 }
-
-.welcome-text p { 
-  margin: 0 0 1.5rem 0; 
-}
+.welcome-text p { margin: 0 0 1.5rem; }
 
 /* ===== SYSTÈME D'ONGLETS ===== */
 .tabs-container {
   max-width: 920px;
   margin: 3rem auto;
 }
-
 .tabs-header {
   display: flex;
   gap: 0.5rem;
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
 }
-
 .tab-button {
   padding: 1rem 2rem;
   border: none;
@@ -70,56 +65,97 @@
   transition: all 0.3s ease;
   border-bottom: 3px solid transparent;
 }
-
-.tab-button:hover {
-  background: var(--tab-hover-bg);
-}
-
+.tab-button:hover { background: var(--tab-hover-bg); }
 .tab-button.active {
   background: var(--tab-active-bg);
   color: var(--tab-active-color);
   border-bottom-color: #9d6cff;
-  box-shadow: 0 4px 16px rgba(157, 108, 255, 0.15);
+  box-shadow: 0 4px 16px rgba(157,108,255,0.15);
   font-weight: 600;
   transform: scale(1.04);
-  /* Ajout d'un indicateur visuel */
   position: relative;
 }
-
 .tab-button.active::after {
   content: "";
   position: absolute;
-  left: 50%;
-  bottom: -8px;
+  left: 50%; bottom: -8px;
   transform: translateX(-50%);
-  width: 32px;
-  height: 4px;
-  background: #9d6cff;
-  border-radius: 2px;
+  width: 32px; height: 4px;
+  background: #9d6cff; border-radius: 2px;
   box-shadow: 0 2px 8px #9d6cff44;
 }
 
 .tab-content {
   display: none;
   padding: 2.5rem;
-  background: var(--bloc-bg, rgba(255, 255, 255, 0.1));
+  background: var(--bloc-bg, rgba(255,255,255,0.1));
   border-radius: 0 16px 16px 16px;
   backdrop-filter: blur(10px);
   border: 1px solid var(--bloc-border, rgba(255,255,255,0.1));
 }
-
 .tab-content.active {
   display: block;
   animation: fadeIn 0.4s ease;
 }
-
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Typo contenu */
+.tab-content h2 {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  color: var(--text-color);
+}
+.tab-content p {
+  margin: 1rem 0 1.5rem;
+  line-height: 1.7;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.05rem;
+}
+.tab-content ul {
+  margin: 1rem 0 1.8rem 2rem;
+  line-height: 1.7;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.05rem;
+}
+.tab-content li { margin-bottom: 0.6rem; }
+
+/* Illustration */
+.home-illustration {
+  background: var(--home-hero) center / cover no-repeat;
+  border-radius: 18px;
+  min-height: 420px;
+  border: 1px solid var(--bloc-border, rgba(0,0,0,.1));
+  box-shadow: 0 15px 40px rgba(0,0,0,.12);
+  position: sticky;
+  top: calc(var(--header-h, 64px) + 16px);
+}
+
+/* === Tablet & up to <desktop === */
+@media (max-width: 980px) {
+  .home-illustration { position: static; min-height: 260px; order: -1; }
+}
+
+/* === Desktop : 2 colonnes (image à gauche, contenu à droite) === */
+@media (min-width: 981px) {
+  .home-shell {
+    display: grid;
+    grid-template-columns: 340px minmax(0,1fr);
+    gap: 2rem;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .home-shell .welcome { margin: 0; max-width: none; }
+  .home-shell .tabs-container { max-width: none; }
 }
 
 /* ===============================
-   Responsive (≤ 768px) — onglets horizontaux
+   Mobile (≤ 768px) — épuré
    =============================== */
 @media (max-width: 768px) {
   /* Carte d’accueil plus compacte */
@@ -131,113 +167,61 @@
   .welcome h1 { font-size: 2rem; }
   .welcome-text { font-size: 1rem; text-align: left; }
 
-  /* Illustration moins haute */
+  /* Illustration vraiment réduite et non rognée */
   .home-illustration {
-    height: clamp(140px, 28vh, 220px);
-    min-height: unset;
-    position: static;
+    height: clamp(110px, 20vh, 160px);
+    min-height: 0;
     margin: 0 0 10px 0;
+    background-position: top center;
+    background-size: contain;   /* au lieu de cover pour éviter la coupe */
+    background-repeat: no-repeat;
     border-radius: 14px;
-    background-size: cover;
     box-shadow: 0 6px 16px rgba(0,0,0,.12);
   }
 
-  /* Conteneur : revient à un flux simple (pas de grid/flex spécial) */
-  .tabs-container {
-    display: block !important;   /* override total des versions précédentes */
-    max-width: 920px;
-    margin: 1rem auto;
-  }
-
-  /* Barre d’onglets horizontale, scrollable si besoin */
+  /* Barre d’onglets en 2 lignes (tout visible, symétrique) */
+  .tabs-container { display: block; margin: 1rem auto; }
   .tabs-header {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    gap: 0.5rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 0.6rem;
     margin: 0 0 0.75rem 0;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
   }
-  .tabs-header::-webkit-scrollbar { display: none; }
-
-  /* Onglets pastilles compacts */
   .tab-button {
-    flex: 0 0 auto;
-    border-radius: 999px !important;         /* pastille */
-    padding: 0.55rem 0.9rem !important;
-    font-size: 0.95rem !important;
+    width: 100%;
+    border-radius: 999px;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.95rem;
     text-align: center;
-    border-bottom-width: 0 !important;       /* supprime le style “onglet” desktop */
-    transform: none !important;              /* évite les sauts / reflows */
+    border-bottom-width: 0;  /* on abandonne le style “onglet” desktop */
+    transform: none;
+    box-shadow: 0 1px 4px rgba(157,108,255,0.06);
   }
-  .tab-button.active {
-    box-shadow: 0 2px 10px rgba(157,108,255,0.12);
-  }
+  .tab-button.active { box-shadow: 0 2px 10px rgba(157,108,255,0.12); }
   .tab-button.active::after {
-    content: "";
-    position: absolute;
-    left: 12%;
-    right: 12%;
-    bottom: -6px;
-    height: 3px;
-    background: #9d6cff;
-    border-radius: 2px;
-    box-shadow: 0 2px 8px #9d6cff44;
+    left: 12%; right: 12%; bottom: -6px; height: 3px;
   }
 
   /* Contenu sous la barre d’onglets, pleine largeur */
   .tab-content {
-    /* reset total des essais précédents */
-    grid-template-columns: unset !important;
-    grid-column: auto !important; 
-    grid-row: auto !important; 
-    flex: unset !important;
-    float: none !important;
-    position: static !important;
-
-    display: none;                 /* ton JS met .active -> block */
-    padding: 1rem 1rem !important; /* plus compact */
+    padding: 1rem;
     margin-top: 0.25rem;
     border-radius: 12px;
     background: var(--bloc-bg, rgba(255,255,255,0.13));
     border: 1px solid var(--bloc-border, rgba(255,255,255,0.12));
     box-shadow: 0 2px 8px rgba(0,0,0,.06);
   }
-  .tab-content.active { display: block; }
-
-  /* Titres & texte un peu réduits */
   .tab-content h2 {
-    font-size: 1.25rem !important;
-    margin-bottom: 0.75rem !important;
-    background: none !important; 
-    border: 0 !important; 
-    padding: 0 !important;
-  }
-  .tab-content > :not(h2) {
-    font-size: 1rem;
-    line-height: 1.55;
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    background: none; border: 0; padding: 0;
   }
 
-  /* (optionnel) si menu global fixé en haut */
-  #menu-placeholder {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw;
-    z-index: 1000;
-    margin-bottom: 0;
-  }
-  .home-shell {
-    margin-top: 0; /* évite la collapse de marge sous un header fixe */
-    padding-top: calc(var(--header-h, 64px) + 8px); /* décale tout sous le bandeau */
-    padding-bottom: 1rem;
-  }
+  /* Petit espacement au-dessus du contenu (symétrie), sans dépendre du header */
+  .home-shell { padding-top: 1rem; }
 
-  /* si tu veux aussi un léger décalage propre à l'image */
-  .home-illustration {
-    margin-top: 4px; /* optionnel */
-  }
+  /* Empêche tout offset de scroll fantôme sous header fixe */
+  html { scroll-padding-top: 0; }
 }
 
 /* Mode sombre */
@@ -245,348 +229,7 @@
   background: rgba(10, 15, 30, 0.85);
   border: 1px solid rgba(255,255,255,0.08);
 }
-
 :root[data-theme="dark"] .tab-content {
   background: rgba(10, 15, 30, 0.8);
   border: 1px solid rgba(255,255,255,0.08);
-}
-
-/* Améliorations de l’aération et de la lisibilité */
-.tab-content h2 {
-  font-family: "Poppins", sans-serif; /* harmonisé avec les boutons */
-  font-size: 1.6rem;
-  font-weight: 600;
-  margin-bottom: 1.2rem; /* espace sous le titre */
-  color: var(--text-color);
-}
-
-.tab-content p {
-  margin: 1rem 0 1.5rem 0; /* espace entre paragraphes */
-  line-height: 1.7;        /* plus aéré */
-  font-family: "Poppins", sans-serif;
-  font-size: 1.05rem;
-}
-
-.tab-content ul {
-  margin: 1rem 0 1.8rem 2rem;
-  line-height: 1.7;
-  font-family: "Poppins", sans-serif;
-  font-size: 1.05rem;
-}
-
-.tab-content li {
-  margin-bottom: 0.6rem; /* espace entre puces */
-}
-
-.home-illustration {
-  /* l'image sera injectée via var(--home-hero) */
-  background: var(--home-hero) center / cover no-repeat;
-  border-radius: 18px;
-  min-height: 420px;
-  border: 1px solid var(--bloc-border, rgba(0,0,0,.1));
-  box-shadow: 0 15px 40px rgba(0,0,0,.12);
-  position: sticky;
-  top: calc(var(--header-h, 64px) + 16px);
-}
-
-/* mobile: une seule colonne, l'image passe au-dessus */
-@media (max-width: 980px) {
-  .home-illustration {
-    position: static;
-    min-height: 260px;
-    order: -1;
-  }
-}
-
-/* === Layout desktop : 2 colonnes (image à gauche, contenu à droite) === */
-@media (min-width: 981px) {
-  .home-shell {
-    /* on complète ta règle existante pour passer en grille sur grands écrans */
-    display: grid;
-    grid-template-columns: 340px minmax(0, 1fr);
-    gap: 2rem;
-    align-items: start;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  /* le contenu à droite ne doit plus être centré/contraint */
-  .home-shell .welcome { margin: 0; max-width: none; }
-  .home-shell .tabs-container { max-width: none; }
-}
-
-/* === HOME — Ajustements mobile ciblés (header/illustration/onglets) === */
-@media (max-width: 768px) {
-  :root{
-    --header-h: 68px;          /* ↑ bandeau un peu plus haut */
-    --mobile-gutter: 1rem;     /* même espace que les côtés du cadre */
-  }
-
-  /* 1) Cadre global : remonter proprement sous le header (symétrie) */
-  .home-shell{
-    margin-top: 0;
-    padding-top: calc(var(--header-h) + var(--mobile-gutter)); /* espace identique aux côtés */
-    padding-bottom: 1rem;
-  }
-
-  /* 2) Illustration : image vraiment plus petite + non rognée + un poil plus haut */
-  .home-illustration{
-    height: clamp(120px, 22vh, 180px);  /* ↓ taille réelle du visuel */
-    margin: 6px 0 10px 0;
-    background-position: top center;
-    background-size: contain;           /* était cover → évite la coupe */
-    background-repeat: no-repeat;
-    border-radius: 14px;
-    box-shadow: 0 6px 16px rgba(0,0,0,.12);
-    position: static;
-    min-height: 0;
-  }
-
-  /* 3) Onglets sur deux lignes, répartis proprement */
-  .tabs-container{ display: block !important; }
-
-  .tabs-header{
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0,1fr)); /* 2 colonnes → 2 lignes si 4 onglets */
-    gap: 0.6rem;
-    margin: 0 0 0.75rem 0;
-    overflow: visible !important; /* pas de scroll horizontal */
-  }
-
-  .tab-button{
-    width: 100%;
-    border-radius: 999px !important;
-    padding: 0.55rem 0.9rem !important;
-    font-size: 0.95rem !important;
-    text-align: center;
-    border-bottom-width: 0 !important;
-    transform: none !important;
-  }
-  .tab-button.active{ box-shadow: 0 2px 10px rgba(157,108,255,0.12); }
-  .tab-button.active::after{
-    left: 12%; right: 12%; bottom: -6px; height: 3px;
-  }
-
-  /* 4) Contenu sous la barre d’onglets, full width + reset des anciens essais */
-  .tab-content{
-    display: none;
-    padding: 1rem 1rem !important;
-    margin-top: 0.25rem;
-    border-radius: 12px;
-    background: var(--bloc-bg, rgba(255,255,255,0.13));
-    border: 1px solid var(--bloc-border, rgba(255,255,255,0.12));
-    box-shadow: 0 2px 8px rgba(0,0,0,.06);
-
-    /* resets */
-    grid-template-columns: unset !important;
-    grid-column: auto !important;
-    grid-row: auto !important;
-    flex: unset !important;
-    float: none !important;
-    position: static !important;
-  }
-  .tab-content.active{ display: block; }
-
-  .tab-content h2{
-    font-size: 1.25rem !important;
-    margin-bottom: 0.75rem !important;
-    background: none !important; border: 0 !important; padding: 0 !important;
-  }
-
-  /* Bonus: ancrages/scroll ne passent pas sous le header */
-  html{ scroll-padding-top: calc(var(--header-h) + var(--mobile-gutter)); }
-}
-
-/* === HOME — Overrides mobiles sûrs (≤768px) === */
-@media (max-width: 768px) {
-  :root{
-    /* ↑ hauteur “logique” du header (sert aux espacements),
-       augmente à 72–76px si besoin */
-    --header-h: 68px;
-    /* marge verticale identique aux gouttières latérales pour la symétrie */
-    --mobile-gutter: 1rem;
-  }
-
-  /* 1) Cadre global : place tout juste sous le header, symétrique */
-  .home-shell{
-    margin-top: 0 !important;
-    padding-top: calc(var(--header-h) + var(--mobile-gutter)) !important;
-    padding-bottom: 1rem !important;
-  }
-
-  /* 2) Illustration : VRAIMENT plus petite, non coupée, et légère marge haute */
-  .home-illustration{
-    height: clamp(120px, 22vh, 180px) !important; /* ↓ taille effective */
-    min-height: 0 !important;
-    margin: 6px 0 10px 0 !important;
-    background-position: top center !important;
-    background-size: contain !important;          /* évite la coupe (au lieu de cover) */
-    background-repeat: no-repeat !important;
-    position: static !important;
-    border-radius: 14px !important;
-    box-shadow: 0 6px 16px rgba(0,0,0,.12) !important;
-  }
-
-  /* 3) Onglets sur deux lignes, répartition propre, pas de scroll horizontal */
-  .tabs-container{ 
-    display: block !important; 
-    max-width: 920px !important; 
-    margin: 1rem auto !important; 
-  }
-
-  .tabs-header{
-    /* on remplace tout flex/nowrap antérieur par une grille à 2 colonnes */
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
-    grid-auto-flow: row !important;
-    gap: 0.6rem !important;
-    margin: 0 0 0.75rem 0 !important;
-    overflow: visible !important;
-    -webkit-overflow-scrolling: auto !important;
-    scrollbar-width: auto !important;
-    white-space: normal !important;
-  }
-  .tabs-header > * { min-width: 0 !important; }
-
-  .tab-button{
-    width: 100% !important;
-    border-radius: 999px !important;          /* pastille */
-    padding: 0.55rem 0.9rem !important;
-    font-size: 0.95rem !important;
-    text-align: center !important;
-    border-bottom-width: 0 !important;        /* supprime le style “onglet” desktop */
-    transform: none !important;               /* évite les sauts/reflows */
-    box-shadow: 0 1px 4px rgba(157,108,255,0.06) !important;
-  }
-  .tab-button.active{ box-shadow: 0 2px 10px rgba(157,108,255,0.12) !important; }
-  .tab-button.active::after{
-    /* petit trait décoratif, recentré */
-    left: 12%; right: 12%; bottom: -6px; height: 3px;
-  }
-
-  /* 4) Contenu : pleine largeur sous les onglets + reset des essais précédents */
-  .tab-content{
-    /* resets anti-conflits */
-    grid-template-columns: unset !important;
-    grid-column: auto !important;
-    grid-row: auto !important;
-    flex: unset !important;
-    float: none !important;
-    position: static !important;
-    clear: both !important;
-
-    display: none;                 /* ton JS met .active -> block */
-    padding: 1rem 1rem !important; /* plus compact */
-    margin-top: 0.25rem !important;
-    border-radius: 12px !important;
-    background: var(--bloc-bg, rgba(255,255,255,0.13)) !important;
-    border: 1px solid var(--bloc-border, rgba(255,255,255,0.12)) !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,.06) !important;
-  }
-  .tab-content.active{ display: block !important; }
-
-  .tab-content h2{
-    font-size: 1.25rem !important;
-    margin-bottom: 0.75rem !important;
-    background: none !important; border: 0 !important; padding: 0 !important;
-  }
-  .tab-content > :not(h2){
-    font-size: 1rem !important;
-    line-height: 1.55 !important;
-  }
-
-  /* Bonus : ancres/scroll ne passent pas sous le header */
-  html{ scroll-padding-top: calc(var(--header-h) + var(--mobile-gutter)); }
-}
-
-/* === HOME — Patch mobile final (≤768px) === */
-@media (max-width: 768px) {
-  :root{
-    --mobile-gutter: 1rem;  /* même marge que les côtés */
-  }
-
-  /* 0) Evite l’espace “fantôme” en haut (devtools/scroll) */
-  html { scroll-padding-top: 0 !important; }
-
-  /* 1) Cadre global : petit espacement symétrique sous le bandeau
-        (on N’utilise PLUS l’estimation de hauteur du header ici) */
-  .home-shell{
-    margin-top: 0 !important;
-    padding-top: var(--mobile-gutter) !important;
-    padding-bottom: 1rem !important;
-  }
-
-  /* 2) Illustration : VRAIMENT plus petite + non rognée + resserrée en haut */
-  .home-illustration{
-    height: clamp(110px, 20vh, 160px) !important; /* ↓ taille réelle */
-    min-height: 0 !important;
-    margin: 0 0 10px 0 !important;               /* pas de marge haute supplémentaire */
-    background-position: top center !important;
-    background-size: contain !important;          /* évite la coupe (au lieu de cover) */
-    background-repeat: no-repeat !important;
-    position: static !important;
-    border-radius: 14px !important;
-    box-shadow: 0 6px 16px rgba(0,0,0,.12) !important;
-  }
-
-  /* 3) Onglets sur deux lignes, répartis proprement et sans scroll horizontal */
-  .tabs-container{ display: block !important; }
-
-  .tabs-header{
-    display: grid !important;                             /* override du flex précédent */
-    grid-template-columns: repeat(2, minmax(0,1fr)) !important;  /* 2 colonnes -> 2 lignes pour 4 onglets */
-    grid-auto-flow: row !important;
-    gap: 0.6rem !important;
-    margin: 0 0 0.75rem 0 !important;
-    overflow: visible !important;
-    white-space: normal !important;
-  }
-  .tabs-header > * { min-width: 0 !important; }
-
-  .tab-button{
-    width: 100% !important;
-    border-radius: 999px !important;
-    padding: 0.55rem 0.9rem !important;
-    font-size: 0.95rem !important;
-    text-align: center !important;
-    border-bottom-width: 0 !important;
-    transform: none !important;
-    box-shadow: 0 1px 4px rgba(157,108,255,0.06) !important;
-    position: relative; /* pour le petit trait actif */
-  }
-  .tab-button.active{ box-shadow: 0 2px 10px rgba(157,108,255,0.12) !important; }
-  .tab-button.active::after{
-    content: ""; position: absolute; left: 12%; right: 12%;
-    bottom: -6px; height: 3px; background: #9d6cff; border-radius: 2px;
-    box-shadow: 0 2px 8px #9d6cff44;
-  }
-
-  /* 4) Contenu : pleine largeur sous les onglets + reset anti-conflits */
-  .tab-content{
-    grid-template-columns: unset !important;
-    grid-column: auto !important;
-    grid-row: auto !important;
-    flex: unset !important;
-    float: none !important;
-    position: static !important;
-    clear: both !important;
-
-    display: none;                 /* ton JS active -> block */
-    padding: 1rem 1rem !important;
-    margin-top: 0.25rem !important;
-    border-radius: 12px !important;
-    background: var(--bloc-bg, rgba(255,255,255,0.13)) !important;
-    border: 1px solid var(--bloc-border, rgba(255,255,255,0.12)) !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,.06) !important;
-  }
-  .tab-content.active{ display: block !important; }
-
-  .tab-content h2{
-    font-size: 1.25rem !important;
-    margin-bottom: 0.75rem !important;
-    background: none !important; border: 0 !important; padding: 0 !important;
-  }
-  .tab-content > :not(h2){
-    font-size: 1rem !important;
-    line-height: 1.55 !important;
-  }
 }
