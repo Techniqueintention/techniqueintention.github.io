@@ -189,16 +189,24 @@ document.addEventListener('DOMContentLoaded', function () {
       .finally(() => viewer.classList.remove('is-loading'));
   }
 
-  // --- Clic sur liens d'articles (pas sur <summary>) ---
-  menu.querySelectorAll('a[data-viewer]').forEach(a => {
-    a.addEventListener('click', (e) => {
-      e.preventDefault();
-      const url = a.getAttribute('data-viewer');
-      loadIntoViewer(url).then(() => {
-        if (mm.matches) toggle.checked = false; // fermer APRÈS injection
-      });
-    });
+// --- Navigation dans le menu (délégation d'événements)
+menu.addEventListener('click', (e) => {
+  const a = e.target.closest('a[data-viewer]');
+  if (!a) return;
+  e.preventDefault();
+
+  // Si on clique un lien "racine" (hors <details>),
+  // on ferme toutes les catégories ouvertes.
+  if (!a.closest('details')) {
+    menu.querySelectorAll('details[open]').forEach(d => d.open = false);
+  }
+
+  const url = a.getAttribute('data-viewer');
+  loadIntoViewer(url).then(() => {
+    if (mm.matches) toggle.checked = false; // fermer APRÈS injection en mobile
   });
+});
+
 
   // --- CROIX ✕ mobile seulement : injection/désinjection ---
   function ensureCloseButton() {
@@ -250,6 +258,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
