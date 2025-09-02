@@ -21,14 +21,15 @@
 <main class="viewer-container">
   <div class="viewer-layout">
 
-    <!-- NEW: barre titre + bouton -->
-    <div class="viewer-header">
-      <h1 class="viewer-title">LES BASES</h1>
-      <label for="menu-toggle" class="menu-toggle-btn" aria-controls="viewer-menu">Sections</label>
-    </div>
+    <!-- La checkbox d’abord -->
+<input type="checkbox" id="menu-toggle" class="menu-toggle" hidden>
 
-    <!-- la checkbox peut rester où elle est -->
-    <input type="checkbox" id="menu-toggle" class="menu-toggle" hidden>
+<!-- Barre titre + bouton -->
+<div class="viewer-header">
+  <h1 class="viewer-title">LES BASES</h1>
+  <label for="menu-toggle" class="menu-toggle-btn" aria-controls="viewer-menu">Sections</label>
+</div>
+
 
       <div class="offcanvas">
         <div class="offcanvas-panel">
@@ -245,6 +246,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
 
 
 
