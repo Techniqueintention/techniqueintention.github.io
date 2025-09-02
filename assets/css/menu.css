@@ -29,14 +29,21 @@ body {
 }
 
 /* Titre à gauche cliquable, sans soulignement */
-.site-title a{
-  font-family: "Cinzel", serif;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--text-color, #222);
-  text-decoration: none;
+.site-title a {
+    font-family: "Cinzel", serif;
+    font-size: 1.8rem;            /* Taille légèrement plus grande */
+    font-weight: 600;             /* Semi-bold pour plus de présence */
+    color: #8a6de9;               /* Couleur violette élégante */
+    text-shadow: 0 0 10px rgba(138, 109, 233, 0.4); /* Ombre subtile */
+    text-decoration: none;
+    letter-spacing: 0.5px;        /* Espacement légèrement accru */
+    transition: all 0.3s ease;
 }
-.site-title a:hover{ opacity: .8; }
+
+.site-title a:hover {
+    opacity: 0.9;
+    text-shadow: 0 0 15px rgba(138, 109, 233, 0.6);
+}
 
 /* ===== HARMONISATION DES ESPACEMENTS ENTRE THÈMES ===== */
 
