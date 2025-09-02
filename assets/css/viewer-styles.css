@@ -3,7 +3,7 @@
    Styles spécifiques pour les pages viewer (bases.html, etc.)
    ============================================= */
 
-/* -------- Layout principal des pages viewer -------- */
+/* -------- Layout principal -------- */
 body{
   display: flex;
   flex-direction: column;
@@ -24,10 +24,10 @@ main{ flex: 1 0 auto; width: 100%; }
 
 .viewer-layout{ min-height: 60vh; }
 
-/* -------- Menu Sections – état par défaut (desktop) -------- */
+/* -------- Menu Sections – état par défaut -------- */
 .menu-toggle{ display: none; }
-.menu-toggle-btn{ display: none; }   /* visible seulement en mobile */
-.offcanvas{ display: contents; }     /* en desktop, contenu dans la grille */
+.menu-toggle-btn{ display: none; }        /* visible seulement en mobile */
+.offcanvas{ display: contents; }          /* desktop: contenu dans la grille */
 .offcanvas-scrim{ display: none; }
 
 /* Bouton fermer (croix) injecté dans le drawer mobile */
@@ -50,17 +50,6 @@ main{ flex: 1 0 auto; width: 100%; }
 }
 .offcanvas-close:hover{ background: rgba(0,0,0,.12); }
 
-/* -------- Desktop : menu latéral intégré -------- */
-@media (min-width: 981px){
-  .offcanvas-panel{
-    grid-column: 2;
-    position: static;
-    height: auto;
-    width: var(--menu-w, 300px);
-  }
-  .menu-toggle-btn{ display: none; }
-}
-
 /* -------- Badges / états -------- */
 .badge-new{
   display: inline-block;
@@ -73,18 +62,13 @@ main{ flex: 1 0 auto; width: 100%; }
   margin-left: .5rem;
   vertical-align: top;
 }
-
 details[data-has-new] > summary::after{
   content: "●";
   color: var(--primary, #6e57e0);
   font-size: .8rem;
   margin-left: .3rem;
 }
-
-#article-viewer.is-loading{
-  opacity: .6;
-  pointer-events: none;
-}
+#article-viewer.is-loading{ opacity: .6; pointer-events: none; }
 #article-viewer.is-loading::before{
   content: "Chargement...";
   display: block;
@@ -94,23 +78,59 @@ details[data-has-new] > summary::after{
 }
 
 /* =========================================================
+   DESKTOP — grille nette: menu (1) | contenu (2)
+   ========================================================= */
+@media (min-width: 981px){
+  .viewer-layout{
+    display: grid;
+    grid-template-columns: minmax(260px, var(--menu-w, 300px)) 1fr;
+    gap: 1.6rem;
+    align-items: start;
+  }
+
+  /* Le panneau (menu Sections) reste dans la colonne 1 */
+  .offcanvas-panel{
+    grid-column: 1;
+    position: sticky;
+    top: calc(var(--header-h) + 20px);
+    height: max-content;
+    width: 100%;
+  }
+
+  /* La barre titre (et donc le H1) est côté contenu */
+  .viewer-header{
+    grid-column: 2;
+    position: static;
+    transform: none;
+    margin: 0 0 .8rem 0;
+    display: block; /* pas besoin de flex en desktop */
+  }
+
+  /* Le contenu (article) est en colonne 2 */
+  #article-viewer{ grid-column: 2; }
+
+  /* Le bouton "Sections" est inutile en desktop */
+  .menu-toggle-btn{ display: none; }
+}
+
+/* =========================================================
    MOBILE — header viewer + bouton Sections + drawer propre
    ========================================================= */
 @media (max-width: 980px){
 
-  /* Barre titre + bouton à droite (remontée sans toucher l'article) */
+  /* Barre titre + bouton: sticky sous le bandeau et remontée */
   .viewer-header{
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: .75rem;
     position: sticky;
-    top: calc(var(--header-h) + 2px);   /* juste sous le bandeau */
-    transform: translateY(-18px);       /* ← remonte UNIQUEMENT la barre */
+    top: calc(var(--header-h) + 2px); /* sous le header */
+    transform: translateY(-18px);     /* remonte UNIQUEMENT la barre */
     will-change: transform;
-    z-index: 1050;                      /* < burger (3000), > contenu */
+    z-index: 1050;                    /* < burger (3000), > contenu */
     padding-right: .25rem;
-    margin: 0 0 1rem 0;                 /* air au-dessus du viewer */
+    margin: 0 0 1rem 0;
   }
 
   /* Bouton Sections (clair/sombre via variables) */
@@ -128,54 +148,37 @@ details[data-has-new] > summary::after{
     box-shadow: 0 4px 12px rgba(0,0,0,.10);
     transition: background .2s, transform .2s, color .2s;
     margin: 0;
-    position: relative; z-index: 1;     /* reste cliquable au-dessus */
+    position: relative; z-index: 1;   /* au-dessus de l'article */
   }
-  .menu-toggle-btn::before{
-    content: "☰";
-    font-size: 1.05rem; line-height: 1;
-  }
-  .menu-toggle-btn:hover{
-    background: rgba(255,255,255,.25);
-    transform: translateY(-1px);
-  }
-  :root[data-theme="dark"] .menu-toggle-btn{
-    background: rgba(255,255,255,.08);
-    border-color: rgba(255,255,255,.15);
-    color: #fff;
-  }
-  :root[data-theme="dark"] .menu-toggle-btn:hover{
-    background: rgba(255,255,255,.16);
-  }
+  .menu-toggle-btn::before{ content: "☰"; font-size: 1.05rem; line-height: 1; }
+  .menu-toggle-btn:hover{ background: rgba(255,255,255,.25); transform: translateY(-1px); }
+  :root[data-theme="dark"] .menu-toggle-btn{ background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.15); color:#fff; }
+  :root[data-theme="dark"] .menu-toggle-btn:hover{ background: rgba(255,255,255,.16); }
 
-  /* Afficher le système offcanvas en mobile */
+  /* Offcanvas visible en mobile */
   .offcanvas{ display: block; }
   .offcanvas-scrim{ display: block; }
 
-  /* Tiroir totalement caché quand fermé (plus de trait arrondi) */
+  /* Tiroir totalement caché quand fermé (plus de trait) */
   #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-panel{
     transform: translateX(calc(-100% - 28px));
-    border-right: 0;
-    box-shadow: none;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    border-right: 0; box-shadow: none;
+    border-top-right-radius: 0; border-bottom-right-radius: 0;
   }
   #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-scrim{
-    opacity: 0;
-    pointer-events: none;
+    opacity: 0; pointer-events: none;
   }
 
   /* Cacher le bouton quand SECTIONS est ouvert */
   #menu-toggle:checked ~ .viewer-header .menu-toggle-btn{
-    visibility: hidden;
-    pointer-events: none;
+    visibility: hidden; pointer-events: none;
   }
 
-  /* Quand le burger principal est ouvert → masquer le header viewer */
+  /* Masquer la barre quand le burger principal est ouvert */
   #mb-drawer.is-open ~ main .viewer-header,
   .mb-drawer.is-open ~ main .viewer-header,
   body:has(#mb-drawer.is-open) .viewer-header,
   body:has(.mb-drawer.is-open) .viewer-header{
-    visibility: hidden;
-    pointer-events: none;
+    visibility: hidden; pointer-events: none;
   }
 }
