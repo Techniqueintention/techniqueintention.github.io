@@ -530,3 +530,33 @@ details[data-has-new] > summary::after{
     width: calc(var(--menu-w, 300px) - var(--menu-edge));
   }
 }
+
+/* =========================
+   DESKTOP – gouttières propres et espace haut
+   ========================= */
+:root{ --viewer-gutter: 24px; } /* ajuste 20–32px selon ton goût */
+
+@media (min-width: 981px){
+  /* 1) Grille + gouttières identiques à gauche/droite */
+  .viewer-layout{
+    display: grid;
+    grid-template-columns: minmax(260px, var(--menu-w, 300px)) 1fr;
+    column-gap: var(--viewer-gutter);
+    padding-inline: var(--viewer-gutter);   /* espace avec les bords */
+    padding-top: 12px;                      /* réduit l’espace au-dessus du H1 */
+  }
+
+  /* 2) On annule le hack précédent sur la colonne menu */
+  .offcanvas-panel{
+    margin-left: 0 !important;
+    width: var(--menu-w, 300px) !important; /* pas de rétrécissement */
+    position: sticky;
+    top: calc(var(--header-h) + 20px);
+    height: max-content;
+  }
+
+  /* 3) Titre "LES BASES" : pas de marge haute superflue */
+  .viewer-header{ margin: 0 0 .8rem 0; position: static; transform: none; }
+  .viewer-title{ margin: 0; }
+}
+
