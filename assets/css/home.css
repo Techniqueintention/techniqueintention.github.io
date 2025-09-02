@@ -395,3 +395,105 @@
   /* Bonus: ancrages/scroll ne passent pas sous le header */
   html{ scroll-padding-top: calc(var(--header-h) + var(--mobile-gutter)); }
 }
+
+/* === HOME — Overrides mobiles sûrs (≤768px) === */
+@media (max-width: 768px) {
+  :root{
+    /* ↑ hauteur “logique” du header (sert aux espacements),
+       augmente à 72–76px si besoin */
+    --header-h: 68px;
+    /* marge verticale identique aux gouttières latérales pour la symétrie */
+    --mobile-gutter: 1rem;
+  }
+
+  /* 1) Cadre global : place tout juste sous le header, symétrique */
+  .home-shell{
+    margin-top: 0 !important;
+    padding-top: calc(var(--header-h) + var(--mobile-gutter)) !important;
+    padding-bottom: 1rem !important;
+  }
+
+  /* 2) Illustration : VRAIMENT plus petite, non coupée, et légère marge haute */
+  .home-illustration{
+    height: clamp(120px, 22vh, 180px) !important; /* ↓ taille effective */
+    min-height: 0 !important;
+    margin: 6px 0 10px 0 !important;
+    background-position: top center !important;
+    background-size: contain !important;          /* évite la coupe (au lieu de cover) */
+    background-repeat: no-repeat !important;
+    position: static !important;
+    border-radius: 14px !important;
+    box-shadow: 0 6px 16px rgba(0,0,0,.12) !important;
+  }
+
+  /* 3) Onglets sur deux lignes, répartition propre, pas de scroll horizontal */
+  .tabs-container{ 
+    display: block !important; 
+    max-width: 920px !important; 
+    margin: 1rem auto !important; 
+  }
+
+  .tabs-header{
+    /* on remplace tout flex/nowrap antérieur par une grille à 2 colonnes */
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+    grid-auto-flow: row !important;
+    gap: 0.6rem !important;
+    margin: 0 0 0.75rem 0 !important;
+    overflow: visible !important;
+    -webkit-overflow-scrolling: auto !important;
+    scrollbar-width: auto !important;
+    white-space: normal !important;
+  }
+  .tabs-header > * { min-width: 0 !important; }
+
+  .tab-button{
+    width: 100% !important;
+    border-radius: 999px !important;          /* pastille */
+    padding: 0.55rem 0.9rem !important;
+    font-size: 0.95rem !important;
+    text-align: center !important;
+    border-bottom-width: 0 !important;        /* supprime le style “onglet” desktop */
+    transform: none !important;               /* évite les sauts/reflows */
+    box-shadow: 0 1px 4px rgba(157,108,255,0.06) !important;
+  }
+  .tab-button.active{ box-shadow: 0 2px 10px rgba(157,108,255,0.12) !important; }
+  .tab-button.active::after{
+    /* petit trait décoratif, recentré */
+    left: 12%; right: 12%; bottom: -6px; height: 3px;
+  }
+
+  /* 4) Contenu : pleine largeur sous les onglets + reset des essais précédents */
+  .tab-content{
+    /* resets anti-conflits */
+    grid-template-columns: unset !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+    flex: unset !important;
+    float: none !important;
+    position: static !important;
+    clear: both !important;
+
+    display: none;                 /* ton JS met .active -> block */
+    padding: 1rem 1rem !important; /* plus compact */
+    margin-top: 0.25rem !important;
+    border-radius: 12px !important;
+    background: var(--bloc-bg, rgba(255,255,255,0.13)) !important;
+    border: 1px solid var(--bloc-border, rgba(255,255,255,0.12)) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06) !important;
+  }
+  .tab-content.active{ display: block !important; }
+
+  .tab-content h2{
+    font-size: 1.25rem !important;
+    margin-bottom: 0.75rem !important;
+    background: none !important; border: 0 !important; padding: 0 !important;
+  }
+  .tab-content > :not(h2){
+    font-size: 1rem !important;
+    line-height: 1.55 !important;
+  }
+
+  /* Bonus : ancres/scroll ne passent pas sous le header */
+  html{ scroll-padding-top: calc(var(--header-h) + var(--mobile-gutter)); }
+}
