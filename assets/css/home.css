@@ -497,3 +497,96 @@
   /* Bonus : ancres/scroll ne passent pas sous le header */
   html{ scroll-padding-top: calc(var(--header-h) + var(--mobile-gutter)); }
 }
+
+/* === HOME — Patch mobile final (≤768px) === */
+@media (max-width: 768px) {
+  :root{
+    --mobile-gutter: 1rem;  /* même marge que les côtés */
+  }
+
+  /* 0) Evite l’espace “fantôme” en haut (devtools/scroll) */
+  html { scroll-padding-top: 0 !important; }
+
+  /* 1) Cadre global : petit espacement symétrique sous le bandeau
+        (on N’utilise PLUS l’estimation de hauteur du header ici) */
+  .home-shell{
+    margin-top: 0 !important;
+    padding-top: var(--mobile-gutter) !important;
+    padding-bottom: 1rem !important;
+  }
+
+  /* 2) Illustration : VRAIMENT plus petite + non rognée + resserrée en haut */
+  .home-illustration{
+    height: clamp(110px, 20vh, 160px) !important; /* ↓ taille réelle */
+    min-height: 0 !important;
+    margin: 0 0 10px 0 !important;               /* pas de marge haute supplémentaire */
+    background-position: top center !important;
+    background-size: contain !important;          /* évite la coupe (au lieu de cover) */
+    background-repeat: no-repeat !important;
+    position: static !important;
+    border-radius: 14px !important;
+    box-shadow: 0 6px 16px rgba(0,0,0,.12) !important;
+  }
+
+  /* 3) Onglets sur deux lignes, répartis proprement et sans scroll horizontal */
+  .tabs-container{ display: block !important; }
+
+  .tabs-header{
+    display: grid !important;                             /* override du flex précédent */
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;  /* 2 colonnes -> 2 lignes pour 4 onglets */
+    grid-auto-flow: row !important;
+    gap: 0.6rem !important;
+    margin: 0 0 0.75rem 0 !important;
+    overflow: visible !important;
+    white-space: normal !important;
+  }
+  .tabs-header > * { min-width: 0 !important; }
+
+  .tab-button{
+    width: 100% !important;
+    border-radius: 999px !important;
+    padding: 0.55rem 0.9rem !important;
+    font-size: 0.95rem !important;
+    text-align: center !important;
+    border-bottom-width: 0 !important;
+    transform: none !important;
+    box-shadow: 0 1px 4px rgba(157,108,255,0.06) !important;
+    position: relative; /* pour le petit trait actif */
+  }
+  .tab-button.active{ box-shadow: 0 2px 10px rgba(157,108,255,0.12) !important; }
+  .tab-button.active::after{
+    content: ""; position: absolute; left: 12%; right: 12%;
+    bottom: -6px; height: 3px; background: #9d6cff; border-radius: 2px;
+    box-shadow: 0 2px 8px #9d6cff44;
+  }
+
+  /* 4) Contenu : pleine largeur sous les onglets + reset anti-conflits */
+  .tab-content{
+    grid-template-columns: unset !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+    flex: unset !important;
+    float: none !important;
+    position: static !important;
+    clear: both !important;
+
+    display: none;                 /* ton JS active -> block */
+    padding: 1rem 1rem !important;
+    margin-top: 0.25rem !important;
+    border-radius: 12px !important;
+    background: var(--bloc-bg, rgba(255,255,255,0.13)) !important;
+    border: 1px solid var(--bloc-border, rgba(255,255,255,0.12)) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06) !important;
+  }
+  .tab-content.active{ display: block !important; }
+
+  .tab-content h2{
+    font-size: 1.25rem !important;
+    margin-bottom: 0.75rem !important;
+    background: none !important; border: 0 !important; padding: 0 !important;
+  }
+  .tab-content > :not(h2){
+    font-size: 1rem !important;
+    line-height: 1.55 !important;
+  }
+}
