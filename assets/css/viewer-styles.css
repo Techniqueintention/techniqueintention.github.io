@@ -248,3 +248,35 @@ details[data-has-new] > summary::after{
   .menu-toggle-btn{ display: none; } /* menu latéral natif */
   .viewer-header{ position: static; transform: none; margin: 0 0 .8rem 0; }
 }
+
+/* ===== MOBILE — Ancrer le tiroir juste sous le bandeau ===== */
+@media (max-width: 980px){
+  /* Le panneau du menu Sections commence sous le header
+     et occupe seulement l'espace disponible en dessous. */
+  .offcanvas .offcanvas-panel{
+    position: fixed;
+    top: calc(var(--header-h) + 8px);
+    left: 0;
+    width: min(84vw, var(--menu-w, 320px));
+    height: calc(100dvh - var(--header-h) - 8px - env(safe-area-inset-bottom, 0px));
+    max-height: calc(100dvh - var(--header-h) - 8px - env(safe-area-inset-bottom, 0px));
+    overflow-y: auto;
+  }
+
+  /* Le voile (scrim) ne recouvre plus le bandeau. */
+  .offcanvas .offcanvas-scrim{
+    position: fixed;
+    top: calc(var(--header-h) + 8px);
+    left: 0; right: 0; bottom: 0;
+  }
+
+  /* Quand le tiroir est FERMÉ, rien ne dépasse (pas de petit trait). */
+  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-panel{
+    transform: translateX(calc(-100% - 28px));
+    border-right: 0; box-shadow: none;
+    border-top-right-radius: 0; border-bottom-right-radius: 0;
+  }
+  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-scrim{
+    opacity: 0; pointer-events: none;
+  }
+}
