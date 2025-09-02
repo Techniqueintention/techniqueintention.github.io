@@ -268,3 +268,104 @@
   .home-shell .tabs-container { max-width: none; }
 }
 
+/* === HOME — correctif mobile compatible avec ton CSS === */
+@media (max-width: 768px) {
+  :root { 
+    --menuW: clamp(70px, 24vw, 110px); 
+    --gap: 12px; 
+    --titleH: clamp(52px, 12vw, 74px);
+  }
+
+  /* 1) Remplace le flex mobile par une grille 2 colonnes */
+  .tabs-container {
+    display: grid !important;                 /* override de ton flex */
+    grid-template-columns: var(--menuW) 1fr;  /* menu | zone droite */
+    grid-auto-rows: auto;
+    gap: var(--gap);
+    align-items: start;
+  }
+
+  /* 2) Colonne menu (gauche) */
+  .tabs-header {
+    grid-column: 1 / 2;
+    grid-row: 1;
+    margin: 0;              /* pas d’espace sous la colonne */
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .tab-button {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.6rem;
+    text-align: left;
+    border-radius: 8px;
+    margin-bottom: 0.15rem;
+    box-shadow: 0 1px 4px rgba(157,108,255,0.06);
+  }
+  .tab-button.active { transform: none; }
+
+  /* 3) Carte active pleine largeur (ligne 2), avec titre en “bandeau” */
+  .tab-content {
+    grid-column: 1 / -1;          /* prend les 2 colonnes */
+    grid-row: 2;
+    display: block;                /* neutralise l’effet grid interne si existant */
+    flex: unset;                   /* neutralise ton flex:1 précédent */
+    position: relative;
+    padding: 1rem 1.1rem;
+    padding-top: calc(var(--titleH) + var(--gap)); /* place réservée au titre */
+    border-radius: 12px;
+    background: var(--bloc-bg, rgba(255,255,255,0.13));
+    border: 1px solid var(--bloc-border, rgba(255,255,255,0.12));
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  }
+
+  /* 4) Titre “en haut à droite du menu” */
+  .tab-content > h2:first-child {
+    position: absolute;
+    top: 0;
+    left: calc(var(--menuW) + var(--gap));
+    right: 0;
+    height: var(--titleH);
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0 1rem;
+    border-radius: 12px;
+    background: var(--bloc-bg, rgba(255,255,255,0.13));
+    border: 1px solid var(--bloc-border, rgba(255,255,255,0.12));
+    font-size: clamp(1.15rem, 4.6vw, 1.45rem);
+    line-height: 1.25;
+    font-weight: 700;
+  }
+
+  /* 5) Texte lisible et compact */
+  .tab-content p,
+  .tab-content ul {
+    font-size: clamp(0.95rem, 2.8vw, 1.04rem);
+    line-height: 1.6;
+    margin: 0.65rem 0 0.9rem;
+  }
+  .tab-content li { margin-bottom: 0.45rem; }
+
+  /* 6) Illustration plus petite (optionnel) */
+  .home-illustration {
+    height: clamp(140px, 28vh, 220px);
+    aspect-ratio: 16/9;
+    margin: 0 0 10px 0;
+    border-radius: 14px;
+    background-size: cover;
+    box-shadow: 0 6px 16px rgba(0,0,0,.12);
+    position: static;   /* garde ton override mobile existant */
+    min-height: 0;      /* évite les hauteurs forcées précédentes */
+  }
+
+  /* 7) Un peu moins d’air global */
+  .home-shell { padding-top: 0.2rem; padding-bottom: 0.8rem; margin-top: 6px; }
+}
+
+/* Ultra-petits écrans : éventuellement masquer l’image */
+@media (max-width: 380px) {
+  .home-illustration { display: none; }
+}
+
