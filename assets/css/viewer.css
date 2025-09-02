@@ -27,7 +27,7 @@
   align-self: start;
   width: var(--menu-w);
   max-width: none;
-  height: calc(100vh - var(--header-h) - 40px);
+  max-height: 70vh; /* Ou simplement supprimer la propriété height */
   overflow-y: auto;
 }
 .blog-menu details { margin-bottom: .7rem; border-radius: 12px; }
