@@ -280,3 +280,84 @@ details[data-has-new] > summary::after{
     opacity: 0; pointer-events: none;
   }
 }
+
+/* =========================================================
+   PATCH MOBILE – bouton non-sticky, barre sticky unique,
+   tiroir "Sections" sous le bandeau (panel + scrim)
+   ========================================================= */
+@media (max-width: 980px){
+
+  /* 1) Barre titre + bouton = seule zone sticky */
+  .viewer-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    position: sticky;
+    top: calc(var(--header-h) + 2px);  /* colle sous le bandeau */
+    transform: translateY(-18px);      /* remonte UNIQUEMENT la barre */
+    will-change: transform;
+    z-index: 1050;
+    margin: 0 0 1rem 0;
+    padding-right: .25rem;
+  }
+
+  /* 2) Bouton "Sections" jamais sticky tout seul (annule viewer.css) */
+  .menu-toggle-btn{
+    position: static !important;       /* ← clé anti-drift */
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font: 600 1rem/1 var(--ui-font, "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif);
+    color: var(--link-color);
+    background: var(--menu-card-bg, rgba(255,255,255,.15));
+    border: 1px solid var(--menu-border, rgba(0,0,0,.2));
+    border-radius: 999px;
+    padding: .55rem .9rem;
+    margin: 0;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,.10);
+    transition: background .2s, transform .2s, color .2s;
+  }
+  .menu-toggle-btn::before{ content:"☰"; font-size:1.05rem; line-height:1; }
+
+  /* 3) Tiroir ancré SOUS le bandeau (panel + scrim) */
+  .viewer-container .offcanvas .offcanvas-panel{
+    position: fixed !important;
+    top: calc(var(--header-h) + 8px) !important;
+    left: 0;
+    width: min(84vw, var(--menu-w, 320px));
+    height: calc(100dvh - var(--header-h) - 8px) !important;
+    max-height: calc(100dvh - var(--header-h) - 8px) !important;
+    overflow-y: auto;
+  }
+  .viewer-container .offcanvas .offcanvas-scrim{
+    position: fixed !important;
+    /* on remplace inset:0 → ne couvre plus le bandeau */
+    top: calc(var(--header-h) + 8px) !important;
+    left: 0; right: 0; bottom: 0;
+    inset: auto !important;
+  }
+
+  /* 4) Fermé = rien ne dépasse (pas de petit trait) */
+  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-panel{
+    transform: translateX(calc(-100% - 28px));
+    border-right: 0; box-shadow: none;
+    border-top-right-radius: 0; border-bottom-right-radius: 0;
+  }
+  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-scrim{
+    opacity: 0; pointer-events: none;
+  }
+
+  /* 5) Quand un menu recouvre l’écran, on masque la barre du viewer
+        (pour éviter le chevauchement du titre) */
+  #menu-toggle:checked ~ .viewer-header{ visibility: hidden; pointer-events: none; }
+  #mb-drawer.is-open ~ main .viewer-header,
+  .mb-drawer.is-open ~ main .viewer-header{ visibility: hidden; pointer-events: none; }
+}
+
+/* Desktop safe-guard */
+@media (min-width: 981px){
+  .menu-toggle-btn{ display: none; }
+  .viewer-header{ position: static; transform: none; margin: 0 0 .8rem 0; }
+}
