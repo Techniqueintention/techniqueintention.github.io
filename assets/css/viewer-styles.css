@@ -184,10 +184,10 @@ details[data-has-new] > summary::after {
 
 /* Version sombre */
 :root[data-theme="dark"] {
-  --title-bg: linear-gradient(135deg, rgba(110, 87, 224, 0.2) 0%, rgba(70, 50, 180, 0.15) 100%);
-  --title-border: rgba(110, 87, 224, 0.5);
-  --title-color: #9d8aee;
-  --title-shadow: 0 2px 12px rgba(138, 109, 233, 0.4);
+  --title-bg: linear-gradient(135deg, rgba(87, 96, 224, 0.2) 0%, rgba(50, 59, 180, 0.15) 100%);
+  --title-border: rgba(87, 96, 224, 0.5);
+  --title-color: #2a7dc4;
+  --title-shadow: 0 2px 12px rgba(109, 119, 233, 0.4);
   --title-box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
 }
 
@@ -195,7 +195,7 @@ details[data-has-new] > summary::after {
 :root[data-theme="light"] {
   --title-bg: linear-gradient(135deg, rgba(110, 87, 224, 0.1) 0%, rgba(80, 60, 200, 0.05) 100%);
   --title-border: rgba(110, 87, 224, 0.3);
-  --title-color: #6e57e0;
+  --title-color: #7E56E8;
   --title-shadow: 0 2px 6px rgba(110, 87, 224, 0.2);
   --title-box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
