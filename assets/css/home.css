@@ -229,9 +229,14 @@
     margin-bottom: 0;
   }
   .home-shell {
-    margin-top: 10px;
-    padding-top: 0rem;
+    margin-top: 0; /* évite la collapse de marge sous un header fixe */
+    padding-top: calc(var(--header-h, 64px) + 8px); /* décale tout sous le bandeau */
     padding-bottom: 1rem;
+  }
+
+  /* si tu veux aussi un léger décalage propre à l'image */
+  .home-illustration {
+    margin-top: 4px; /* optionnel */
   }
 }
 
