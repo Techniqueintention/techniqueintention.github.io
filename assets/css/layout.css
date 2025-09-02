@@ -13,7 +13,7 @@ html, body {
 
 /* Le BODY devient le conteneur flex vertical */
 body {
-  min-height: 100dvh;
+  min-height: auto; /* Permettre au contenu de déterminer la hauteur */
   display: flex;
   flex-direction: column;
   padding-top: var(--header-h, 64px); /* Compensation pour header fixe */
@@ -50,7 +50,7 @@ footer,
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  margin-top: 160px; /* 👈 Ajoute de l'espace au-dessus du footer */
+  margin-top: 40px; /* 👈 Ajoute de l'espace au-dessus du footer */
 }
 
 /* --------- Utilitaires (optionnels) --------- */
