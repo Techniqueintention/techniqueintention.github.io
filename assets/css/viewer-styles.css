@@ -51,22 +51,15 @@ main{ flex: 1 0 auto; width: 100%; }
 .offcanvas-close:hover{ background: rgba(0,0,0,.12); }
 
 /* -------- Badges / états -------- */
+/* Badge NEW plus petit */
 .badge-new{
-  display: inline-block;
-  background: var(--primary, #6e57e0);
-  color: #fff;
-  font-size: .7rem;
-  font-weight: 700;
-  padding: .2rem .4rem;
-  border-radius: 4px;
-  margin-left: .5rem;
-  vertical-align: top;
+  font-size: .62rem;        /* avant .7rem */
+  padding: .12rem .32rem;   /* avant .2rem .4rem */
+  border-radius: 3px;       /* avant 4px */
+  line-height: 1.05;
 }
 details[data-has-new] > summary::after{
-  content: "●";
-  color: var(--primary, #6e57e0);
-  font-size: .8rem;
-  margin-left: .3rem;
+  font-size: .68rem;        /* avant .8rem */
 }
 #article-viewer.is-loading{ opacity: .6; pointer-events: none; }
 #article-viewer.is-loading::before{
@@ -75,6 +68,10 @@ details[data-has-new] > summary::after{
   text-align: center;
   padding: 2rem;
   color: var(--text-muted, #666);
+}
+
+@media (max-width: 980px){
+  .badge-new{ font-size: .58rem; padding: .10rem .26rem; }
 }
 
 /* =========================================================
@@ -504,4 +501,32 @@ details[data-has-new] > summary::after{
     margin: 0 0 1rem 0; padding-right: .25rem;
   }
   #menu-toggle:checked ~ .viewer-header{ visibility: hidden; pointer-events: none; }
+}
+
+/* Slider Sections : fond plus lisible + scrim un peu plus sombre */
+@media (max-width: 980px){
+  /* Fond du panneau */
+  .offcanvas .offcanvas-panel{
+    background: var(--sections-panel-bg, rgba(255,255,255,.98)) !important;
+    backdrop-filter: none !important; /* retire l’effet “verre” si présent */
+  }
+  :root[data-theme="dark"] .offcanvas .offcanvas-panel{
+    background: var(--sections-panel-bg-dark, rgba(18,18,24,.96)) !important;
+  }
+
+  /* Voile derrière le panneau (sépare mieux le contenu) */
+  .offcanvas .offcanvas-scrim{
+    background: rgba(0,0,0,.25) !important; /* monte/descends l’opacité au besoin */
+  }
+}
+
+/* === Desktop : petit espace entre le bord gauche et la colonne menu === */
+:root{ --menu-edge: 12px; }  /* ajuste 8–20px selon ton goût */
+
+@media (min-width: 981px){
+  .offcanvas-panel{
+    /* on recrée le “gutter” sans casser la largeur du track */
+    margin-left: var(--menu-edge);
+    width: calc(var(--menu-w, 300px) - var(--menu-edge));
+  }
 }
