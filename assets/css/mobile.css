@@ -447,4 +447,16 @@ img, video, canvas, svg, iframe {
   }
 }
 
-/* SOLUTION JAVASCRIPT COMPLÉMENTAIRE pour forcer la déco */
+/* Bandeau (header) — hauteur globale mobile */
+@media (max-width: 900px) {
+  /* 1) Hauteur logique du bandeau (fait aussi bouger le padding-top du body) */
+  :root { --header-h: 72px; }  /* ← ajuste 68 / 72 / 76px selon ton besoin */
+
+  /* 2) Hauteur réelle du header pour matcher la variable */
+  .site-header {
+    min-height: var(--header-h);
+    /* optionnel : ajuste l’air vertical si besoin */
+    padding-block: 10px; /* ↑ ou ↓ la valeur pour affiner */
+  }
+}
+
