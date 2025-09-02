@@ -1,27 +1,20 @@
 /* =============================================
    VIEWER-STYLES.CSS
    Styles spécifiques pour les pages viewer (bases.html, etc.)
-   À créer dans /assets/css/viewer-styles.css
    ============================================= */
 
-/* Layout principal des pages viewer */
-body {
+/* -------- Layout principal des pages viewer -------- */
+body{
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   padding-top: var(--header-h, 64px);
 }
 
-main {
-  flex: 1 0 auto;
-  width: 100%;
-}
+main{ flex: 1 0 auto; width: 100%; }
+.viewer-container{ width: 100%; }
 
-.viewer-container {
-  width: 100%;
-}
-
-#footer-placeholder {
+#footer-placeholder{
   margin-top: auto;
   flex-shrink: 0;
   width: 100%;
@@ -29,29 +22,16 @@ main {
   z-index: 1;
 }
 
-.viewer-layout {
-  min-height: 60vh;
-}
+.viewer-layout{ min-height: 60vh; }
 
-/* Menu Sections - État par défaut */
-.menu-toggle {
-  display: none;
-}
+/* -------- Menu Sections – état par défaut (desktop) -------- */
+.menu-toggle{ display: none; }
+.menu-toggle-btn{ display: none; }   /* visible seulement en mobile */
+.offcanvas{ display: contents; }     /* en desktop, contenu dans la grille */
+.offcanvas-scrim{ display: none; }
 
-.menu-toggle-btn {
-  display: none;
-}
-
-.offcanvas {
-  display: contents;
-}
-
-.offcanvas-scrim {
-  display: none;
-}
-
-/* Bouton fermer (dans le drawer mobile) */
-.offcanvas-close {
+/* Bouton fermer (croix) injecté dans le drawer mobile */
+.offcanvas-close{
   position: sticky;
   top: 0;
   display: inline-flex;
@@ -59,100 +39,53 @@ main {
   justify-content: center;
   width: 2rem;
   height: 2rem;
-  margin: 0.2rem 0 0.4rem auto;
+  margin: .2rem 0 .4rem auto;
   border-radius: 8px;
   cursor: pointer;
   z-index: 1;
-  background: rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(0,0,0,.08);
+  border: 1px solid rgba(0,0,0,.12);
   font-weight: 700;
-  transition: background 0.2s ease;
+  transition: background .2s ease;
 }
+.offcanvas-close:hover{ background: rgba(0,0,0,.12); }
 
-.offcanvas-close:hover {
-  background: rgba(0, 0, 0, 0.12);
-}
-
-/* Desktop - Menu Sections intégré */
-@media (min-width: 981px) {
-  .offcanvas-panel {
+/* -------- Desktop : menu latéral intégré -------- */
+@media (min-width: 981px){
+  .offcanvas-panel{
     grid-column: 2;
     position: static;
     height: auto;
     width: var(--menu-w, 300px);
   }
+  .menu-toggle-btn{ display: none; }
 }
 
-/* Mobile - Menu Sections en drawer */
-@media (max-width: 980px) {
-  .menu-toggle-btn {
-    display: inline-flex;
-  }
-  
-  .offcanvas {
-    display: block;
-  }
-  
-  .offcanvas-scrim {
-    display: block; /* voile cliquable visible en mobile */
-  }
-
-  /* Quand le drawer Sections est ouvert, cacher le bouton */
-  #menu-toggle:checked + .menu-toggle-btn {
-    visibility: hidden;
-  }
-  
-  /* SÉCURITÉ : Si le menu burger principal est ouvert, forcer la fermeture du menu Sections */
-  #mb-drawer.is-open ~ main .offcanvas-panel,
-  .mb-drawer.is-open ~ main .offcanvas-panel {
-    transform: translateX(-100%) !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-  }
-  
-  #mb-drawer.is-open ~ main .offcanvas-scrim,
-  .mb-drawer.is-open ~ main .offcanvas-scrim {
-    opacity: 0 !important;
-    pointer-events: none !important;
-    visibility: hidden !important;
-  }
-  
-  /* Empêcher l'interaction avec le menu Sections quand le menu principal est ouvert */
-  #mb-drawer.is-open ~ main .offcanvas,
-  .mb-drawer.is-open ~ main .offcanvas {
-    pointer-events: none !important;
-    z-index: -1 !important;
-  }
-}
-
-/* Badge NEW pour les nouveaux articles */
-.badge-new {
+/* -------- Badges / états -------- */
+.badge-new{
   display: inline-block;
   background: var(--primary, #6e57e0);
-  color: white;
-  font-size: 0.7rem;
+  color: #fff;
+  font-size: .7rem;
   font-weight: 700;
-  padding: 0.2rem 0.4rem;
+  padding: .2rem .4rem;
   border-radius: 4px;
-  margin-left: 0.5rem;
+  margin-left: .5rem;
   vertical-align: top;
 }
 
-/* Détails avec nouveaux éléments */
-details[data-has-new] > summary::after {
+details[data-has-new] > summary::after{
   content: "●";
   color: var(--primary, #6e57e0);
-  font-size: 0.8rem;
-  margin-left: 0.3rem;
+  font-size: .8rem;
+  margin-left: .3rem;
 }
 
-/* Loading state pour l'article viewer */
-#article-viewer.is-loading {
-  opacity: 0.6;
+#article-viewer.is-loading{
+  opacity: .6;
   pointer-events: none;
 }
-
-#article-viewer.is-loading::before {
+#article-viewer.is-loading::before{
   content: "Chargement...";
   display: block;
   text-align: center;
@@ -160,215 +93,62 @@ details[data-has-new] > summary::after {
   color: var(--text-muted, #666);
 }
 
-/* Bouton Sections amélioré - Mobile */
-@media (max-width: 980px) {
-  .menu-toggle-btn {
+/* =========================================================
+   MOBILE — header viewer + bouton Sections + drawer propre
+   ========================================================= */
+@media (max-width: 980px){
+
+  /* Barre titre + bouton à droite */
+  .viewer-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    position: sticky;
+    top: calc(var(--header-h) + 4px);   /* juste sous le bandeau */
+    z-index: 1050;                      /* < burger (3000), > contenu */
+    padding-right: .25rem;
+    margin: 0 0 1rem 0;                  /* air au-dessus du viewer */
+  }
+
+  /* Bouton Sections (clair/sombre via variables) */
+  .menu-toggle-btn{
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--link-color); /* s'adapte déjà clair/sombre */
+    gap: .5rem;
+    font: 600 1rem/1 var(--ui-font, "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif);
+    color: var(--link-color);
     background: var(--menu-card-bg, rgba(255,255,255,.15));
     border: 1px solid var(--menu-border, rgba(0,0,0,.2));
     border-radius: 999px;
-    padding: 0.6rem 1rem;
-    margin: 0.8rem 0 1rem 0;
+    padding: .55rem .9rem;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,.1);
-    transition: background 0.2s, transform 0.2s, color 0.2s;
+    box-shadow: 0 4px 12px rgba(0,0,0,.10);
+    transition: background .2s, transform .2s, color .2s;
+    margin: 0;
   }
-
-  /* Icône avant le texte */
-  .menu-toggle-btn::before {
-    content: "☰"; /* peut être remplacé par SVG inline */
-    font-size: 1.1rem;
-    line-height: 1;
+  .menu-toggle-btn::before{
+    content: "☰";
+    font-size: 1.05rem; line-height: 1;
   }
-
-  /* Effet hover clair/sombre */
-  .menu-toggle-btn:hover {
-    background: rgba(255,255,255,0.25);
+  .menu-toggle-btn:hover{
+    background: rgba(255,255,255,.25);
     transform: translateY(-1px);
   }
-
-  /* Adaptation theme sombre */
-  :root[data-theme="dark"] .menu-toggle-btn {
-    background: rgba(255,255,255,0.08);
-    border-color: rgba(255,255,255,0.15);
+  :root[data-theme="dark"] .menu-toggle-btn{
+    background: rgba(255,255,255,.08);
+    border-color: rgba(255,255,255,.15);
     color: #fff;
   }
-  :root[data-theme="dark"] .menu-toggle-btn:hover {
-    background: rgba(255,255,255,0.16);
-  }
-
-/* Barre titre + bouton */
-.viewer-header{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: .75rem;
-  margin: 0 0 .6rem 0;
-}
-
-/* MOBILE */
-@media (max-width: 980px){
-
-  /* Bouton Sections */
-  .menu-toggle-btn{
-    display: inline-flex;
-    align-items: center;
-    gap: .5rem;
-    font: 600 1rem/1 var(--ui-font, "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif);
-    color: var(--link-color);
-    background: var(--menu-card-bg, rgba(255,255,255,.15));
-    border: 1px solid var(--menu-border, rgba(0,0,0,.2));
-    border-radius: 999px;
-    padding: .55rem .9rem;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,.10);
-    transition: background .2s, transform .2s, color .2s;
-  }
-  .menu-toggle-btn::before{
-    content:"☰";
-    font-size: 1.05rem;
-    line-height: 1;
-  }
-  .menu-toggle-btn:hover{
-    background: rgba(255,255,255,.25);
-    transform: translateY(-1px);
-  }
-
-  /* Sticky du couple Titre + Bouton sous le bandeau */
-  .viewer-header{
-    position: sticky;
-    top: calc(var(--header-h) + 8px);
-    z-index: 1050;
-    padding-right: .25rem;
-  }
-
-  /* Quand le drawer Sections est ouvert → cacher le bouton
-     (utilise ~ car .viewer-header n'est pas adjacent à l'input) */
-  #menu-toggle:checked ~ .viewer-header .menu-toggle-btn{
-    visibility: hidden;
-  }
-
-  /* Thème sombre */
-  :root[data-theme="dark"] .menu-toggle-btn{
-    background: rgba(255,255,255,.08);
-    border-color: rgba(255,255,255,.15);
-    color:#fff;
-  }
   :root[data-theme="dark"] .menu-toggle-btn:hover{
     background: rgba(255,255,255,.16);
-  }
-
-  /* Offcanvas visible en mobile */
-  .offcanvas{ display:block; }
-  .offcanvas-scrim{ display:block; }
-}
-
-/* DESKTOP : menu latéral natif → bouton inutile */
-@media (min-width: 981px){
-  .menu-toggle-btn{ display:none; }
-}
-
-/* MOBILE – cacher totalement le tiroir quand il est fermé */
-@media (max-width: 980px){
-  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-panel{
-    /* on pousse un peu plus loin que 100% pour ne rien voir du tout */
-    transform: translateX(calc(-100% - 20px));
-    /* et on neutralise ce qui “bave” */
-    border-right-color: transparent;
-    box-shadow: none;
-  }
-  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-scrim{
-    opacity: 0;
-    pointer-events: none;
-  }
-}
-
-   /* MOBILE – position et espacement du header viewer */
-@media (max-width: 980px){
-  .viewer-header{
-    position: sticky;
-    /* un poil plus haut sous le bandeau */
-    top: calc(var(--header-h) + 4px);
-    z-index: 1050;
-    /* plus d’air avec le bloc article */
-    margin-bottom: 1rem;   /* ↑ et tu peux monter à 1.2rem si tu veux */
-  }
-}
-
-/* =============================
-   VIEWER — Header + Sections (MOBILE CLEAN)
-   ============================= */
-
-/* Barre titre + bouton (base) */
-.viewer-header{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: .75rem;
-  margin: 0 0 .6rem 0;
-}
-
-/* Desktop : menu latéral natif → bouton inutile */
-@media (min-width: 981px){
-  .menu-toggle-btn{ display:none; }
-}
-
-/* ===== MOBILE ===== */
-@media (max-width: 980px){
-
-  /* Bouton Sections (clair/sombre via variables existantes) */
-  .menu-toggle-btn{
-    display: inline-flex;
-    align-items: center;
-    gap: .5rem;
-    font: 600 1rem/1 var(--ui-font, "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif);
-    color: var(--link-color);
-    background: var(--menu-card-bg, rgba(255,255,255,.15));
-    border: 1px solid var(--menu-border, rgba(0,0,0,.2));
-    border-radius: 999px;
-    padding: .55rem .9rem;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,.10);
-    transition: background .2s, transform .2s, color .2s;
-    margin: 0; /* annule toute marge précédente */
-  }
-  .menu-toggle-btn::before{
-    content:"☰";
-    font-size: 1.05rem;
-    line-height: 1;
-  }
-  .menu-toggle-btn:hover{
-    background: rgba(255,255,255,.25);
-    transform: translateY(-1px);
-  }
-  :root[data-theme="dark"] .menu-toggle-btn{
-    background: rgba(255,255,255,.08);
-    border-color: rgba(255,255,255,.15);
-    color:#fff;
-  }
-  :root[data-theme="dark"] .menu-toggle-btn:hover{
-    background: rgba(255,255,255,.16);
-  }
-
-  /* Titre + bouton juste sous le bandeau */
-  .viewer-header{
-    position: sticky;
-    top: calc(var(--header-h) + 4px); /* remonte au plus près du header */
-    z-index: 1050;                    /* < drawer burger (3000), > contenu */
-    padding-right: .25rem;
-    margin-bottom: 1rem;              /* air avec le bloc viewer */
   }
 
   /* Afficher le système offcanvas en mobile */
-  .offcanvas{ display:block; }
-  .offcanvas-scrim{ display:block; }
+  .offcanvas{ display: block; }
+  .offcanvas-scrim{ display: block; }
 
-  /* Cacher totalement le tiroir quand il est fermé (plus de “trait”) */
+  /* Tiroir totalement caché quand fermé (plus de trait arrondi) */
   #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-panel{
     transform: translateX(calc(-100% - 28px));
     border-right: 0;
@@ -381,14 +161,14 @@ details[data-has-new] > summary::after {
     pointer-events: none;
   }
 
-  /* Quand SECTIONS est ouvert → cacher le bouton */
+  /* Cacher le bouton quand SECTIONS est ouvert */
   #menu-toggle:checked ~ .viewer-header .menu-toggle-btn{
     visibility: hidden;
     pointer-events: none;
   }
 
   /* Quand le burger principal est ouvert → masquer le header viewer
-     (évite que “LES BASES” apparaisse par-dessus le menu) */
+     (évite que le titre apparaisse au-dessus du menu principal) */
   #mb-drawer.is-open ~ main .viewer-header,
   .mb-drawer.is-open ~ main .viewer-header,
   body:has(#mb-drawer.is-open) .viewer-header,
