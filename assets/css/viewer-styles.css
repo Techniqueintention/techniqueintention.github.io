@@ -177,3 +177,51 @@ details[data-has-new] > summary::after{
     pointer-events: none;
   }
 }
+
+/* === OVERRIDES MOBILE — remonte le header viewer, neutralise les conflits === */
+@media (max-width: 980px){
+
+  /* 1) On écrase la marge mobile définie dans mobile.css */
+  .viewer-layout{
+    margin: 6px 0 20px 0 !important; /* ou 0 si tu veux qu'il colle vraiment */
+    padding: 0 1rem;                 /* on garde l'air latéral doux */
+  }
+
+  /* 2) Titre + bouton "Sections" juste sous le bandeau */
+  .viewer-header{
+    position: sticky;
+    top: calc(var(--header-h) + 4px);
+    z-index: 1050;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: .75rem;
+    margin-bottom: 1rem;
+    padding-right: .25rem;
+  }
+
+  /* 3) Bouton "Sections" (si une ancienne règle le rend sticky tout seul) */
+  .menu-toggle-btn{
+    position: static !important;  /* évite le double-sticky concurrencé */
+    margin: 0;                    /* pas de marge haute parasite */
+  }
+
+  /* 4) Cache le header viewer quand un menu recouvre l’écran */
+  #menu-toggle:checked ~ .viewer-header{
+    visibility: hidden; pointer-events: none;
+  }
+  #mb-drawer.is-open ~ main .viewer-header,
+  .mb-drawer.is-open ~ main .viewer-header,
+  body:has(#mb-drawer.is-open) .viewer-header,
+  body:has(.mb-drawer.is-open) .viewer-header{
+    visibility: hidden; pointer-events: none;
+  }
+
+  /* 5) Tiroir "Sections" totalement hors-champ quand fermé (plus de trait) */
+  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-panel{
+    transform: translateX(calc(-100% - 28px));
+    border-right: 0; box-shadow: none;
+    border-top-right-radius: 0; border-bottom-right-radius: 0;
+  }
+  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-scrim{
+    opacity: 0; pointer-events: none;
+  }
+}
