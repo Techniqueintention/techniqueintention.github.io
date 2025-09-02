@@ -15,7 +15,7 @@
   display: grid;
   grid-template-columns: var(--pad-left) var(--menu-w) var(--gap-fixed) minmax(var(--article-min), var(--article-max)) 1fr;
   max-width: none;
-  margin: calc(var(--header-h) + 38px) 0 28px 0;
+  margin: 20px 0 28px 0; /* CORRIGÉ : espace réduit */
   padding: 0;
   align-items: start;
 }
