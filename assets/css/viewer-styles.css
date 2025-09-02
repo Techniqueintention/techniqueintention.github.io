@@ -1,20 +1,25 @@
 /* =============================================
-   VIEWER-STYLES.CSS
-   Styles spécifiques pour les pages viewer (bases.html, etc.)
+   VIEWER-STYLES.CSS - Version optimisée
    ============================================= */
 
 /* -------- Layout principal -------- */
-body{
+body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   padding-top: var(--header-h, 64px);
 }
 
-main{ flex: 1 0 auto; width: 100%; }
-.viewer-container{ width: 100%; }
+main { 
+  flex: 1 0 auto; 
+  width: 100%; 
+}
 
-#footer-placeholder{
+.viewer-container { 
+  width: 100%; 
+}
+
+#footer-placeholder {
   margin-top: auto;
   flex-shrink: 0;
   width: 100%;
@@ -22,16 +27,29 @@ main{ flex: 1 0 auto; width: 100%; }
   z-index: 1;
 }
 
-.viewer-layout{ min-height: 60vh; }
+.viewer-layout { 
+  min-height: 60vh; 
+}
 
 /* -------- Menu Sections – état par défaut -------- */
-.menu-toggle{ display: none; }
-.menu-toggle-btn{ display: none; }        /* visible seulement en mobile */
-.offcanvas{ display: contents; }          /* desktop: contenu dans la grille */
-.offcanvas-scrim{ display: none; }
+.menu-toggle { 
+  display: none; 
+}
 
-/* Bouton fermer (croix) injecté dans le drawer mobile */
-.offcanvas-close{
+.menu-toggle-btn { 
+  display: none; 
+}
+
+.offcanvas { 
+  display: contents; 
+}
+
+.offcanvas-scrim { 
+  display: none; 
+}
+
+/* Bouton fermer (croix) */
+.offcanvas-close {
   position: sticky;
   top: 0;
   display: inline-flex;
@@ -48,21 +66,29 @@ main{ flex: 1 0 auto; width: 100%; }
   font-weight: 700;
   transition: background .2s ease;
 }
-.offcanvas-close:hover{ background: rgba(0,0,0,.12); }
+
+.offcanvas-close:hover { 
+  background: rgba(0,0,0,.12); 
+}
 
 /* -------- Badges / états -------- */
-/* Badge NEW plus petit */
-.badge-new{
-  font-size: .62rem;        /* avant .7rem */
-  padding: .12rem .32rem;   /* avant .2rem .4rem */
-  border-radius: 3px;       /* avant 4px */
+.badge-new {
+  font-size: .62rem;
+  padding: .12rem .32rem;
+  border-radius: 3px;
   line-height: 1.05;
 }
-details[data-has-new] > summary::after{
-  font-size: .68rem;        /* avant .8rem */
+
+details[data-has-new] > summary::after {
+  font-size: .68rem;
 }
-#article-viewer.is-loading{ opacity: .6; pointer-events: none; }
-#article-viewer.is-loading::before{
+
+#article-viewer.is-loading { 
+  opacity: .6; 
+  pointer-events: none; 
+}
+
+#article-viewer.is-loading::before {
   content: "Chargement...";
   display: block;
   text-align: center;
@@ -70,68 +96,73 @@ details[data-has-new] > summary::after{
   color: var(--text-muted, #666);
 }
 
-@media (max-width: 980px){
-  .badge-new{ font-size: .58rem; padding: .10rem .26rem; }
+/* Variables globales */
+:root { 
+  --menu-edge: 12px;
+  --viewer-gutter: 24px;
+  --viewer-top-pad: 8px;
 }
 
 /* =========================================================
-   DESKTOP — grille nette: menu (1) | contenu (2)
+   VERSION DESKTOP (min-width: 981px)
    ========================================================= */
-@media (min-width: 981px){
-  .viewer-layout{
+@media (min-width: 981px) {
+  .viewer-layout {
     display: grid;
     grid-template-columns: minmax(260px, var(--menu-w, 300px)) 1fr;
-    gap: 1.6rem;
+    column-gap: var(--viewer-gutter);
+    padding-inline: var(--viewer-gutter);
+    padding-top: var(--viewer-top-pad);
     align-items: start;
   }
 
-  /* Le panneau (menu Sections) reste dans la colonne 1 */
-  .offcanvas-panel{
+  .offcanvas-panel {
     grid-column: 1;
     position: sticky;
     top: calc(var(--header-h) + 20px);
     height: max-content;
-    width: 100%;
+    width: var(--menu-w, 300px);
   }
 
-  /* La barre titre (et donc le H1) est côté contenu */
-  .viewer-header{
+  .viewer-header {
     grid-column: 2;
-    position: static;
-    transform: none;
     margin: 0 0 .8rem 0;
-    display: block; /* pas besoin de flex en desktop */
   }
 
-  /* Le contenu (article) est en colonne 2 */
-  #article-viewer{ grid-column: 2; }
+  .viewer-title { 
+    margin: 0 !important; 
+  }
 
-  /* Le bouton "Sections" est inutile en desktop */
-  .menu-toggle-btn{ display: none; }
+  #article-viewer { 
+    grid-column: 2; 
+  }
+
+  .menu-toggle-btn { 
+    display: none; 
+  }
 }
 
 /* =========================================================
-   MOBILE — header viewer + bouton Sections + drawer propre
+   VERSION MOBILE (max-width: 980px)
    ========================================================= */
-@media (max-width: 980px){
-
-  /* Barre titre + bouton: sticky sous le bandeau et remontée */
-  .viewer-header{
+@media (max-width: 980px) {
+  /* Barre titre + bouton sticky */
+  .viewer-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: .75rem;
     position: sticky;
-    top: calc(var(--header-h) + 2px); /* sous le header */
-    transform: translateY(-18px);     /* remonte UNIQUEMENT la barre */
+    top: calc(var(--header-h) + 2px);
+    transform: translateY(-18px);
     will-change: transform;
-    z-index: 1050;                    /* < burger (3000), > contenu */
+    z-index: 1050;
     padding-right: .25rem;
     margin: 0 0 1rem 0;
   }
 
-  /* Bouton Sections (clair/sombre via variables) */
-  .menu-toggle-btn{
+  /* Bouton Sections */
+  .menu-toggle-btn {
     display: inline-flex;
     align-items: center;
     gap: .5rem;
@@ -145,418 +176,112 @@ details[data-has-new] > summary::after{
     box-shadow: 0 4px 12px rgba(0,0,0,.10);
     transition: background .2s, transform .2s, color .2s;
     margin: 0;
-    position: relative; z-index: 1;   /* au-dessus de l'article */
+    position: static !important;
   }
-  .menu-toggle-btn::before{ content: "☰"; font-size: 1.05rem; line-height: 1; }
-  .menu-toggle-btn:hover{ background: rgba(255,255,255,.25); transform: translateY(-1px); }
-  :root[data-theme="dark"] .menu-toggle-btn{ background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.15); color:#fff; }
-  :root[data-theme="dark"] .menu-toggle-btn:hover{ background: rgba(255,255,255,.16); }
 
-  /* Offcanvas visible en mobile */
-  .offcanvas{ display: block; }
-  .offcanvas-scrim{ display: block; }
+  .menu-toggle-btn::before { 
+    content: "☰"; 
+    font-size: 1.05rem; 
+    line-height: 1; 
+  }
 
-  /* Tiroir totalement caché quand fermé (plus de trait) */
-  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-panel{
+  .menu-toggle-btn:hover { 
+    background: rgba(255,255,255,.25); 
+    transform: translateY(-1px); 
+  }
+
+  :root[data-theme="dark"] .menu-toggle-btn {
+    background: rgba(255,255,255,.08);
+    border-color: rgba(255,255,255,.15);
+    color: #fff;
+  }
+
+  :root[data-theme="dark"] .menu-toggle-btn:hover { 
+    background: rgba(255,255,255,.16); 
+  }
+
+  /* Badge plus petit en mobile */
+  .badge-new { 
+    font-size: .58rem; 
+    padding: .10rem .26rem; 
+  }
+
+  /* Offcanvas en mobile */
+  .offcanvas, .offcanvas-scrim { 
+    display: block; 
+  }
+
+  /* Conteneur offcanvas fixe sous le header */
+  .offcanvas {
+    position: fixed;
+    top: calc(var(--header-h) + 0px);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2400;
+    pointer-events: none;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #menu-toggle:checked ~ .offcanvas {
+    pointer-events: auto;
+  }
+
+  /* Voile */
+  .offcanvas .offcanvas-scrim {
+    position: absolute;
+    inset: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: rgba(0,0,0,.25) !important;
+  }
+
+  /* Panneau du menu */
+  .offcanvas .offcanvas-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: min(84vw, var(--menu-w, 320px));
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    z-index: 1;
+    margin: 0 !important;
+    padding-top: 0 !important;
+    background: var(--sections-panel-bg, rgba(255,255,255,.98)) !important;
+  }
+
+  :root[data-theme="dark"] .offcanvas .offcanvas-panel {
+    background: var(--sections-panel-bg-dark, rgba(18,18,24,.96)) !important;
+  }
+
+  /* État fermé */
+  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-panel {
     transform: translateX(calc(-100% - 28px));
-    border-right: 0; box-shadow: none;
-    border-top-right-radius: 0; border-bottom-right-radius: 0;
-  }
-  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-scrim{
-    opacity: 0; pointer-events: none;
+    border-right: 0;
+    box-shadow: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
-  /* Cacher le bouton quand SECTIONS est ouvert */
-  #menu-toggle:checked ~ .viewer-header .menu-toggle-btn{
-    visibility: hidden; pointer-events: none;
+  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-scrim {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Masquer la barre quand le menu est ouvert */
+  #menu-toggle:checked ~ .viewer-header {
+    visibility: hidden;
+    pointer-events: none;
   }
 
   /* Masquer la barre quand le burger principal est ouvert */
   #mb-drawer.is-open ~ main .viewer-header,
   .mb-drawer.is-open ~ main .viewer-header,
   body:has(#mb-drawer.is-open) .viewer-header,
-  body:has(.mb-drawer.is-open) .viewer-header{
-    visibility: hidden; pointer-events: none;
-  }
-}
-
-/* MOBILE — barre sticky, bouton aligné à droite, pas de "drift" */
-@media (max-width: 980px){
-
-  /* La barre colle sous le bandeau et remonte légèrement */
-  .viewer-header{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: .75rem;
-    position: sticky;
-    top: calc(var(--header-h) + 2px); /* juste sous le header */
-    transform: translateY(-18px);     /* remonte UNIQUEMENT la barre */
-    will-change: transform;
-    z-index: 1050;
-    margin: 0 0 1rem 0;
-    padding-right: .25rem;
-  }
-
-  /* Le bouton n'est PAS sticky tout seul (override ancien code) */
-  .menu-toggle-btn{
-    position: static !important;
-    display: inline-flex;
-    align-items: center;
-    gap: .5rem;
-    font: 600 1rem/1 var(--ui-font, "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif);
-    color: var(--link-color);
-    background: var(--menu-card-bg, rgba(255,255,255,.15));
-    border: 1px solid var(--menu-border, rgba(0,0,0,.2));
-    border-radius: 999px;
-    padding: .55rem .9rem;
-    margin: 0;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,.10);
-    transition: background .2s, transform .2s, color .2s;
-  }
-  .menu-toggle-btn::before{ content:"☰"; font-size:1.05rem; line-height:1; }
-  .menu-toggle-btn:hover{ background: rgba(255,255,255,.25); transform: translateY(-1px); }
-  :root[data-theme="dark"] .menu-toggle-btn{
-    background: rgba(255,255,255,.08);
-    border-color: rgba(255,255,255,.15);
-    color:#fff;
-  }
-  :root[data-theme="dark"] .menu-toggle-btn:hover{ background: rgba(255,255,255,.16); }
-
-  /* Fermer le tiroir = plus de petit trait */
-  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-panel{
-    transform: translateX(calc(-100% - 28px));
-    border-right: 0; box-shadow: none;
-    border-top-right-radius: 0; border-bottom-right-radius: 0;
-  }
-  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-scrim{
-    opacity: 0; pointer-events: none;
-  }
-
-  /* Quand SECTIONS est ouvert → on masque la barre pour éviter les recouvrements */
-  #menu-toggle:checked ~ .viewer-header{ visibility: hidden; pointer-events: none; }
-  #mb-drawer.is-open ~ main .viewer-header,
-  .mb-drawer.is-open ~ main .viewer-header{ visibility: hidden; pointer-events: none; }
-}
-
-/* DESKTOP — aucune sticky sur le bouton, pas d’effet de bord */
-@media (min-width: 981px){
-  .menu-toggle-btn{ display: none; } /* menu latéral natif */
-  .viewer-header{ position: static; transform: none; margin: 0 0 .8rem 0; }
-}
-
-/* ===== MOBILE — Ancrer le tiroir juste sous le bandeau ===== */
-@media (max-width: 980px){
-  /* Le panneau du menu Sections commence sous le header
-     et occupe seulement l'espace disponible en dessous. */
-  .offcanvas .offcanvas-panel{
-    position: fixed;
-    top: calc(var(--header-h) + 8px);
-    left: 0;
-    width: min(84vw, var(--menu-w, 320px));
-    height: calc(100dvh - var(--header-h) - 8px - env(safe-area-inset-bottom, 0px));
-    max-height: calc(100dvh - var(--header-h) - 8px - env(safe-area-inset-bottom, 0px));
-    overflow-y: auto;
-  }
-
-  /* Le voile (scrim) ne recouvre plus le bandeau. */
-  .offcanvas .offcanvas-scrim{
-    position: fixed;
-    top: calc(var(--header-h) + 8px);
-    left: 0; right: 0; bottom: 0;
-  }
-
-  /* Quand le tiroir est FERMÉ, rien ne dépasse (pas de petit trait). */
-  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-panel{
-    transform: translateX(calc(-100% - 28px));
-    border-right: 0; box-shadow: none;
-    border-top-right-radius: 0; border-bottom-right-radius: 0;
-  }
-  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-scrim{
-    opacity: 0; pointer-events: none;
-  }
-}
-
-/* =========================================================
-   PATCH MOBILE – bouton non-sticky, barre sticky unique,
-   tiroir "Sections" sous le bandeau (panel + scrim)
-   ========================================================= */
-@media (max-width: 980px){
-
-  /* 1) Barre titre + bouton = seule zone sticky */
-  .viewer-header{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: .75rem;
-    position: sticky;
-    top: calc(var(--header-h) + 2px);  /* colle sous le bandeau */
-    transform: translateY(-18px);      /* remonte UNIQUEMENT la barre */
-    will-change: transform;
-    z-index: 1050;
-    margin: 0 0 1rem 0;
-    padding-right: .25rem;
-  }
-
-  /* 2) Bouton "Sections" jamais sticky tout seul (annule viewer.css) */
-  .menu-toggle-btn{
-    position: static !important;       /* ← clé anti-drift */
-    display: inline-flex;
-    align-items: center;
-    gap: .5rem;
-    font: 600 1rem/1 var(--ui-font, "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif);
-    color: var(--link-color);
-    background: var(--menu-card-bg, rgba(255,255,255,.15));
-    border: 1px solid var(--menu-border, rgba(0,0,0,.2));
-    border-radius: 999px;
-    padding: .55rem .9rem;
-    margin: 0;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,.10);
-    transition: background .2s, transform .2s, color .2s;
-  }
-  .menu-toggle-btn::before{ content:"☰"; font-size:1.05rem; line-height:1; }
-
-  /* 3) Tiroir ancré SOUS le bandeau (panel + scrim) */
-  .viewer-container .offcanvas .offcanvas-panel{
-    position: fixed !important;
-    top: calc(var(--header-h) + 8px) !important;
-    left: 0;
-    width: min(84vw, var(--menu-w, 320px));
-    height: calc(100dvh - var(--header-h) - 8px) !important;
-    max-height: calc(100dvh - var(--header-h) - 8px) !important;
-    overflow-y: auto;
-  }
-  .viewer-container .offcanvas .offcanvas-scrim{
-    position: fixed !important;
-    /* on remplace inset:0 → ne couvre plus le bandeau */
-    top: calc(var(--header-h) + 8px) !important;
-    left: 0; right: 0; bottom: 0;
-    inset: auto !important;
-  }
-
-  /* 4) Fermé = rien ne dépasse (pas de petit trait) */
-  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-panel{
-    transform: translateX(calc(-100% - 28px));
-    border-right: 0; box-shadow: none;
-    border-top-right-radius: 0; border-bottom-right-radius: 0;
-  }
-  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-scrim{
-    opacity: 0; pointer-events: none;
-  }
-
-  /* 5) Quand un menu recouvre l’écran, on masque la barre du viewer
-        (pour éviter le chevauchement du titre) */
-  #menu-toggle:checked ~ .viewer-header{ visibility: hidden; pointer-events: none; }
-  #mb-drawer.is-open ~ main .viewer-header,
-  .mb-drawer.is-open ~ main .viewer-header{ visibility: hidden; pointer-events: none; }
-}
-
-/* Desktop safe-guard */
-@media (min-width: 981px){
-  .menu-toggle-btn{ display: none; }
-  .viewer-header{ position: static; transform: none; margin: 0 0 .8rem 0; }
-}
-
-/* =========================================================
-   FIX MOBILE FINAL — tiroir calé sous le bandeau, bouton non-sticky
-   ========================================================= */
-@media (max-width: 980px){
-
-  /* 0) Le bouton "Sections" ne doit JAMAIS être sticky tout seul */
-  .menu-toggle-btn{
-    position: static !important;   /* anti-drift, même si un autre fichier le met en sticky */
-  }
-
-  /* 1) Le conteneur offcanvas est FIXE sous le header (pas le panel) */
-  .offcanvas{
-    position: fixed !important;
-    top: calc(var(--header-h) + 8px) !important;  /* ajuste à 0px si tu veux le coller au bandeau */
-    left: 0 !important; right: 0 !important; bottom: 0 !important;
-    z-index: 2400;                  /* < header (ex: 3000), > contenu */
-    pointer-events: none;           /* par défaut, inerte si fermé */
-    display: block !important;      /* force l’affichage en mobile */
-  }
-  /* activé uniquement quand la checkbox est cochée */
-  #menu-toggle:checked ~ .offcanvas{
-    pointer-events: auto;
-  }
-
-  /* 2) Le voile ne recouvre plus le bandeau (positionné dans le conteneur fixe) */
-  .offcanvas .offcanvas-scrim{
-    position: absolute !important;
-    inset: 0 !important;            /* couvre tout l’espace sous le bandeau */
-  }
-
-  /* 3) Le panneau glisse depuis la gauche, ancré sous le bandeau */
-  .offcanvas .offcanvas-panel{
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: min(84vw, var(--menu-w, 320px)) !important;
-    height: 100% !important;
-    max-height: 100% !important;
-    overflow-y: auto !important;
-    z-index: 1;
-  }
-
-  /* fermé = rien ne dépasse (plus de “petit trait”) */
-  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-panel{
-    transform: translateX(calc(-100% - 28px)) !important;
-    border-right: 0 !important;
-    box-shadow: none !important;
-    border-top-right-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-  }
-  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-scrim{
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-
-  /* 4) La barre (LES BASES + bouton) reste sticky et peut se masquer lors de l’ouverture */
-  .viewer-header{
-    position: sticky;
-    top: calc(var(--header-h) + 2px);
-    transform: translateY(-18px);   /* remonte uniquement la barre, pas l’article */
-    z-index: 1050;
-    display: flex; align-items: center; justify-content: space-between; gap: .75rem;
-    margin: 0 0 1rem 0; padding-right: .25rem;
-  }
-  #menu-toggle:checked ~ .viewer-header{
-    visibility: hidden; pointer-events: none;
-  }
-  /* si le burger s’ouvre, on masque aussi la barre viewer */
-  #mb-drawer.is-open ~ main .viewer-header,
-  .mb-drawer.is-open ~ main .viewer-header{
-    visibility: hidden; pointer-events: none;
-  }
-}
-
-/* Desktop safe-guard (au cas où un autre fichier a bougé des choses) */
-@media (min-width: 981px){
-  .menu-toggle-btn{ display: none; }
-  .viewer-header{ position: static; transform: none; margin: 0 0 .8rem 0; }
-}
-
-/* =========================================================
-   MOBILE — verrouillage final : tiroir sous le bandeau
-   (écrase marges/paddings/residus d'autres fichiers)
-   ========================================================= */
-@media (max-width: 980px){
-
-  /* Le bouton ne doit JAMAIS être sticky tout seul */
-  .menu-toggle-btn{
-    position: static !important;
-  }
-
-  /* Le conteneur offcanvas occupe tout l'espace SOUS le bandeau */
-  .offcanvas{
-    position: fixed !important;
-    top: calc(var(--header-h) + 0px) !important;   /* monte/descend ici si besoin */
-    left: 0 !important; right: 0 !important; bottom: 0 !important;
-    z-index: 2400;
-    display: block !important;
+  body:has(.mb-drawer.is-open) .viewer-header {
+    visibility: hidden;
     pointer-events: none;
-    margin: 0 !important;           /* 🔒 tue toute marge résiduelle */
-    padding: 0 !important;          /* 🔒 idem pour padding */
-  }
-  #menu-toggle:checked ~ .offcanvas{ pointer-events: auto; }
-
-  /* Le voile ne recouvre pas le bandeau (vit dans .offcanvas) */
-  .offcanvas .offcanvas-scrim{
-    position: absolute !important;
-    inset: 0 !important;            /* couvre toute la zone sous le header */
-    margin: 0 !important; padding: 0 !important;
-  }
-
-  /* Le panneau glisse depuis la gauche, sans marge/padding parasites */
-  .offcanvas .offcanvas-panel{
-    position: absolute !important;
-    top: 0 !important; left: 0 !important;
-    width: min(84vw, var(--menu-w, 320px)) !important;
-    height: 100% !important; max-height: 100% !important;
-    overflow-y: auto !important;
-    margin: 0 !important;           /* 🔒 pas de marge qui décale */
-    padding-top: 0 !important;      /* 🔒 si un fichier en rajoutait */
-  }
-
-  /* Fermé = rien ne dépasse */
-  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-panel{
-    transform: translateX(calc(-100% - 28px)) !important;
-    border-right: 0 !important; box-shadow: none !important;
-    border-top-right-radius: 0 !important; border-bottom-right-radius: 0 !important;
-  }
-  #menu-toggle:not(:checked) ~ .offcanvas .offcanvas-scrim{
-    opacity: 0 !important; pointer-events: none !important;
-  }
-
-  /* Barre titre + bouton = seule sticky (reste telle quelle) */
-  .viewer-header{
-    position: sticky;
-    top: calc(var(--header-h) + 2px);
-    transform: translateY(-18px);   /* remonte seulement la barre */
-    z-index: 1050;
-    display: flex; align-items: center; justify-content: space-between; gap: .75rem;
-    margin: 0 0 1rem 0; padding-right: .25rem;
-  }
-  #menu-toggle:checked ~ .viewer-header{ visibility: hidden; pointer-events: none; }
-}
-
-/* Slider Sections : fond plus lisible + scrim un peu plus sombre */
-@media (max-width: 980px){
-  /* Fond du panneau */
-  .offcanvas .offcanvas-panel{
-    background: var(--sections-panel-bg, rgba(255,255,255,.98)) !important;
-    backdrop-filter: none !important; /* retire l’effet “verre” si présent */
-  }
-  :root[data-theme="dark"] .offcanvas .offcanvas-panel{
-    background: var(--sections-panel-bg-dark, rgba(18,18,24,.96)) !important;
-  }
-
-  /* Voile derrière le panneau (sépare mieux le contenu) */
-  .offcanvas .offcanvas-scrim{
-    background: rgba(0,0,0,.25) !important; /* monte/descends l’opacité au besoin */
   }
 }
-
-/* === Desktop : petit espace entre le bord gauche et la colonne menu === */
-:root{ --menu-edge: 12px; }  /* ajuste 8–20px selon ton goût */
-
-@media (min-width: 981px){
-  .offcanvas-panel{
-    /* on recrée le “gutter” sans casser la largeur du track */
-    margin-left: var(--menu-edge);
-    width: calc(var(--menu-w, 300px) - var(--menu-edge));
-  }
-}
-
-/* =========================
-   DESKTOP – gouttières propres et espace haut
-   ========================= */
-:root{ --viewer-gutter: 24px; } /* ajuste 20–32px selon ton goût */
-
-@media (min-width: 981px){
-  /* 1) Grille + gouttières identiques à gauche/droite */
-  .viewer-layout{
-    display: grid;
-    grid-template-columns: minmax(260px, var(--menu-w, 300px)) 1fr;
-    column-gap: var(--viewer-gutter);
-    padding-inline: var(--viewer-gutter);   /* espace avec les bords */
-    padding-top: 12px;                      /* réduit l’espace au-dessus du H1 */
-  }
-
-  /* 2) On annule le hack précédent sur la colonne menu */
-  .offcanvas-panel{
-    margin-left: 0 !important;
-    width: var(--menu-w, 300px) !important; /* pas de rétrécissement */
-    position: sticky;
-    top: calc(var(--header-h) + 20px);
-    height: max-content;
-  }
-
-  /* 3) Titre "LES BASES" : pas de marge haute superflue */
-  .viewer-header{ margin: 0 0 .8rem 0; position: static; transform: none; }
-  .viewer-title{ margin: 0; }
-}
-
