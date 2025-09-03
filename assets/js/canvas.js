@@ -72,8 +72,8 @@ export function initParticles(type = 'stars', count = null) {
     });
   }
 
-  // Ajouter occasionnellement une étoile filante
-  if (type === 'stars' && Math.random() < 0.3) {
+  // RÉDUIT: Beaucoup moins d'étoiles filantes au départ (5% de chance au lieu de 30%)
+  if (type === 'stars' && Math.random() < 0.05) {
     particles.push({
       x: -20,
       y: Math.random() * canvas.height / 2,
@@ -145,8 +145,8 @@ function animateParticles() {
     }
   }
 
-  // Ajouter occasionnellement une nouvelle étoile filante
-  if (Math.random() < 0.005 && particles[0]?.type === 'stars') {
+  // RÉDUIT: Beaucoup moins d'étoiles filantes (0.1% de chance au lieu de 0.5%)
+  if (Math.random() < 0.001 && particles[0]?.type === 'stars') {
     particles.push({
       x: -20,
       y: Math.random() * canvas.height / 2,
