@@ -122,3 +122,38 @@ footer,
     padding: 1rem;
   }
 }
+
+/* ===============================
+   Styles pour la balise <var>
+   =============================== */
+var {
+  font-family: inherit;
+  color: var(--var-color, var(--accent, #8a6de9));
+  font-style: italic;
+  font-weight: 600;
+  background: var(--var-bg, rgba(138, 109, 233, 0.1));
+  padding: 0.2em 0.4em;
+  border-radius: 5px;
+  border: 1px solid var(--var-border, rgba(138, 109, 233, 0.2));
+  display: inline;
+}
+
+/* Adaptation pour le thème sombre */
+:root[data-theme="dark"] var {
+  --var-color: #9d8aee;
+  --var-bg: rgba(157, 138, 238, 0.15);
+  --var-border: rgba(157, 138, 238, 0.3);
+}
+
+/* Adaptation pour le thème clair */
+:root[data-theme="light"] var {
+  --var-color: #6e57e0;
+  --var-bg: rgba(110, 87, 224, 0.08);
+  --var-border: rgba(110, 87, 224, 0.2);
+}
+
+/* Survol */
+var:hover {
+  background: var(--var-hover-bg, rgba(138, 109, 233, 0.2));
+  border-color: var(--var-hover-border, rgba(138, 109, 233, 0.4));
+}
