@@ -176,3 +176,10 @@
   padding: 1.5rem;
   margin-bottom: 2rem;
 }
+
+/* Styles pour <var> - Thème sombre */
+var {
+  font-style: italic;
+  font-weight: 600;
+  color: #5eb0ff;
+}
