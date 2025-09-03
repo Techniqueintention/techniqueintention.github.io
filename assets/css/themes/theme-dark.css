@@ -17,6 +17,12 @@
   --accent-color: #5eb0ff;
   --star-color: #ffffff;
 
+     /* onglets */
+  --tab-active-border: #0d9eed;           /* ← ajoute cette var */
+  --tab-active-bg: linear-gradient(90deg, #3a84b8 0%, #0d9eed 100%);
+  --tab-active-color: #ffffff;
+  --tab-hover-bg: #1f5f85;                /* si tu l’utilises ailleurs */
+
   --header-bg: rgba(10, 20, 35, 0.75);
   --footer-bg: rgba(10, 20, 35, 0.75);
 
@@ -26,6 +32,7 @@
   /* image adaptée au thème sombre */
   --home-hero: url("/img/hero-dark.png");
 }
+
 
 [data-theme="dark"] body {
   background: var(--bg-color);
