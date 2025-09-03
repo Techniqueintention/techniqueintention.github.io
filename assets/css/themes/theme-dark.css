@@ -183,3 +183,11 @@ var {
   font-weight: 600;
   color: #5eb0ff;
 }
+
+  /* Tabs */
+  --tab-active-bg: linear-gradient(90deg, #5eb0ff 0%, #1e90ff 100%);
+  --tab-inactive-bg: #0a1525;
+  --tab-hover-bg: #11233a;
+  --tab-active-color: #fff;
+  --tab-inactive-color: #90bfff;  
+}
