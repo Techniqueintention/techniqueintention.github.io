@@ -83,8 +83,8 @@
 .tab-button.active {
   background: var(--tab-active-bg);
   color: var(--tab-active-color);
-  border-bottom: 3px solid var(--tab-active-border); /* ← var thème */
-  box-shadow: 0 4px 16px rgba(157,108,255,0.15);
+  border-bottom: 3px solid var(--tab-active-border);
+  box-shadow: 0 4px 10px var(--tab-active-border); /* halo */
   font-weight: 600;
   transform: scale(1.04);
   position: relative;
