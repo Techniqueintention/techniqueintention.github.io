@@ -79,23 +79,29 @@
 }
 
 .tab-button:hover { background: var(--tab-hover-bg); }
+/* Onglet actif */
 .tab-button.active {
   background: var(--tab-active-bg);
   color: var(--tab-active-color);
-  border-bottom: 3px solid var(--tab-active-border); /* ← utilise la var */
+  border-bottom: 3px solid var(--tab-active-border); /* ← var thème */
   box-shadow: 0 4px 16px rgba(157,108,255,0.15);
   font-weight: 600;
   transform: scale(1.04);
   position: relative;
 }
+
+/* Petit trait décoratif sous l’onglet */
 .tab-button.active::after {
   content: "";
   position: absolute;
-  left: 50%; bottom: -8px;
+  left: 50%;
+  bottom: -8px;
   transform: translateX(-50%);
-  width: 32px; height: 4px;
-  background: var(--tab-active-border);  /* ← utilise la var */
-  border-radius: 2px;
+  width: 32px;
+  height: 4px;
+  background: var(--tab-active-border);        /* ← var thème */
+  /* Si tu veux une lueur, remplace la ligne suivante par color-mix pour dériver l’alpha: */
+  /* box-shadow: 0 2px 8px color-mix(in srgb, var(--tab-active-border) 30%, transparent); */
   box-shadow: 0 2px 8px var(--tab-active-border);
 }
 
