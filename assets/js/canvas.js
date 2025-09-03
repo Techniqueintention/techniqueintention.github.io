@@ -206,3 +206,27 @@ export function changeParticleType(type) {
   
   initParticles(type);
 }
+
+/**
+ * Vérifie et redémarre les particules si nécessaire
+ * Utile quand la page est restaurée depuis le cache navigateur
+ */
+export function checkAndRestartParticles() {
+  if (canvas && document.documentElement.getAttribute("data-theme") === "dark") {
+    if (particles.length === 0 || !rafId) {
+      stopParticles();
+      initParticles("stars");
+    }
+  }
+}
+
+// Vérifier périodiquement si les particules tournent toujours
+setInterval(() => {
+  if (document.documentElement.getAttribute("data-theme") === "dark" && 
+      canvas && canvas.style.opacity === "1" && 
+      (!rafId || particles.length === 0)) {
+    console.log("Redémarrage automatique des particules");
+    stopParticles();
+    initParticles("stars");
+  }
+}, 5000); // Vérifie toutes les 5 secondes
