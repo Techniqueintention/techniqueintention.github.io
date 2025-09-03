@@ -4,6 +4,13 @@
   --accent: #8a6df1;
   --accent-bg: color-mix(in oklab, var(--accent) 16%, transparent);
   --header-h: 64px; /* hauteur du header réutilisable ailleurs */
+  
+  /* AJOUTEZ CES LIGNES */
+  --title-font: 'Cinzel', serif;
+  --title-color: #8a6de9;
+  --title-shadow: 0 0 10px rgba(138, 109, 233, 0.4);
+  --title-size: 1.8rem;
+  --title-weight: 600;
 }
 
 /* BANDEAU FIXE EN HAUT - CORRIGÉ */
@@ -29,20 +36,20 @@ body {
 }
 
 /* Titre à gauche cliquable, sans soulignement */
-.site-title a {
-    font-family: "Cinzel", serif;
-    font-size: 1.8rem;            /* Taille légèrement plus grande */
-    font-weight: 600;             /* Semi-bold pour plus de présence */
-    color: #8a6de9;               /* Couleur violette élégante */
-    text-shadow: 0 0 10px rgba(138, 109, 233, 0.4); /* Ombre subtile */
-    text-decoration: none;
-    letter-spacing: 0.5px;        /* Espacement légèrement accru */
-    transition: all 0.3s ease;
+/* Titre à gauche cliquable, sans soulignement */
+.site-title a{
+  font-family: var(--title-font);
+  font-size: var(--title-size);
+  font-weight: var(--title-weight);
+  color: var(--title-color);
+  text-shadow: var(--title-shadow);
+  text-decoration: none;
+  letter-spacing: 0.5px; /* Ajoutez cette ligne */
+  transition: all 0.3s ease; /* Ajoutez pour l'animation hover */
 }
-
-.site-title a:hover {
-    opacity: 0.9;
-    text-shadow: 0 0 15px rgba(138, 109, 233, 0.6);
+.site-title a:hover{ 
+  opacity: .8;
+  text-shadow: 0 0 15px rgba(138, 109, 233, 0.6); /* Améliore l'effet au survol */
 }
 
 /* ===== HARMONISATION DES ESPACEMENTS ENTRE THÈMES ===== */
