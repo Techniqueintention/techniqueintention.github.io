@@ -68,3 +68,38 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }, 50);
 });
+
+// Gestion de la navigation et restauration des étoiles
+window.addEventListener('pageshow', function(event) {
+  // Si la page est restaurée depuis le cache navigateur
+  if (event.persisted) {
+    const theme = document.documentElement.getAttribute('data-theme');
+    const canvas = document.getElementById('theme-canvas');
+    
+    if (theme === 'dark' && canvas) {
+      // Réinitialiser les étoiles après un court délai
+      setTimeout(() => {
+        stopParticles();
+        initParticles('stars', 140);
+        canvas.style.opacity = '1';
+      }, 100);
+    }
+  }
+});
+
+// Réinitialiser aussi quand l'onglet redevient visible
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) {
+    const theme = document.documentElement.getAttribute('data-theme');
+    const canvas = document.getElementById('theme-canvas');
+    
+    if (theme === 'dark' && canvas && canvas.style.opacity === '0') {
+      // Redémarrer les particules si elles ne sont pas visibles
+      setTimeout(() => {
+        stopParticles();
+        initParticles('stars', 140);
+        canvas.style.opacity = '1';
+      }, 100);
+    }
+  }
+});
