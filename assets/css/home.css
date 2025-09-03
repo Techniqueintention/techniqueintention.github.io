@@ -2,10 +2,17 @@
    Accueil — avec système d'onglets
    =============================== */
 
+/* AJOUTEZ CES VARIABLES EN HAUT */
+:root {
+  --font-title: 'Cinzel', serif;
+  --font-body: 'Poppins', sans-serif;
+}
+
 /* Container principal */
 .home-shell {
   width: 100%;
   padding: 1rem;
+  font-family: var(--font-body); /* FORCER Poppins pour tout le contenu */
 }
 
 /* Carte centrale */
@@ -19,23 +26,27 @@
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 15px 40px rgba(0,0,0,0.15);
   border: 1px solid var(--bloc-border, rgba(255,255,255,0.1));
+  font-family: var(--font-body); /* FORCER Poppins */
 }
 
-/* Titre centré */
+/* Titre centré - CORRIGÉ */
 .welcome h1 {
-  font-family: "Cinzel", serif;
+  font-family: var(--font-title); /* Utilisation de la variable */
   font-size: 2.4rem;
+  font-weight: 600; /* IMPORTANT: Ajouter le font-weight */
   margin: 0 0 2rem;
   text-align: center;
   color: var(--link-color);
   text-shadow: 0 2px 15px rgba(0,0,0,0.15);
+  letter-spacing: 0.5px; /* Ajouter pour meilleur rendu */
 }
 
-/* Texte */
+/* Texte - CORRIGÉ */
 .welcome-text {
   text-align: justify;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-body); /* Utilisation de la variable */
   font-size: 1.1rem;
+  font-weight: 400; /* Spécifier le poids */
   line-height: 1.8;
   color: var(--text-color);
 }
@@ -45,6 +56,7 @@
 .tabs-container {
   max-width: 920px;
   margin: 3rem auto;
+  font-family: var(--font-body); /* FORCER Poppins */
 }
 .tabs-header {
   display: flex;
@@ -59,12 +71,13 @@
   color: var(--tab-inactive-color);
   border-radius: 12px 12px 0 0;
   cursor: pointer;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-body); /* Utilisation de la variable */
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 500; /* Spécifier le poids */
   transition: all 0.3s ease;
   border-bottom: 3px solid transparent;
 }
+
 .tab-button:hover { background: var(--tab-hover-bg); }
 .tab-button.active {
   background: var(--tab-active-bg);
@@ -102,9 +115,9 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Typo contenu */
+/* Typo contenu - CORRIGÉ */
 .tab-content h2 {
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-body); /* Changer pour Poppins */
   font-size: 1.6rem;
   font-weight: 600;
   margin-bottom: 1.2rem;
@@ -113,13 +126,14 @@
 .tab-content p {
   margin: 1rem 0 1.5rem;
   line-height: 1.7;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-body);
   font-size: 1.05rem;
+  font-weight: 400; /* Spécifier le poids */
 }
 .tab-content ul {
   margin: 1rem 0 1.8rem 2rem;
   line-height: 1.7;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-body);
   font-size: 1.05rem;
 }
 .tab-content li { margin-bottom: 0.6rem; }
@@ -158,14 +172,21 @@
    Mobile (≤ 768px) — épuré
    =============================== */
 @media (max-width: 768px) {
-  /* Carte d’accueil plus compacte */
+  /* Carte d'accueil plus compacte */
   .welcome {
     padding: 2rem 1.5rem;
     margin: 1rem;
     max-width: calc(100% - 2rem);
   }
-  .welcome h1 { font-size: 2rem; }
-  .welcome-text { font-size: 1rem; text-align: left; }
+  .welcome h1 { 
+    font-size: 2rem;
+    font-weight: 600; /* Maintenir le poids en mobile */
+  }
+  .welcome-text { 
+    font-size: 1rem; 
+    text-align: left;
+    font-weight: 400; /* Spécifier le poids */
+  }
 
   /* Illustration vraiment réduite et non rognée */
   .home-illustration {
