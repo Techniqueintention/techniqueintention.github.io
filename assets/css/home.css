@@ -82,7 +82,7 @@
 .tab-button.active {
   background: var(--tab-active-bg);
   color: var(--tab-active-color);
-  border-bottom-color: #9d6cff;
+  border-bottom: 3px solid var(--tab-active-border); /* ← utilise la var */
   box-shadow: 0 4px 16px rgba(157,108,255,0.15);
   font-weight: 600;
   transform: scale(1.04);
@@ -94,8 +94,9 @@
   left: 50%; bottom: -8px;
   transform: translateX(-50%);
   width: 32px; height: 4px;
-  background: #9d6cff; border-radius: 2px;
-  box-shadow: 0 2px 8px #9d6cff44;
+  background: var(--tab-active-border);  /* ← utilise la var */
+  border-radius: 2px;
+  box-shadow: 0 2px 8px var(--tab-active-border);
 }
 
 .tab-content {
