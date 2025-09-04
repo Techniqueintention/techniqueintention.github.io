@@ -494,3 +494,18 @@ img, video, canvas, svg, iframe {
 @media (max-width: 360px) {
   .viewer-title { font-size: clamp(15px, 5.6vw, 20px); padding: .5rem .8rem; }
 }
+
+/* mobile only */
+@media (max-width: 900px) {
+  /* espace entre chaque enfant direct du container viewer */
+  .viewer-container > * + * { 
+    margin-top: 10px;            /* ajuste 8–14px selon ton goût */
+  }
+
+  /* si tu veux un peu plus d'air sous le bouton Sections uniquement */
+  .viewer-container .sections-btn,
+  .viewer-container .viewer-menu,
+  .viewer-container .menu-sections {
+    margin-bottom: 10px;         /* pris si l’une de ces classes existe */
+  }
+}
