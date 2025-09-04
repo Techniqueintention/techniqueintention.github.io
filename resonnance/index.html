@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Réonnance intérieure — Technique Intention</title>
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/viewer-styles.css">
+  <script type="module" src="/assets/js/main.js"></script>
+
+  <!-- Dans l'en-tête de votre HTML -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  
+  <!-- Plus de <style> inline ! Tout est externalisé -->
+</head>
+<body>
+
+  <canvas id="theme-canvas"></canvas>
+  <div id="menu-placeholder"></div>
+
+<main class="viewer-container">
+  <div class="viewer-layout">
+
+<!-- DOIT être AVANT la barre -->
+<input type="checkbox" id="menu-toggle" class="menu-toggle" hidden>
+
+<!-- Barre titre + bouton Sections -->
+<div class="viewer-header">
+  <h1 class="viewer-title">RÉSONNANCE INTÉRIEURE</h1>
+  <label for="menu-toggle"
+         class="menu-toggle-btn"
+         aria-controls="viewer-menu">Sections</label>
+</div>
+
+
+      <div class="offcanvas">
+        <div class="offcanvas-panel">
+      
+          <nav id="viewer-menu" class="blog-menu" aria-label="Navigation Bases">
+           
+
+            <a class="menu-card" href="#" data-viewer="./apropos.html" data-date="2025-09-01">
+              <span>A propos</span>
+            </a>
+
+
+         
+
+            <details>
+              <summary>Exercices</summary>
+              <ul>
+                <li><a href="#" data-viewer="./exercices/apropos.html" data-date="2025-09-02">A propos des exercices</a></li>
+              </ul>
+            </details>
+            
+          </nav>
+        </div>
+        <!-- clic en dehors du panneau = fermeture -->
+        <label for="menu-toggle" class="offcanvas-scrim" aria-label="Fermer le menu"></label>
+      </div>
+
+      <section id="article-viewer" role="region" aria-live="polite">
+        <div class="placeholder">
+          <h2>Bienvenue dans Résonnance intérieure</h2>
+          <p class="notes-fin">Cliquez à gauche pour afficher l'article souhaité.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script>
+
+    // À ajouter DANS bases.html - dans la balise <script> existante
+// Juste AVANT la ligne "document.addEventListener('DOMContentLoaded', function () {"
+
+// ==============================================
+// FIX EXCLUSION MUTUELLE BURGER ↔ SECTIONS
+// ==============================================
+
+// Détecter quand le menu burger principal s'ouvre/ferme
+const observeBurgerMenu = () => {
+  const mbDrawer = document.querySelector('#mb-drawer, .mb-drawer');
+  const sectionsToggle = document.getElementById('menu-toggle');
+  
+  if (!mbDrawer || !sectionsToggle) return;
+  
+  // Observer les changements de classe sur le menu burger
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+        const isBurgerOpen = mbDrawer.classList.contains('is-open');
+        
+        if (isBurgerOpen) {
+          // Menu burger ouvert → fermer le menu Sections
+          sectionsToggle.checked = false;
+          console.log('🍔 Menu burger ouvert → Sections fermé');
+        }
+      }
+    });
+  });
+  
+  observer.observe(mbDrawer, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+  
+  // Écouter l'ouverture du menu Sections pour fermer le burger si besoin
+  sectionsToggle.addEventListener('change', (e) => {
+    if (e.target.checked && mbDrawer.classList.contains('is-open')) {
+      // Si Sections s'ouvre alors que burger est ouvert, fermer le burger
+      const mbScrim = document.querySelector('#mb-scrim, .mb-scrim');
+      if (mbScrim) {
+        mbScrim.click(); // Ferme le burger via le scrim
+      } else {
+        mbDrawer.classList.remove('is-open');
+      }
+      console.log('📋 Sections ouvert → Burger fermé');
+    }
+  });
+};
+
+// Initialiser après un petit délai pour être sûr que tout est chargé
+setTimeout(observeBurgerMenu, 100);
+    
+
+      // --- SCRIPT BASES.HTML ---
+document.addEventListener('DOMContentLoaded', function () {
+  const menu   = document.getElementById('viewer-menu');
+  const toggle = document.getElementById('menu-toggle');
+  const viewer = document.getElementById('article-viewer');
+  const mm     = window.matchMedia('(max-width: 980px)');
+
+  if (!menu || !viewer || !toggle) return;
+
+  // --- Badge NEW auto (inchangé)
+  (function(){
+    const now = new Date(), seven = 7*24*60*60*1000;
+    menu.querySelectorAll('[data-date]').forEach(el=>{
+      if (el.querySelector('.badge-new')) return;
+      const d = new Date(el.getAttribute('data-date'));
+      if (!isNaN(d) && (now - d) <= seven) {
+        const b = document.createElement('span');
+        b.className = 'badge-new';
+        b.textContent = 'NEW';
+        el.appendChild(b);
+        const det = el.closest('details');
+        if (det && !det.hasAttribute('data-has-new')) det.setAttribute('data-has-new','1');
+      }
+    });
+  })();
+
+  // --- Loader d'article fiable (data-viewer) ---
+  function loadIntoViewer(url){
+    if (!url) return Promise.resolve();
+    viewer.classList.add('is-loading');
+    return fetch(url, { cache: 'no-store' })
+      .then(r => r.text())
+      .then(html => { viewer.innerHTML = html; })
+      .catch(err => {
+        console.error(err);
+        viewer.innerHTML = '<div class="placeholder"><p>Impossible de charger cet article pour le moment.</p></div>';
+      })
+      .finally(() => viewer.classList.remove('is-loading'));
+  }
+
+// --- Navigation dans le menu (délégation d'événements)
+menu.addEventListener('click', (e) => {
+  const a = e.target.closest('a[data-viewer]');
+  if (!a) return;
+  e.preventDefault();
+
+  // Si on clique un lien "racine" (hors <details>),
+  // on ferme toutes les catégories ouvertes.
+  if (!a.closest('details')) {
+    menu.querySelectorAll('details[open]').forEach(d => d.open = false);
+  }
+
+  const url = a.getAttribute('data-viewer');
+  loadIntoViewer(url).then(() => {
+    if (mm.matches) toggle.checked = false; // fermer APRÈS injection en mobile
+  });
+});
+
+
+  // --- CROIX ✕ mobile seulement : injection/désinjection ---
+  function ensureCloseButton() {
+    const panel = document.querySelector('.offcanvas-panel');
+    if (!panel) return;
+    let btn = panel.querySelector('.offcanvas-close');
+    if (mm.matches) {
+      if (!btn) {
+        btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'offcanvas-close';
+        btn.setAttribute('aria-label','Fermer le menu Sections');
+        btn.textContent = '✕';
+        btn.addEventListener('click', () => { toggle.checked = false; });
+        panel.prepend(btn);
+      }
+    } else {
+      if (btn) btn.remove(); // desktop : pas de croix
+    }
+  }
+  ensureCloseButton();
+  mm.addEventListener('change', ensureCloseButton);
+
+  // --- MUTUAL EXCLUSION avec le burger principal ---
+  // APRÈS – supporte id OU classe
+  const mbDrawer = document.querySelector('#mb-drawer, .mb-drawer');
+  const mbScrim  = document.querySelector('#mb-scrim, .mb-scrim');
+
+  // 1) Si "Sections" s'ouvre, fermer le burger mobile s'il est ouvert
+  toggle.addEventListener('change', () => {
+    if (toggle.checked && mbDrawer && mbDrawer.classList.contains('is-open')) {
+      if (mbScrim) mbScrim.click(); else mbDrawer.classList.remove('is-open');
+    }
+  });
+
+  // 2) Si le burger mobile s'ouvre, fermer "Sections"
+  if (mbDrawer) {
+    const mo = new MutationObserver(() => {
+      if (mbDrawer.classList.contains('is-open') && toggle.checked) {
+        toggle.checked = false;
+      }
+    });
+    mo.observe(mbDrawer, { attributes: true, attributeFilter: ['class'] });
+  }
+
+  // --- Clic hors panneau déjà géré par le <label> .offcanvas-scrim ---
+});
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
