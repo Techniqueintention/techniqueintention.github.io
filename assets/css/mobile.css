@@ -463,3 +463,34 @@ img, video, canvas, svg, iframe {
 @media (max-width: 980px){
   .viewer-layout { margin: 28px 0 20px 0; /* ← crée l’espace au-dessus */ }
 }
+
+/* ↓ Titre au-dessus du viewer — MOBILE ONLY */
+@media (max-width: 900px) {
+  /* La barre titre + bouton peut passer sur 2 lignes si besoin */
+  .viewer-header {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    flex-wrap: wrap;             /* ← évite que ça déborde */
+  }
+
+  /* Le titre s’auto-redimensionne et se coupe joliment */
+  .viewer-title {
+    font-size: clamp(16px, 5.2vw, 22px);  /* ← auto-fit suivant la largeur écran */
+    line-height: 1.15;
+    padding: .6rem 1rem;                  /* ← réduit la “petite case” */
+    max-width: 92%;
+    text-wrap: balance;                   /* retours de ligne propres */
+    hyphens: auto;                        /* césure si mot trop long */
+    overflow-wrap: anywhere;              /* filet de sécurité */
+    word-break: normal;
+  }
+
+  /* Optionnel : alléger l’effet visuel en mobile */
+  .viewer-title::before { display: none; }           /* coupe la brillance */
+  .viewer-title { box-shadow: 0 6px 18px rgba(0,0,0,.18); }
+}
+
+@media (max-width: 360px) {
+  .viewer-title { font-size: clamp(15px, 5.6vw, 20px); padding: .5rem .8rem; }
+}
